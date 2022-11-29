@@ -1,0 +1,389 @@
+@font-face {
+  font-family: symbol;
+  src: url(./fonts/Symbol\ Regular.ttf);
+}
+
+a {
+  cursor: pointer !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Login css starts */
+
+.login.login-2 .login-signin,
+.login.login-2 .login-signup,
+.login.login-2 .login-forgot {
+  display: none;
+}
+.login.login-2.login-signin-on .login-signup {
+  display: none;
+}
+.login.login-2.login-signin-on .login-signin {
+  display: block;
+}
+.login.login-2.login-signin-on .login-forgot {
+  display: none;
+}
+.login.login-2.login-signup-on .login-signup {
+  display: block;
+}
+.login.login-2.login-signup-on .login-signin {
+  display: none;
+}
+.login.login-2.login-signup-on .login-forgot {
+  display: none;
+}
+.login.login-2.login-forgot-on .login-signup {
+  display: none;
+}
+.login.login-2.login-forgot-on .login-signin {
+  display: none;
+}
+.login.login-2.login-forgot-on .login-forgot {
+  display: block;
+}
+
+@media (min-width: 992px) {
+  .login.login-2 .login-aside {
+    width: 100%;
+    max-width: 600px;
+  }
+  .login.login-2 .login-form {
+    width: 100%;
+    max-width: 450px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1399.98px) {
+  .login.login-2 .login-aside {
+    width: 100%;
+    max-width: 450px;
+  }
+}
+@media (max-width: 991.98px) {
+  .login.login-2 .login-form {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+@media (max-width: 575.98px) {
+  .login.login-2 .login-form {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Login css ends */
+
+/* Submenu Css Starts */
+.header-bottom {
+  background-color: #fff;
+  padding: 0.5rem;
+}
+
+.header-bottom.submenu {
+  background-color: rgb(211 211 211 / 25%);
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.menu-item .menu-link {
+  font-size: 12px;
+  font-weight: 500;
+  color: #444;
+}
+
+.menu-item .menu-link.active {
+  background-color: rgb(211 211 211 / 68%);
+  color: #333;
+}
+
+/* Submenu Css end */
+
+.action_btns i {
+  cursor: pointer;
+}
+
+.user_header span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.clock_container {
+  /* background-color: #fff7f7; */
+  height: 100%;
+  border-radius: 3px;
+  border: 1px solid #fff7f7;
+  padding-bottom: 3px;
+}
+
+.clock_container p {
+  color: #333;
+  font-size: 11px;
+  background: #fff7f7;
+  border-radius: 2px;
+}
+
+.clock_container h2 {
+  font-size: 24px;
+  color: #444;
+  background-color: #fff7f7;
+  width: 44px;
+  border-radius: 50px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter_box {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid #eee;
+}
+
+.font_13 {
+  font-size: 11px !important;
+}
+
+.MuiDataGrid-root .MuiDataGrid-footer {
+  justify-content: flex-end !important;
+}
+
+.switch_loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.logo-header h4 {
+  font-size: 30px;
+  font-weight: bold;
+  font-family: symbol;
+  letter-spacing: 1px;
+}
+
+.clock_container p {
+  font-size: 11px;
+  text-align: center;
+}
+
+.switch_btn {
+  border-radius: 50px !important;
+  min-width: 40px !important;
+  height: 40px;
+  padding: 6px 11px !important;
+}
+
+.hrs.MuiCircularProgress-colorPrimary {
+  color: #fb9300;
+}
+
+.seconds.MuiCircularProgress-colorPrimary {
+  color: #1eae98;
+}
+
+.dashboard-color {
+  background-color: #ba135d;
+}
+.accounts-color {
+  background-color: #f4cca4;
+}
+.masters-color {
+  background-color: #005792;
+}
+.profile-color {
+  background-color: #064420;
+}
+.purchase-color {
+  background-color: #233e8b;
+}
+
+.reports-color {
+  background-color: #ff7b54;
+}
+.sales-color {
+  background-color: #a58faa;
+}
+
+.circle_box {
+  background-color: #fff7f7;
+  border-radius: 50px;
+  padding: 2px;
+  height: 40px;
+}
+
+.tab {
+  color: #000;
+  opacity: 1 !important;
+}
+
+.tab.Mui-selected {
+  background-color: #f5f5f5;
+  border: 1px solid #eee;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-weight: 600;
+}
+
+.customtab-panel {
+  flex-grow: 1;
+  background-color: #fff;
+  display: flex;
+  height: 100%;
+}
+
+.customtab-panel .MuiTabs-root {
+  width: 15%;
+  min-width: 15%;
+}
+
+.customtab-panel .customtab-container {
+  width: 85%;
+  min-width: 85%;
+}
+
+.light-tab {
+  background-color: #ffe8e8 !important;
+  color: #d32f2f !important;
+}
+
+.theme-bg {
+  background-image: linear-gradient(
+    -225deg,
+    #22e1ff 0%,
+    #1d8fe1 48%,
+    #625eb1 100%
+  ) !important;
+}
+
+.custom-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0 0 0 / 68%);
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg-menu {
+  background: rgb(255 255 255 / 34%);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.main-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  z-index: 9;
+  background: #1e1e2d;
+  padding: 1rem 1.5rem;
+  height: 100%;
+}
+
+.main-sidebar .svg-menu {
+  width: 25px;
+  padding: 4px;
+  transition: all 0.3s;
+}
+
+.main-sidebar .svg-menu:hover {
+  background: #fff;
+}
+
+.main-sidebar .sidebar-menulist ul li {
+  color: rgb(255 255 255 / 61%);
+  font-size: 14px;
+  padding: 0.5rem;
+  transition: all 0.5s;
+  margin-bottom: 10px;
+}
+
+.main-sidebar .sidebar-menulist ul li:hover {
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.main-sidebar .sidebar-menulist ul li i {
+  font-size: 10px;
+}
+
+.float-action-btn {
+  position: fixed;
+  bottom: 5%;
+  right: 2%;
+  z-index: 9;
+}
+
+.entry-details div {
+  flex: 1;
+}
+
+.widget-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+}
+
+.widget-container .widget-box {
+  margin: 20px 10px;
+  padding: 1.5rem;
+  text-align: end;
+  border-radius: 10px;
+}
+
+.widget-box span {
+  font-size: 14px;
+  font-weight: 500;
+}
+.widget-box p {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.widget-box.first {
+  background-color: rgb(238 253 255);
+  border: 1px solid rgb(188, 247, 254);
+}
+
+.widget-box.second {
+  background-color: rgb(255 238 240);
+  border: 1px solid rgb(255, 212, 217);
+}
+
+.widget-box.third {
+  background-color: rgb(243 234 255);
+  border: 1px solid rgb(227, 205, 255);
+}
+
+/* Responsive CSS */
+@media (min-width: 600px) {
+  .customtab-container .MuiTab-root {
+    min-width: 90px;
+  }
+}
