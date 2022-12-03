@@ -1,31 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import { TextField,Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearAccountGroupInfoResponse, clearSelectedConfigGroup , updateAccountGroupInfo } from '../../../../../_redux/actions/masters/configuration.action';
-
-
+import { CommonController } from '../../../../../_redux/controller/common.controller';
+import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 const AddOrEditGroup = (props) => {
-    const dispatch = useDispatch();
-    const getGroupInfo = useSelector((state) => state.ConfigurationMaster.groupInfo);
-    const updateGroupInfoResponse = useSelector((state) => state.ConfigurationMaster.groupResponse);
-    const [groupValues , setGroupValues] = useState({});
+  
+    const [groupValues , setGroupValues] = useState({
+        group_id:"",
+        group_name:"",
+        description:""
+    });
     const [showMessage , setMessage] = useState({
         type:"",
         msg:""
     })
+console.log(props.editData)
 
+const insertForm=async()=>{
+    try{
+      let body={
+        user_name: localStorage.getItem("userName"),
+        user_id: localStorage.getItem("userId"),
+        description:groupValues.description,
+        group_name:groupValues.group_name,
+        group_id:groupValues.group_id
+      }
+
+await CommonController.commonApiCallFilter(
+    "master/insert_group",
+    body,
+    "post",
+    "node"
+
+).then(result=>{
+    if(result.status==200){
+        showSuccessToast(result.message)
+    setGroupValues({
+        group_id:"",
+        group_name:"",
+        description:""
+    })
+    }})
+
+    }catch(err){
+        showErrorToast(err)
+    }
+}
     useEffect(() => {
-        if(getGroupInfo){
-            setGroupValues(getGroupInfo);
-        }
-    },[getGroupInfo]);
+        setGroupValues(props.editData)
+       
+    },[]);
 
      const onSave = () => {
-        var temp = {...groupValues};
-        temp.user_id = localStorage.getItem("userId");
-        temp.user_name = localStorage.getItem("userName");
-        dispatch(updateAccountGroupInfo(temp));
+        insertForm()
+     
     }
 
 
@@ -36,27 +64,19 @@ const AddOrEditGroup = (props) => {
     }
 
     const onCancelClick = () => {
-        dispatch(clearSelectedConfigGroup());
         props.onClose(0);
+      
     }
 
    
     useEffect(() => {
-        if(updateGroupInfoResponse){
-             setMessage({...showMessage,
-                type:updateGroupInfoResponse.valid ? "success" : "danger",
-                msg:getGroupInfo ? "Group updated successfully" : "Group Saved successfully"
-            });
+       
             setTimeout(() => {
-                setMessage({
-                    type:"",
-                    msg:""
-                });
-                props.onClose(0);
+                
             }, 2000);
-            dispatch(clearAccountGroupInfoResponse());
-        }
-    },[updateGroupInfoResponse]);
+         
+        
+    },[]);
 // 
 
     return <React.Fragment>
@@ -67,13 +87,13 @@ const AddOrEditGroup = (props) => {
                 </div>
                 <div className="col-md-4">
                     <TextField label="Group Name" name="group_name" value={groupValues.group_name} onChange={handleOnChange} fullWidth variant="outlined" size="small"/>
-                </div>
+                </div>     
                 <div className="col-md-4">
                     <TextField multiline label="Description" value={groupValues.description} onChange={handleOnChange} name="description" fullWidth variant="outlined" size="small"/>
                 </div>
                 <div className="col-md-12 mt-3 text-right">
                     <Button variant="contained" className="mr-2" onClick={onCancelClick} disableElevation>Cancel</Button>
-                    <Button variant="contained" onClick={onSave} color="primary" disableElevation>Save</Button>
+                   {groupValues.type=="preview"?"": <Button variant="contained" onClick={onSave} color="primary" disableElevation>Save</Button>}
                 </div>
                 {showMessage.type != "" ? <Alert severity={showMessage.type}>{showMessage.msg}</Alert> : null}
             </div>

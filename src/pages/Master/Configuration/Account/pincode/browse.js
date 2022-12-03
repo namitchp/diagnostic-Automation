@@ -1,180 +1,220 @@
-import { DataGrid } from '@material-ui/data-grid';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearPincodeInfoResponse, deleteSelectedPincode, getPincodeBrowseList, selectedPincodeInfo } from '../../../../../_redux/actions/masters/configuration.action';
-import CustomPagination from '../../../../../components/CustomPagination';
-import CustomNoRowsOverlay from '../../../../../components/customRowComponent';
-import { Alert } from '@material-ui/lab';
-import { TextField } from '@material-ui/core';
 
-const BrowsePincode = (props) => {
-    const dispatch = useDispatch();
-    const [isLoading , setIsLoading] = useState(false);
+import { TextField, Button, MenuItem } from "@material-ui/core";
+import { DataGrid } from "@mui/x-data-grid";
 
-    const configurationLoading = useSelector((state) => state.ConfigurationMaster.isLoading);
-    const getPincodeListResponse = useSelector((state) => state.ConfigurationMaster.pincodeList);
-    const deletePincodeResponse = useSelector((state) => state.ConfigurationMaster.pincodeResponse);
+import React, { useEffect, useState } from "react";
 
-    const [pincodeList , setPincodeList] = useState(null);
-    const [showMessage , setMessage] = useState({
-        type:"",
-        msg:""
-    })
 
-    const [params , setParams] = useState({
-        pageNo:1,
-        pageSize:10,
-        filter_value:'',
-        sort_column:'',
-        sort_order:''
-    });
 
-    const handlePageSizeChange = (param) => {
-        setParams({...params,
-            pageSize:parseInt(param.pageSize)
-        });
-    }
-    const handlePageChange = (param) => {
-        setParams({...params,
-            pageNo:param.page
-        });
-    }
+import {
+  CommonController,
+  currenyMasking,
+} from "../../../../../_redux/controller/common.controller";
+import CustomPagination from "../../../../../components/CustomPagination";
+import CustomNoRowsOverlay from "../../../../../components/customRowComponent";
+import { debounce, showErrorToast, showSuccessToast } from "../../../../../components/common";
+import DateFilter from "../../../../../components/dateFilter";
+import moment from "moment";
+import ActionButtons from "../../../../../components/action-buttons";
 
-    useEffect(() => {
-        dispatch(getPincodeBrowseList(params));
-    },[]);
+const BrowsePincode = ({ type, onEdit, onPreview }) => {
+  const [browseListData, setBrowseListData] = useState([]);
+  const [totalRecord, setTotalRecords] = useState(0);
+  const [amountFigures, setAmountFigures] = useState({
+    amount: 0,
+    mdc_amount: 0,
+    actual_amount: 0,
+  });
 
-    useEffect(() => {
-        dispatch(getPincodeBrowseList(params));
-    },[params]);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        setIsLoading(configurationLoading);
-    },[configurationLoading])
+  const [params, setParams] = useState({
+    pageNo: 1,
+    pageSize: 10,
+    filter_value: "",
+    sort_column: "",
+    sort_order: "",
+  });
+  const handleParams = (event) => {
+    debounce(
+      setParams({ ...params, [event.target.name]: event.target.value }),
+      1000
+    );
+  };
 
-    useEffect(() => {
-        if(getPincodeListResponse){
-            setPincodeList(getPincodeListResponse)
+  const handleBodyParam = (event) => {
+    setTimeout(() => {
+      //   setBodyParam({ ...bodyParam, [event.target.name]: event.target.value });
+    }, 800);
+  };
+
+  const getBrowseListData = async () => {
+    setLoading(true);
+    try {
+      await CommonController.commonApiCall(
+        "master/browse_pincode",
+        params,
+        "",
+        "node"
+      ).then((data) => {
+        if (data.status === 200) {
+          setBrowseListData(data.data);
+          setTotalRecords(data.totalRecords);
+
+        } else {
+          showErrorToast("Something went wrong");
         }
-    },[getPincodeListResponse]);
+      });
+    } catch (err) {
+      showErrorToast(err);
+    }
+    setLoading(false);
+  };
 
-    
+  const handlePageSizeChange = (param) => {
+    setParams({ ...params, pageSize: param });
+  };
+  const handleRowId = (e) => {
+    console.log(e)
+  }
+  const handlePageChange = (param) => {
 
-    useEffect(() => {
-        if(deletePincodeResponse){
-            setMessage({...showMessage,
-                type:deletePincodeResponse.valid ? "success" : "error",
-                msg:deletePincodeResponse.valid ? "Pincode deleted successfully" : "Something went wrong"
-            });
-            setTimeout(() => {
-                setMessage({
-                    type:"",
-                    msg:""
-                });
-            }, 2000);
-            dispatch(clearPincodeInfoResponse());
-            dispatch(getPincodeBrowseList(params));
+    if (param !== 0) {
+      setParams({ ...params, pageNo: param });
+    }
+  };
+
+  const deleteData = async (id) => {
+    try {
+      await CommonController.commonApiCallFilter(
+        "master/delete_pincode",
+        { pin_code_id: id },
+        "post",
+        "node"
+      ).then(result => {
+        if (result.status == 200) {
+          getBrowseListData();
+          showSuccessToast("Success Delete")
+
         }
-    },[deletePincodeResponse]);
+      }).catch(err => {
+        showErrorToast(err)
+      })
 
-    const onPreviewOrEdit = (row) => {
-        dispatch(selectedPincodeInfo(row));
-        props.onActionClick(1);
+    } catch (err) {
+      showErrorToast(err)
     }
+  }
 
-    const deletePincode = (row) => {
-        var param = {
-            pin_code_id:row.pin_code_id
-        }
-        dispatch(deleteSelectedPincode(param))
-    }
+  useEffect(() => {
+    getBrowseListData();
+  }, [params]);
 
-    const handleParams = (event) => {
-        setTimeout(() => {
-            setParams({...params,
-                [event.target.name]:event.target.value
-            });
-        }, 800);
-    }
+  return (
+    <>
 
+      <div className="filter_box mb-5">
+        <div className="row">
+          <div className="col-md-1 d-flex align-items-center">
+            <h4 className="mb-0">Filters</h4>
+          </div>
 
-    return <React.Fragment>
-         <div className="filter_box mb-5">
-                <div className="row">
-                    <div className="col-md-1 d-flex align-items-center"><h4 className="mb-0">Filters</h4></div>
-                    <div className="col-md-2">
-                        <TextField fullWidth id="outlined-basic" size="small" onKeyUp={handleParams} name="filter_value" label="Search" variant="outlined" />
-                    </div>
-                     
-                </div>
-            </div>
-    <div style={{ height: 350, width: '100%' }}>
-            <DataGrid
-               pagination
-               disableColumnFilter
-               pageSize={params.pageSize}   
-               page={1}
-               rowsPerPageOptions={[10,20,50,100]}
-               rowCount={pincodeList ? pincodeList.recordsFiltered : 0}
-               paginationMode="server"
-               onPageSizeChange={handlePageSizeChange}
-               onPageChange={handlePageChange}
-               loading={isLoading}                   
-               rowHeight={30}
-               components={{
-                   Pagination:CustomPagination,
-                   NoRowsOverlay: CustomNoRowsOverlay,
-               }}
-                columns={[
-                    {
-                        field: 'id',
-                        headerName:"Sr No.",
-                        width:120
-                    },
-                    {
-                        field: 'pin_code_id',
-                        headerName:"Pincode ID",
-                        width:120
-                    },
-                    {
-                        field: 'pin_code_no',
-                        headerName:"Pincode",
-                        width:200
-                    },
-                    {
-                        field: 'city',
-                        headerName:"City",
-                        width:200
-                    },
-                    {
-                        field: 'state',
-                        headerName:"State",
-                        width:200
-                    },
-                    {
-                        field: 'district',
-                        headerName:"District",
-                        width:200
-                    },
-                    {
-                        field: '',
-                        headerName:"Actions",
-                        renderCell:(params) => (
-                            <div className="action_btns">
-                                <i class="fas fa-search mr-2" onClick={() => onPreviewOrEdit(params.row)}></i>
-                                <i class="far fa-edit mr-2" onClick={() => onPreviewOrEdit(params.row)}></i>
-                                <i class="far fa-trash-alt mr-2" onClick={() => deletePincode(params.row)}></i>
-                            </div>
-                        ),
-                        width:150
-                    } 
-                    
-                ]}
-                rows={pincodeList ? pincodeList.data : []}
+          <div className="col-md-2">
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              size="small"
+              onKeyUp={handleParams}
+              name="filter_value"
+              label="Search"
+              variant="outlined"
             />
-            {showMessage.type != "" ? <Alert severity={showMessage.type}>{showMessage.msg}</Alert> : null}
+          </div>
+          {/* <DateFilter onDateUpdate={() => getBrowseListData()} /> */}
         </div>
-</React.Fragment>
-}
+      </div>
+
+      <div style={{ height: 400, width: "100%" }}>
+        <DataGrid
+          columns={[
+            {
+              field: "pin_code_id",
+              headerName: "ID",
+              width: 110,
+
+            },
+
+
+            {
+              field: "pin_code_no",
+              headerName: "Pin Code No",
+              width: 230,
+            },
+            {
+              field: "city",
+              headerName: "City",
+              width: 230,
+            },
+            {
+              field: "state",
+              headerName: "State",
+              width: 230,
+            },
+            {
+              field: "district",
+              headerName: "District",
+              width: 230,
+            },
+            {
+              field: '',
+              headerName: "Actions",
+              renderCell: (params) => (
+                <div className="action_btns">
+                  <i className="fas fa-search mr-2" onClick={() => onPreview(params.row)}></i>
+                  <i className="far fa-edit mr-2" onClick={() => onEdit(params.row)}></i>
+                  <i className="far fa-trash-alt mr-2" onClick={() =>deleteData(params.row.pin_code_id)}></i>
+                </div>
+              ),
+              width: 100
+            }
+          ]}
+
+          pagination
+
+          disableColumnFilter
+          pageSize={params.pageSize}
+          page={params.pageNo}
+          rowsPerPageOptions={[10, 15, 25, 100]}
+          rowCount={totalRecord}
+          paginationMode="server"
+          onPageSizeChange={handlePageSizeChange}
+          onPageChange={handlePageChange}
+          loading={loading}
+          rowHeight={30}
+          components={
+            browseListData.length > 0
+              ? {
+                Pagination: CustomPagination,
+                NoRowsOverlay: CustomNoRowsOverlay,
+              }
+              : {}
+          }
+          onSortModelChange={(sort) => {
+            if (sort.length > 0) {
+              setParams({
+                ...params,
+                sort_column: sort[0].field,
+                sort_order: sort[0].sort,
+              });
+            }
+          }}
+          rows={browseListData}
+          getRowId={(browseListData) => browseListData.pin_code_id}
+        />
+      </div>
+
+    </>
+  );
+};
 
 export default BrowsePincode;

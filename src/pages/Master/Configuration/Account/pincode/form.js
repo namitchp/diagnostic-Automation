@@ -1,35 +1,68 @@
 import React, { useEffect, useState } from 'react';
 import { TextField,Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { useDispatch, useSelector } from 'react-redux';
-import {  clearPincodeInfoResponse,  clearSelectedPincode, updatePincodeInfo } from '../../../../../_redux/actions/masters/configuration.action';
-
+import { showErrorToast, showSuccessToast } from '../../../../../components/common';
+import { CommonController } from '../../../../../_redux/controller/common.controller';
 
 const AddOrEditPincode = (props) => {
-    const dispatch = useDispatch();
-    const getPincodeInfo = useSelector((state) => state.ConfigurationMaster.pincodeInfo);
-    const updatePincodeInfoResponse = useSelector((state) => state.ConfigurationMaster.pincodeResponse);
-    const [formValues , setFormValues] = useState({});
+    const [formValues , setFormValues] = useState({
+        pin_code_id:"",
+        pin_code_no:"",
+        city:"",
+        state:"",
+        district:"",
+        description:"",
+
+    });
     const [showMessage , setMessage] = useState({
         type:"",
         msg:""
     })
-
-    useEffect(() => {
-         
-        if(getPincodeInfo){
-            setFormValues(getPincodeInfo);
+    const insertForm=async()=>{
+        try{
+          let body={
+            user_name: localStorage.getItem("userName"),
+            user_id: localStorage.getItem("userId"),
+            description:formValues.description,
+            pin_code_no:formValues.pin_code_no,
+            city:formValues.city,
+            state:formValues.state,
+            district:formValues.district,
+          }
+    
+    await CommonController.commonApiCallFilter(
+        "master/insert_pincode",
+        body,
+        "post",
+        "node"
+    
+    ).then(result=>{
+        if(result.status==200){
+            showSuccessToast(result.message)
+        setFormValues({
+            pin_code_id:"",
+            pin_code_no:"",
+            city:"",
+            state:"",
+            district:"",
+            description:"",
+    
+        })
+        }})
+    
+        }catch(err){
+            showErrorToast(err)
         }
-    },[getPincodeInfo]);
-
-     const onSave = () => {
-        var temp = {...formValues};
-        temp.user_id = localStorage.getItem("userId");
-        temp.user_name = localStorage.getItem("userName");
-        dispatch(updatePincodeInfo(temp));
     }
-
-
+   
+   useEffect(() => {
+            setFormValues(props.editData)
+           
+        },[]);
+    
+         const onSave = () => {
+            insertForm()
+        }
     const handleOnChange = (event) => {
         setFormValues({...formValues,
             [event.target.name]:event.target.value
@@ -37,29 +70,28 @@ const AddOrEditPincode = (props) => {
     }
 
     const onCancelClick = () => {
-        dispatch(clearSelectedPincode());
+
         props.onClose(0);
     }
-
-   
-    useEffect(() => {
-        console.log(updatePincodeInfoResponse)
-        if(updatePincodeInfoResponse){
-             setMessage({...showMessage,
-                type:updatePincodeInfoResponse.valid ? "success" : "error",
-                msg:updatePincodeInfoResponse.valid ? getPincodeInfo ? "Pincode updated successfully" : "Pincode Saved successfully" : "Something went wrong"
-            });
-            setTimeout(() => {
-                setMessage({
-                    type:"",
-                    msg:""
-                });
-                props.onClose(0);
-            }, 2000);
-            dispatch(clearPincodeInfoResponse());
-        }
-    },[updatePincodeInfoResponse]);
-// 
+  
+//     useEffect(() => {
+//         console.log(updatePincodeInfoResponse)
+//         if(updatePincodeInfoResponse){
+//              setMessage({...showMessage,
+//                 type:updatePincodeInfoResponse.valid ? "success" : "error",
+//                 msg:updatePincodeInfoResponse.valid ? getPincodeInfo ? "Pincode updated successfully" : "Pincode Saved successfully" : "Something went wrong"
+//             });
+//             setTimeout(() => {
+//                 setMessage({
+//                     type:"",
+//                     msg:""
+//                 });
+//                 props.onClose(0);
+//             }, 2000);
+//             dispatch(clearPincodeInfoResponse());
+//         }
+//     },[updatePincodeInfoResponse]);
+// // 
 
     return <React.Fragment>
         <div className="container-fluid">
@@ -82,7 +114,7 @@ const AddOrEditPincode = (props) => {
                  
                 <div className="col-md-12 mt-3 text-right">
                     <Button variant="contained" className="mr-2" onClick={onCancelClick} disableElevation>Cancel</Button>
-                    <Button variant="contained" onClick={onSave} color="primary" disableElevation>Save</Button>
+                   {formValues.type=="preview"?"": <Button variant="contained" onClick={onSave} color="primary" disableElevation>Save</Button>}
                 </div>
                 {showMessage.type != "" ? <Alert severity={showMessage.type}>{showMessage.msg}</Alert> : null}
             </div>

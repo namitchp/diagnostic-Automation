@@ -140,7 +140,6 @@ async function commonApiCallFilter(url, body, type = "post", domain = "") {
       let _url = url + "?" + queryString;
       response = await userService.get(_url, domain);
     }
-
     if (response) {
       return response.data;
     } else {

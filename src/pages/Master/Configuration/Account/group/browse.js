@@ -1,114 +1,210 @@
-import React, { useEffect, useState } from 'react';
-import CustomPagination from '../../../../../components/CustomPagination';
-import CustomNoRowsOverlay from '../../../../../components/customRowComponent';
-import { DataGrid } from '@material-ui/data-grid';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAccountGroupBrowse, selectedConfigGroup } from '../../../../../_redux/actions/masters/configuration.action';
 
-const ConfigGroupBrowse = (props) => {
-    const dispatch = useDispatch();
-    const [isLoading , setIsLoading] = useState(false);
-    const configurationLoading = useSelector((state) => state.ConfigurationMaster.isLoading);
-    const getGroupListResponse = useSelector((state) => state.ConfigurationMaster.groupList);
+import { TextField, Button, MenuItem } from "@material-ui/core";
+import { DataGrid } from "@mui/x-data-grid";
 
-    const [groupList , setGroupList] = useState([]);
+import React, { useEffect, useState } from "react";
+import {
+  CommonController,
+  currenyMasking,
+} from "../../../../../_redux/controller/common.controller";
+import CustomPagination from "../../../../../components/CustomPagination";
+import CustomNoRowsOverlay from "../../../../../components/customRowComponent"; 
+import { debounce, showErrorToast, showSuccessToast } from "../../../../../components/common";
+import DateFilter from "../../../../../components/dateFilter";
+import moment from "moment";
+import ActionButtons from "../../../../../components/action-buttons";
 
-    const [params , setParams] = useState({
-        pageNo:1,
-        pageSize:10,
-        filter_value:'',
-        sort_column:'',
-        sort_order:''
-    });
+const ConfigGroupBrowse = ({ type,onEdit,onPreview }) => {
+  const [browseListData, setBrowseListData] = useState([]);
+  
+  const [totalRecord, setTotalRecords] = useState(0);
+  const [amountFigures, setAmountFigures] = useState({
+    amount: 0,
+    mdc_amount: 0,
+    actual_amount: 0,
+  });
 
-    const handlePageSizeChange = (param) => {
-        setParams({...params,
-            pageSize:param.pageSize
-        });
+  const [loading, setLoading] = useState(false);
+
+  const [params, setParams] = useState({
+    pageNo: 1,
+    pageSize: 10,
+    filter_value: "",
+    sort_column: "",
+    sort_order: "",
+  });
+  const handleParams = (event) => {
+    debounce(     
+      setParams({...params, [event.target.name]: event.target.value }),
+      1000
+    );
+  };
+
+  const handleBodyParam = (event) => {
+    setTimeout(() => {
+    //   setBodyParam({ ...bodyParam, [event.target.name]: event.target.value });
+    }, 800);
+  };
+
+  const getBrowseListData = async () => {
+    setLoading(true);
+    try {
+      await CommonController.commonApiCall(
+        "master/browse_group",
+        params,
+       "",
+        "node"
+      ).then((data) => {
+        if (data.status === 200) {
+          setBrowseListData(data.data);
+          setTotalRecords(data.totalRecords);
+        
+        } 
+      }).catch(err=>{
+        showErrorToast(err);
+      })
+    } catch (err) {
+      showErrorToast(err);
     }
-    const handlePageChange = (param) => {
-        setParams({...params,
-            pageNo:param.page + 1
-        });
+    setLoading(false);
+  };
+  const deleteData=async(id)=>{
+    try{
+    
+
+await CommonController.commonApiCallFilter(
+    "master/delete_group",
+    {group_id:id},
+    "post",
+    "node"
+
+).then(result=>{
+    if(result.status==200){
+      getBrowseListData();
+        showSuccessToast("Success Delete")
+  
+    }}).catch(err=>{
+      showErrorToast(err)
+  })
+
+    }catch(err){
+        showErrorToast(err)
     }
-
-    useEffect(() => {
-        dispatch(getAccountGroupBrowse(params));
-    },[]);
-
-    useEffect(() => {
-        dispatch(getAccountGroupBrowse(params));
-    },[params]);
-
-    useEffect(() => {
-        setIsLoading(configurationLoading);
-        if(getGroupListResponse){
-            setGroupList(getGroupListResponse.data  || [])
-         }
-    },[getGroupListResponse , configurationLoading]);
-
-    const onPreviewOrEdit = (row) => {
-        dispatch(selectedConfigGroup(row));
-        props.onActionClick(1);
-    }
-
-    return <React.Fragment>
-        <div style={{ height: 350, width: '100%' }}>
-                <DataGrid
-                   pagination
-                   disableColumnFilter
-                   pageSize={params.pageSize}
-                  
-                   rowsPerPageOptions={[10,20,50,100]}
-                   rowCount={getGroupListResponse?.recordsFiltered}
-                   paginationMode="server"
-                   onPageSizeChange={handlePageSizeChange}
-                   onPageChange={handlePageChange}
-                   loading={isLoading}                   
-                   rowHeight={30}
-                   components={{
-                       Pagination:CustomPagination,
-                       NoRowsOverlay: CustomNoRowsOverlay,
-                   }}
-                    columns={[
-                        {
-                            field: 'id',
-                            headerName:"Sr No.",
-                            width:120
-                        },
-                        {
-                            field: 'group_id',
-                            headerName:"Group ID",
-                            width:120
-                        },
-                        {
-                            field: 'group_name',
-                            headerName:"Group Name",
-                            width:200
-                        },
-                        {
-                            field: 'description',
-                            headerName:"Description",
-                            width:200
-                        },
-                        {
-                            field: '',
-                            headerName:"Actions",
-                            renderCell:(params) => (
-                                <div className="action_btns">
-                                    {/* <i className="fas fa-search mr-2" onClick={() => onPreviewOrEdit(params.row)}></i> */}
-                                    <i className="far fa-edit mr-2" onClick={() => onPreviewOrEdit(params.row)}></i>
-                                    <i className="far fa-trash-alt mr-2"></i>
-                                </div>
-                            ),
-                            width:150
-                        } 
-                        
-                    ]}
-                    rows={getGroupListResponse ? getGroupListResponse.data : []}
-                />
-            </div>
-    </React.Fragment>
 }
+  const handlePageSizeChange = (param) => {
+    setParams({ ...params, pageSize: param });
+  };
+  const handleRowId=(e)=>{
+    console.log(e)
+  }
+  const handlePageChange = (param) => {
+    console.log(param)
+    if (param !== 0) {
+      setParams({ ...params, pageNo: param });
+    }
+  };
+  const onDelete=(id)=>{
+    console.log(id)
+deleteData(id.group_id)
+  }
+  useEffect(() => {
+    getBrowseListData();
+  }, [params]);
+
+  return (
+    <>
+     
+      <div className="filter_box mb-5">
+        <div className="row">
+          <div className="col-md-1 d-flex align-items-center">
+            <h4 className="mb-0">Filters</h4>
+          </div>
+
+          <div className="col-md-2">
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              size="small"
+              onKeyUp={handleParams}
+              name="filter_value"
+              label="Search"
+              variant="outlined"
+            />
+          </div>
+          {/* <DateFilter onDateUpdate={() => getBrowseListData()} /> */}
+        </div>
+      </div>
+
+      <div style={{ height: 400, width: "100%" }}>
+        <DataGrid
+          columns={[
+            {
+              field: "group_id",
+              headerName: "ID",
+              flex: 10,
+            },
+         
+
+            {
+              field: "group_name",
+              headerName: "Name",
+              width: 450,
+            },
+            {
+              field: "description",
+              headerName: "Description",
+              width: 450,
+            },
+            {
+                field: '',
+                headerName:"Actions",
+                renderCell:(params) => (
+                    <div className="action_btns">
+                        <i className="fas fa-search mr-2" onClick={() => onPreview(params.row)}></i>
+                        <i className="far fa-edit mr-2" onClick={() => onEdit(params.row)}></i>
+                        <i className="far fa-trash-alt mr-2" onClick={()=>onDelete(params.row)}></i>
+                    </div>
+                ),
+                width:150
+            } 
+          ]}
+          
+          pagination
+      
+          disableColumnFilter
+          pageSize={params.pageSize}
+          page={params.pageNo}
+          rowsPerPageOptions={[10, 15, 25, 100]}
+          rowCount={totalRecord>20||22}
+          paginationMode="server"
+          onPageSizeChange={handlePageSizeChange}
+          onPageChange={handlePageChange}
+          loading={loading}
+          rowHeight={30}
+          components={
+            browseListData.length > 0
+              ? {
+                  Pagination: CustomPagination,
+                  NoRowsOverlay: CustomNoRowsOverlay,
+                }
+              : {}
+          }
+          onSortModelChange={(sort) => {
+            if (sort.length > 0) {
+              setParams({
+                ...params,
+                sort_column: sort[0].field,
+                sort_order: sort[0].sort,
+              });
+            }
+          }}
+          rows={browseListData}
+          getRowId={(browseListData) =>  browseListData.group_id}
+        />
+      </div>
+  
+    </>
+  );
+};
 
 export default ConfigGroupBrowse;

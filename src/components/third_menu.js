@@ -22,7 +22,7 @@ const ThirdMenu = (props) => {
                     //     .replace(/\s+/g, "-")
                     //     .toLowerCase()
                     // ); 
-                    console.log(list)
+                  
                     return (
                       <li className="menu-item" key={"sublist" + index}>
                         <Link

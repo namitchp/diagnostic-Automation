@@ -10,42 +10,42 @@ import DesignationIndex from "./designation";
 import SiemensIndex from "./siemens";
 import SupplyItemIndex from "./supply-item";
 
-const panel = [
-  {
-    name: "Group",
-    component: "",
-  },
-  {
-    name: "Pin Code",
-    component: "",
-  },
-  {
-    name: "Region",
-    component: "",
-  },
-  {
-    name: "Rating",
-    component: "",
-  },
-  {
-    name: "Department",
-    component: "",
-  },
-  {
-    name: "Designation",
-    component: "",
-  },
-  {
-    name: "Siemens",
-    component: "",
-  },
-  {
-    name: "Supply Items",
-    component: "",
-  },
-];
+// const panel = [
+//   {
+//     name: "Group",
+//     component: "",
+//   },
+//   {
+//     name: "Pin Code",
+//     component: "",
+//   },
+//   {
+//     name: "Region",
+//     component: "",
+//   },
+//   {
+//     name: "Rating",
+//     component: "",
+//   },
+//   {
+//     name: "Department",
+//     component: "",
+//   },
+//   {
+//     name: "Designation",
+//     component: "",
+//   },
+//   {
+//     name: "Siemens",
+//     component: "",
+//   },
+//   {
+//     name: "Supply Items",
+//     component: "",
+//   },
+// ];
 
-const ConfigAccountIndex = () => {
+const ConfigAccountIndex = ({list}) => {
   const [selectedIndex, setSeletedIndex] = useState(0);
 
   const handleIndex = (event, newValue) => {
@@ -95,8 +95,8 @@ const ConfigAccountIndex = () => {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          {panel.map((tab, index) => {
-            return <Tab value={index} key={"tab" + index} label={tab.name} />;
+          {list.map((tab, index) => {
+            return <Tab value={index} key={"tab" + index} label={tab.display_name} />;
           })}
         </Tabs>
       </AppBar>
