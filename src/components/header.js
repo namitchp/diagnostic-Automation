@@ -194,18 +194,20 @@ const Header = ({ onHeaderClick }) => {
     }
   };
   const handleSubMenu = (id) => {
+    console.log(id)
     if(subMenuList.length>0){
-    
-      getThirdMenu(id)
+    id===12?getThirdMenu(1):getThirdMenu(id)
+      
     }
 
   }
+ 
   return (
     <React.Fragment>
       <MainBar onMenuClick={() => onHeaderClick()} />
       <MainMenu list={userRightListArr} onMenuChange={handleMenuChange} />
       {subMenuList.length > 0 ? <Submenu list={subMenuList} onSubMenuChange={handleSubMenu} /> : null}
-      {/* {(thirdMenuList.length > 0)&&(subMenuList.length>0) ? <ThirdMenu list={thirdMenuList} list2={subMenuList} /> : null} */}
+      {(thirdMenuList.length > 0)&&(subMenuList.length>0) ? <ThirdMenu list={thirdMenuList} list2={subMenuList} /> : null}
     </React.Fragment>
   );
 };

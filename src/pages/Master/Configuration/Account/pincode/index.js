@@ -1,22 +1,30 @@
 import { Tab, Tabs } from "@material-ui/core";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { clearSelectedPincode } from "../../../../../_redux/actions/masters/configuration.action";
 
 import BrowsePincode from "./browse";
 import AddOrEditPincode from "./form";
 
 const PincodeIndex = () => {
-  const dispatch = useDispatch();
-  const [selectedIndex, setSeletedIndex] = useState(0);
 
+  const [selectedIndex, setSeletedIndex] = useState(0);
+  const [editdata, seteditdata] = useState("");
   const handleIndex = (event, newValue) => {
     setSeletedIndex(newValue);
-    if (newValue === 0) {
-      dispatch(clearSelectedPincode());
-    }
+   seteditdata("")
   };
-
+  const handelEdit=(edit)=>{
+    let editData={...edit}
+    editData.type="edit";
+    setSeletedIndex(1)
+    seteditdata(editData)
+}
+const handelPreview=(preview)=>{
+    let previewData={...preview}
+    previewData.type="preview";
+    setSeletedIndex(1)
+    seteditdata(previewData)
+    console.log(previewData)
+}
   return (
     <div className="px-3">
       <Tabs
@@ -31,9 +39,9 @@ const PincodeIndex = () => {
       </Tabs>
       <div className="customtab-container w-100 py-3">
         {selectedIndex === 0 ? (
-          <BrowsePincode onActionClick={(index) => handleIndex({}, index)} />
+          <BrowsePincode onEdit={handelEdit} onPreviewData={handelPreview}  />
         ) : (
-          <AddOrEditPincode onClose={(index) => handleIndex({}, index)} />
+          <AddOrEditPincode onClose={(index) => handleIndex({}, index)} editData={editdata} />
         )}
       </div>
     </div>

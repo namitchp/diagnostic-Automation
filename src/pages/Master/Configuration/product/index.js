@@ -7,31 +7,32 @@ import GroupIndex from "./group";
 import ItemIndex from "./item";
 import UnitIndex from "./unit";
 import GGIndex from "./gg";
+import { buttonLoader } from "../../../../components/common";
 
-const panel = [
-  {
-    name: "Category",
-    component: "",
-  },
-  {
-    name: "Group",
-    component: "",
-  },
-  {
-    name: "Item",
-    component: "",
-  },
-  {
-    name: "Unit",
-    component: "",
-  },
-  {
-    name: "GG",
-    component: "",
-  },
-];
+// const panel = [
+//   {
+//     name: "Category",
+//     component: "",
+//   },
+//   {
+//     name: "Group",
+//     component: "",
+//   },
+//   {
+//     name: "Item",
+//     component: "",
+//   },
+//   {
+//     name: "Unit",
+//     component: "",
+//   },
+//   {
+//     name: "GG",
+//     component: "",
+//   },
+// ];
 
-const ConfigProductIndex = () => {
+const ConfigProductIndex = ({list}) => {
   const [selectedIndex, setSeletedIndex] = useState(0);
 
   const handleIndex = (event, newValue) => {
@@ -73,11 +74,12 @@ const ConfigProductIndex = () => {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          {panel.map((tab, index) => {
-            return <Tab value={index} key={"tab" + index} label={tab.name} />;
+          {list.map((tab, index) => {
+            return <Tab value={index} key={"tab" + index} label={tab.display_name} />;
           })}
         </Tabs>
       </AppBar>
+      
       <div className="customtab-container w-100">{getSelectedComponent()}</div>
     </div>
   );
