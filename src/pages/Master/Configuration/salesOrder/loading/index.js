@@ -2,7 +2,7 @@ import { Tab, Tabs } from "@material-ui/core";
 import React, { useState } from "react";
 import ConfigGroupBrowse from "./browse";
 import AddOrEditGroup from "./form";
-const GroupIndex = () => {
+const LoadingIndex = () => {
   const [selectedIndex, setSeletedIndex] = useState(0);
   const [editdata, seteditdata] = useState("");
   const handleIndex = (event, newValue) => {
@@ -50,4 +50,4 @@ const GroupIndex = () => {
     </div>
   );
 };
-export default GroupIndex;
+export default LoadingIndex;
