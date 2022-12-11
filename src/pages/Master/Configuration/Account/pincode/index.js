@@ -13,14 +13,17 @@ const PincodeIndex = () => {
    seteditdata("")
   };
   const handelEdit=(edit)=>{
-    const editData=edit.type="edit";
+    let editData={...edit}
+    editData.type="edit";
     setSeletedIndex(1)
-    seteditdata(edit)
+    seteditdata(editData)
 }
 const handelPreview=(preview)=>{
-    const previewData=preview.type="preview";
+    let previewData={...preview}
+    previewData.type="preview";
     setSeletedIndex(1)
-    seteditdata(preview)
+    seteditdata(previewData)
+    console.log(previewData)
 }
   return (
     <div className="px-3">
@@ -36,7 +39,7 @@ const handelPreview=(preview)=>{
       </Tabs>
       <div className="customtab-container w-100 py-3">
         {selectedIndex === 0 ? (
-          <BrowsePincode onEdit={handelEdit} onPreview={handelPreview}  />
+          <BrowsePincode onEdit={handelEdit} onPreviewData={handelPreview}  />
         ) : (
           <AddOrEditPincode onClose={(index) => handleIndex({}, index)} editData={editdata} />
         )}

@@ -1,30 +1,21 @@
-import { DataGrid } from "@material-ui/data-grid";
-import { TextField } from "@material-ui/core";
+import { TextField, Button, MenuItem } from "@material-ui/core";
+import { DataGrid } from "@mui/x-data-grid";
+
 import React, { useEffect, useState } from "react";
 import {
+  CommonController,
+} from "../../../../../_redux/controller/common.controller";
+import CustomPagination from "../../../../../components/CustomPagination";
+import CustomNoRowsOverlay from "../../../../../components/customRowComponent";
+import {
+  debounce,
   showErrorToast,
   showSuccessToast,
 } from "../../../../../components/common";
-
-import CustomPagination from "../../../../../components/CustomPagination";
-import CustomNoRowsOverlay from "../../../../../components/customRowComponent";
-
-import { Loader } from "../../../../../components/loader";
-import { CommonController } from "../../../../../_redux/controller/common.controller";
-import ActionButtons from "../../../../../components/action-buttons";
-import { useDispatch } from "react-redux";
-import { Alert } from "@material-ui/lab";
-import { selectedSupplyItemId } from "../../../../../_redux/actions/masters/all.action";
-const user_id = {
-  user_id: localStorage.getItem("userId"),
-};
-
-const BrowseSupplyItem = ({ onEdit }) => {
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
-  const [itemList, setItemList] = useState([]);
+const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
+  const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   const [params, setParams] = useState({
     pageNo: 1,
     pageSize: 10,
@@ -32,69 +23,89 @@ const BrowseSupplyItem = ({ onEdit }) => {
     sort_column: "",
     sort_order: "",
   });
-
   const handleParams = (event) => {
-    setTimeout(() => {
-      setParams({ ...params, [event.target.name]: event.target.value });
-    }, 800);
+    debounce(
+      setParams({ ...params, [event.target.name]: event.target.value }),
+      1000
+    );
   };
-
   const getBrowseListData = async () => {
-    setIsLoading(true);
-    await CommonController.commonApiCall(
-      "Configuration/ConfigurationItemBrowse",
-      params,
-      user_id
-    )
-      .then((data) => {
-        setItemList(data.data);
-        setTotalRecords(data.recordsFiltered);
-      })
-      .catch((err) => {
-        showErrorToast(err);
-      });
-    setIsLoading(false);
+    setLoading(true);
+    try {
+      await CommonController.commonApiCall(
+        "master/browse_supply",
+        params,
+        "",
+        "node"
+      )
+        .then((data) => {
+          if (data.status === 200) {
+            setBrowseListData(data.data);
+            setTotalRecords(data.totalRecords);
+          }
+        })
+        .catch((err) => {
+          showErrorToast(err);
+        });
+    } catch (err) {
+      showErrorToast(err);
+    }
+    setLoading(false);
   };
-
   const handlePageSizeChange = (param) => {
-    setParams({ ...params, pageSize: param.pageSize });
+    setParams({ ...params, pageSize: param });
   };
   const handlePageChange = (param) => {
-    setParams({ ...params, pageNo: param.page });
+    if (param !== 0) {
+      setParams({ ...params, pageNo: param });
+    }
   };
-
-  useEffect(() => {
-    getBrowseListData();
-  }, []);
-
+  const onDelete = async (id) => {
+    try {
+      await CommonController.commonApiCallFilter(
+        "master/delete_supply",
+        { item_id: id },
+        "post",
+        "node"
+      )
+        .then((result) => {
+          if (result.status == 200) {
+            getBrowseListData();
+            showSuccessToast("Success Delete");
+          }
+        })
+        .catch((err) => {
+          showErrorToast(err);
+        });
+    } catch (err) {
+      showErrorToast(err);
+    }
+  };
+  const onPreview = async (id) => {
+    try {
+      await CommonController.commonApiCallFilter(
+        "master/preview_supply",
+        { item_id: id },
+        "post",
+        "node"
+      )
+        .then((result) => {
+          if (result.status == 200) {
+            onPreviewData(...result.data);
+          }
+        })
+        .catch((err) => {
+          showErrorToast(err);
+        });
+    } catch (err) {
+      showErrorToast(err);
+    }
+  };
   useEffect(() => {
     getBrowseListData();
   }, [params]);
-
-  const handleEdit = (id) => {
-    dispatch(selectedSupplyItemId(id));
-    onEdit();
-  };
-
-  const handleDeleteRow = (id) => {
-    CommonController.commonApiCallFilter(
-      "Configuration/ConfigurationItemDelete",
-      {
-        item_id: id,
-      }
-    ).then((data) => {
-      if (data.valid) {
-        showSuccessToast("Record Deleted Successfully");
-        getBrowseListData();
-      } else {
-        showErrorToast("Something went wrong");
-      }
-    });
-  };
-
   return (
-    <React.Fragment>
-      {isLoading && <Loader />}
+    <>
       <div className="filter_box mb-5">
         <div className="row">
           <div className="col-md-1 d-flex align-items-center">
@@ -112,72 +123,83 @@ const BrowseSupplyItem = ({ onEdit }) => {
               variant="outlined"
             />
           </div>
+          {/* <DateFilter onDateUpdate={() => getBrowseListData()} /> */}
         </div>
       </div>
+
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={[
             {
-              field: "id",
-              headerName: "Sr. no",
-              flex: 0,
+              field: "item_id",
+              headerName: "ID",
+              flex: 10,
             },
             {
               field: "item_name",
               headerName: "Item Name",
-              flex: 0.1,
+              width: 450,
             },
             {
               field: "description",
               headerName: "Description",
-              flex: 0.1,
-            },
-            {
-              field: "datetime",
-              headerName: "Date",
-              flex: 0.1,
+              width: 450,
             },
             {
               field: "",
               headerName: "Actions",
               renderCell: (params) => (
-                <ActionButtons
-                  onEdit={() => handleEdit(params.row.item_id)}
-                  onDelete={() => handleDeleteRow(params.row.item_id)}
-                />
+                <div className="action_btns">
+                  <i
+                    className="fas fa-search mr-2"
+                    onClick={() => onPreview(params.row.item_id)}
+                  ></i>
+                  <i
+                    className="far fa-edit mr-2"
+                    onClick={() => onEdit(params.row)}
+                  ></i>
+                  <i
+                    className="far fa-trash-alt mr-2"
+                    onClick={() => onDelete(params.row.item_id)}
+                  ></i>
+                </div>
               ),
-              flex: 0.1,
+              width: 150,
             },
           ]}
           pagination
           disableColumnFilter
           pageSize={params.pageSize}
-          // page={params.pageNo}
+          page={params.pageNo}
           rowsPerPageOptions={[10, 15, 25, 100]}
-          rowCount={totalRecord}
+          rowCount={totalRecord > 20 || 22}
           paginationMode="server"
           onPageSizeChange={handlePageSizeChange}
           onPageChange={handlePageChange}
-          loading={isLoading}
+          loading={loading}
           rowHeight={30}
-          components={{
-            Pagination: CustomPagination,
-            NoRowsOverlay: CustomNoRowsOverlay,
-          }}
+          components={
+            browseListData.length > 0
+              ? {
+                  Pagination: CustomPagination,
+                  NoRowsOverlay: CustomNoRowsOverlay,
+                }
+              : {}
+          }
           onSortModelChange={(sort) => {
-            if (sort.sortModel.length > 0) {
+            if (sort.length > 0) {
               setParams({
                 ...params,
-                sort_column: sort.sortModel[0].field,
-                sort_order: sort.sortModel[0].sort,
+                sort_column: sort[0].field,
+                sort_order: sort[0].sort,
               });
             }
           }}
-          rows={itemList}
+          rows={browseListData}
+          getRowId={(browseListData) => browseListData.item_id}
         />
       </div>
-    </React.Fragment>
+    </>
   );
 };
-
-export default BrowseSupplyItem;
+export default ConfigGroupBrowse;

@@ -8,52 +8,52 @@ import ConfigEnquiryIndex from "./enquiry";
 import ConfigCostingIndex from "./costing";
 import { CommonController } from "../../../_redux/controller/common.controller";
 import { buttonLoader, showErrorToast } from "../../../components/common";
+import ConfigSalesOrder from "./salesOrder";
+import ConfigQuotation from "./quotation";
 
 const useStyles = makeStyles((theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
   },
 }));
-
-const panel = [
-  {
-    name: "Account",
-    component: <ConfigAccountIndex />,
-  },
-  {
-    name: "Product",
-    component: <ConfigProductIndex />,
-  },
-  {
-    name: "Sales Enquiry",
-    component: <ConfigEnquiryIndex />,
-  },
-  {
-    name: "Costing",
-    component: <ConfigCostingIndex />,
-  },
-  {
-    name: "Sales Order",
-    component: "",
-  },
-  {
-    name: "Quotation",
-    component: "",
-  },
-  {
-    name: "Type of Invoice",
-    component: "",
-  },
-];
-
 const ConfigurationMaster = () => {
   const classes = useStyles();
   const [selectedIndex, setSeletedIndex] = useState(0);
   const [MenuList, setMenuList] = useState([]);
-  const [thirdMenuId, setthirdMenuId] = useState(101);
   const [SubMenuList, setSubMenuList] = useState([]);
   const [loading, setloading] = useState(true);
   const [loadingsubMenu, setloadingsubMenu] = useState(true);
+  const panel = [
+    {
+      name: "Account",
+      component: <ConfigAccountIndex list={SubMenuList} />,
+    },
+    {
+      name: "Product",
+      component: <ConfigProductIndex list={SubMenuList} />,
+    },
+    {
+      name: "Sales Enquiry",
+      component: <ConfigEnquiryIndex list={SubMenuList}/>,
+    },
+    {
+      name: "Costing",
+      component: <ConfigCostingIndex list={SubMenuList}/>,
+    },
+    {
+      name: "Quotation",
+      component: <ConfigQuotation list={SubMenuList}/>,
+    },
+    {
+      name: "Sales Order",
+      component:<ConfigSalesOrder list={SubMenuList}/>
+    },
+   
+    {
+      name: "Type of Invoice",
+      component: "",
+    },
+  ];
   const getThirdMenu = async (menu_id) => {
     try {
       let user_id = { user_id: localStorage.getItem("userId") };
@@ -99,17 +99,15 @@ const ConfigurationMaster = () => {
     }
   };
   useEffect(() => {
-    getfourthMenu(thirdMenuId);
-  }, [thirdMenuId]);
+    getfourthMenu(101);
+  }, []);
 
   useEffect(() => {
     getThirdMenu(12);
   }, []);
-
   const handleIndex = (event, newValue) => {
     setSeletedIndex(newValue);
   };
-
   return (
     <React.Fragment>
       <div className="card card-custom gutter-b  px-7 py-3">
@@ -132,8 +130,10 @@ const ConfigurationMaster = () => {
               return (
                 <Tab
                   onClick={() => {
+                    console.log("bhjnm,")
                     setloadingsubMenu(true);
-                    setthirdMenuId(tab.transaction_id);
+                    getfourthMenu(tab.transaction_id);
+
                   }}
                   className={"tab"}
                   value={index}
@@ -148,24 +148,13 @@ const ConfigurationMaster = () => {
               <div className="text-center">
                 {buttonLoader(false, "Loading...", "")}
               </div>
-            ) : (
-              <>
-                {selectedIndex===0 && (
-                  <ConfigAccountIndex list={SubMenuList} />
-                )}
-                {selectedIndex === 1 && (
-                  <ConfigProductIndex list={SubMenuList} />
-                )}
-              </>
+            ) : (panel[selectedIndex].component
             )}
             {/* {panel[selectedIndex].component} */}
-
-            {}
           </div>
         </div>
       </div>
     </React.Fragment>
   );
 };
-
 export default ConfigurationMaster;

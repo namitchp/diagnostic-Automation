@@ -1,150 +1,82 @@
-import React, { useEffect, useState } from "react";
-import {
-  TextField,
-  Checkbox,
-  FormControlLabel,
-  Button,
-} from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import { DatePicker } from "@material-ui/pickers";
-import SimpleReactValidator from "simple-react-validator";
-
-import {
-  buttonLoader,
-  showErrorToast,
-  showSuccessToast,
-} from "../../../../../components/common";
-import { CommonController } from "../../../../../_redux/controller/common.controller";
-import { SimpleTable } from "../../../../../components/basic-table";
-import useForceUpdate from "use-force-update";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import { Loader } from "../../../../../components/loader";
-import { selectedCategoryId } from "../../../../../_redux/actions/masters/all.action";
-
-const AddOrEditCategory = ({ onClose }) => {
-  const [loading, setLoading] = useState(false);
-
-  const selectedIdResponse = useSelector(
-    (state) => state.AllReducersMaster.categoryId
-  );
-
-  const [validator, setValidator] = useState(new SimpleReactValidator());
-
-  const forceUpdate = useForceUpdate();
-
-  const [insertParams, setInsertParams] = useState({
-    p_category_id: "0",
-    p_category_name: "",
-    description: "",
-    user_id: localStorage.getItem("userId"),
-    user_name: localStorage.getItem("userName"),
-  });
-
-  useEffect(() => {
-    if (selectedIdResponse) {
-      CommonController.commonApiCallFilter(
-        "Configuration/ConfigurationProductCgyPreview",
-        {
-          p_category_id: selectedIdResponse,
+import React, { useEffect, useState } from 'react';
+import { TextField, Button } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { CommonController } from '../../../../../_redux/controller/common.controller';
+import { showErrorToast, showSuccessToast } from '../../../../../components/common';
+const AddOrEditGroup = (props) => {
+    console.log(props.editData)
+    const [groupValues, setGroupValues] = useState({
+        p_category_id: "",
+        p_category_name: "",
+        description: ""
+    });
+    const [showMessage, setMessage] = useState({
+        type: "",
+        msg: ""
+    })
+    const insertForm = async () => {
+        try {
+            let body = {
+                user_name: localStorage.getItem("userName"),
+                user_id: localStorage.getItem("userId"),
+                description: groupValues.description,
+                p_category_name: groupValues.p_category_name,
+                p_category_id: groupValues.p_category_id
+            }
+            await CommonController.commonApiCallFilter(
+                "master/insert_category",
+                body,
+                "post",
+                "node"
+            ).then(result => {
+                if (result.status == 200) {
+                    showSuccessToast(result.message)
+                    setGroupValues({
+                        p_category_id: "",
+                        p_category_name: "",
+                        description: "",
+                        
+                    })
+                }
+            })
+        } catch (err) {
+            showErrorToast(err)
         }
-      ).then((data) => {
-        if (data.p_category_id) {
-          setInsertParams({
-            ...insertParams,
-            p_category_id: data.p_category_id,
-            p_category_name: data.p_category_name,
-            description: data.description,
-          });
-        } else {
-          showErrorToast("Something went wrong");
-        }
-      });
     }
-  }, [selectedIdResponse]);
-
-  const insertCombo = async () => {
-    if (validator.allValid()) {
-      setLoading(true);
-      CommonController.commonApiCallFilter(
-        "Configuration/ConfigurationProductCgyInsert",
-        insertParams
-      ).then((data) => {
-        if (data.valid) {
-          showSuccessToast("Successfully Saved");
-          setLoading(false);
-          onClose();
-        } else {
-          showErrorToast("Something went wrong");
-        }
-      });
-    } else {
-      validator.showMessages();
-      // rerender to show messages for the first time
-      // you can use the autoForceUpdate option to do this automatically`
-      forceUpdate();
+    useEffect(() => {
+        setGroupValues(props.editData)
+    }, [props.editData]);
+    const onSave = () => {
+        insertForm()
     }
-  };
-
-  return (
-    <React.Fragment>
-      <div className="container-fluid mt-5 pt-5">
-        {/* {loading && <Loader />} */}
-        <div className="row">
-          <div className="col-md-6">
-            <TextField
-              variant="outlined"
-              fullWidth
-              size="small"
-              label="Category Name*"
-              value={insertParams.p_category_name}
-              onChange={(event) => {
-                setInsertParams({
-                  ...insertParams,
-                  p_category_name: event.target.value,
-                });
-              }}
-            />
-            <p className="text-danger">
-              {validator.message(
-                "Category Name",
-                insertParams.p_category_name,
-                "required"
-              )}
-            </p>
-          </div>
-          <div className="col-md-6">
-            <TextField
-              variant="outlined"
-              fullWidth
-              size="small"
-              multiline
-              label="Description"
-              value={insertParams.description}
-              onChange={(event) => {
-                setInsertParams({
-                  ...insertParams,
-                  description: event.target.value,
-                });
-              }}
-            />
-          </div>
+    const handleOnChange = (event) => {
+        setGroupValues({
+            ...groupValues,
+            [event.target.name]: event.target.value
+        });
+    }
+    const onCancelClick = () => {
+        props.onClose(0);
+    }
+    return <React.Fragment>
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-md-4">
+                    <TextField label="Category ID" name="p_category_id" value={groupValues.p_category_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                </div>
+                <div className="col-md-4">
+                    <TextField label="Category Name" name="p_category_name" value={groupValues.p_category_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                </div>
+                <div className="col-md-4">
+                    <TextField multiline label="Description" value={groupValues.description} onChange={handleOnChange} name="description" fullWidth variant="outlined" size="small" />
+                </div>
+                <div className="col-md-12 mt-3 text-right">
+                    <Button variant="contained" className="mr-2" onClick={onCancelClick} disableElevation>Cancel</Button>
+                    {groupValues.type == "preview" ? "" : <Button variant="contained" onClick={onSave} color="primary" disableElevation>Save</Button>}
+                </div>
+                {showMessage.type != "" ? <Alert severity={showMessage.type}>{showMessage.msg}</Alert> : null}
+            </div>
         </div>
-        <div className="w-100 text-right mt-4">
-          <Button
-            onClick={() => onClose()}
-            variant="contained"
-            className="mr-2"
-            color="primary"
-            disableElevation
-          >
-            Cancel
-          </Button>
-          {buttonLoader(loading, "Save", insertCombo, "primary")}
-        </div>
-      </div>
     </React.Fragment>
-  );
-};
-
-export default AddOrEditCategory;
+}
+export default AddOrEditGroup;

@@ -3,7 +3,6 @@ import { TextField,Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 import { CommonController } from '../../../../../_redux/controller/common.controller';
-
 const AddOrEditPincode = (props) => {
     const [formValues , setFormValues] = useState({
         pin_code_id:"",
@@ -46,20 +45,15 @@ const AddOrEditPincode = (props) => {
             state:"",
             district:"",
             description:"",
-    
         })
         }})
-    
         }catch(err){
             showErrorToast(err)
         }
     }
-   
    useEffect(() => {
             setFormValues(props.editData)
-           
-        },[]);
-    
+        },[props.editData]);
          const onSave = () => {
             insertForm()
         }
