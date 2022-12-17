@@ -36,7 +36,6 @@ const AddComboMLFB = ({ onClose }) => {
     selectedProduct: "",
     selectedMlfb: "",
   });
-
   useEffect(async () => {
     if (selectedComboMLFBIdResponse && mlfbProductList.length > 0) {
       setDataLoading(true);
@@ -68,7 +67,6 @@ const AddComboMLFB = ({ onClose }) => {
       setDataLoading(false);
     }
   }, [selectedComboMLFBIdResponse, mlfbProductList]);
-
   const onProductChoose = async () => {
     const tempList = [...insertParams.mlfbItems];
     const indx = tempList.findIndex(
@@ -91,7 +89,6 @@ const AddComboMLFB = ({ onClose }) => {
       setSelectedParams({ ...selectedParams, selectedProduct: "" });
     }
   };
-
   const insertCombo = async () => {
     if (validator.allValid()) {
       if (insertParams.mlfbItems.length > 0) {
@@ -115,20 +112,16 @@ const AddComboMLFB = ({ onClose }) => {
       forceUpdate();
     }
   };
-
   const getProductList = async () => {
     await CommonController.commonApiCallFilter(
       "Dropdown/GetProductMlfb",
       {}
     ).then((data) => setProductList(data));
   };
-
   useEffect(() => {
     getProductList();
   }, []);
-
   //   const handleDataChange = () => {};
-
   const handleDateChange = (key, date) => {
     setInsertParams({
       ...insertParams,
@@ -136,7 +129,6 @@ const AddComboMLFB = ({ onClose }) => {
     });
     setSelectedParams({ ...selectedParams, date: date });
   };
-
   const mlfbColumns = [
     {
       id: "mlfb_no",
@@ -155,7 +147,6 @@ const AddComboMLFB = ({ onClose }) => {
       label: "Group Name",
     },
   ];
-
   const handleDelete = (row) => {
     const tempList = [...insertParams.mlfbItems];
     const indx = tempList.findIndex((x) => x.product_id === row.product_id);
@@ -164,7 +155,6 @@ const AddComboMLFB = ({ onClose }) => {
     }
     setInsertParams({ ...insertParams, mlfbItems: tempList });
   };
-
   return (
     <div className="container-fluid mt-5 pt-5">
       {dataLoading && <Loader />}

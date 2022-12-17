@@ -3,13 +3,10 @@ import { useDispatch } from "react-redux";
 import SalesCostingBrowse from "./browse";
 
 const SalesCostingIndex = () => {
-  const dispatch = useDispatch();
   const [selectedIndex, setSeletedIndex] = useState(0);
-
   const handleIndex = (index) => {
     setSeletedIndex(index);
   };
-
   return (
     <div className="card card-custom gutter-b  px-7 py-3">
       <ul className="nav nav-tabs nav-tabs-line">

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { CommonController } from '../../../../../_redux/controller/common.controller';
+
 import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 const AddOrEditGroup = (props) => {
     const [groupValues, setGroupValues] = useState({
-        group_id: "",
-        group_name: "",
+        freight_id: "",
+        freight_name: "",
         description: ""
     });
     const [showMessage, setMessage] = useState({
@@ -16,14 +17,14 @@ const AddOrEditGroup = (props) => {
     const insertForm = async () => {
         try {
             let body = {
-                user_name: localStorage.getItem("userName"),
+                // user_name: localStorage.getItem("userName"),
                 user_id: localStorage.getItem("userId"),
                 description: groupValues.description,
-                group_name: groupValues.group_name,
-                group_id: groupValues.group_id
+                freight_name: groupValues.freight_name,
+                freight_id: groupValues.freight_id
             }
             await CommonController.commonApiCallFilter(
-                "master/insert_group",
+                "master/insert_sale_freight",
                 body,
                 "post",
                 "node"
@@ -31,8 +32,8 @@ const AddOrEditGroup = (props) => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
                     setGroupValues({
-                        group_id: "",
-                        group_name: "",
+                        freight_id: "",
+                        freight_name: "",
                         description: ""
                     })
                 }
@@ -60,10 +61,10 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label="Group ID" name="group_id" value={groupValues.group_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Freight ID" name="freight_id" value={groupValues.freight_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
-                    <TextField label="Group Name" name="group_name" value={groupValues.group_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Freight Name" name="freight_name" value={groupValues.freight_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField multiline label="Description" value={groupValues.description} onChange={handleOnChange} name="description" fullWidth variant="outlined" size="small" />

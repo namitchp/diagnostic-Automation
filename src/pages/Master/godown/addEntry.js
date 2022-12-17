@@ -1,6 +1,4 @@
 import { TextField, Button } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import { DatePicker } from "@material-ui/pickers";
 import React, { useEffect, useState } from "react";
 import SimpleReactValidator from "simple-react-validator";
 import {
@@ -9,13 +7,8 @@ import {
   showSuccessToast,
 } from "../../../components/common";
 import { CommonController } from "../../../_redux/controller/common.controller";
-import { SimpleTable } from "../../../components/basic-table";
 import useForceUpdate from "use-force-update";
-import moment from "moment";
 import { useSelector } from "react-redux";
-import { Loader } from "../../../components/loader";
-import { selectedGodownId } from "../../../_redux/actions/masters/all.action";
-
 const AddGodown = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const selectedIdResponse = useSelector(

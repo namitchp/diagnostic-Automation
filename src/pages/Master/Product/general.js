@@ -2,7 +2,6 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  Paper,
   TextField,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
@@ -47,12 +46,12 @@ const GeneralProduct = ({
           <FormGroup className="flex-row justify-content-end">
             <FormControlLabel
               label="Edit"
-              checked={formData.edit == "True"}
+              checked={formData.edit === "True"}
               control={<Checkbox color="primary" />}
               onChange={(e) => handleCheckChange("edit", e.target.checked)}
             />
             <FormControlLabel
-              checked={formData.deactivate == "True"}
+              checked={formData.deactivate === "True"}
               control={<Checkbox color="primary" />}
               onChange={(e) =>
                 handleCheckChange("deactivate", e.target.checked)
@@ -60,13 +59,13 @@ const GeneralProduct = ({
               label="Hide"
             />
             <FormControlLabel
-              checked={formData.serial == "True"}
+              checked={formData.serial === "True"}
               control={<Checkbox color="primary" />}
               onChange={(e) => handleCheckChange("serial", e.target.checked)}
               label="Multiple Line"
             />
             <FormControlLabel
-              checked={formData.siemens_product == "True"}
+              checked={formData.siemens_product === "True"}
               control={<Checkbox color="primary" />}
               onChange={(e) =>
                 handleCheckChange("siemens_product", e.target.checked)
@@ -107,7 +106,7 @@ const GeneralProduct = ({
               handleAutoChange("category_id", "category_name", value)
             }
             value={
-              formData.category_id != ""
+              formData.category_id !== ""
                 ? { id: formData.category_id, value: formData.category_name }
                 : ""
             }
@@ -128,7 +127,7 @@ const GeneralProduct = ({
               handleAutoChange("p_group_id", "p_group_name", value)
             }
             value={
-              formData.p_group_id != ""
+              formData.p_group_id !== ""
                 ? { id: formData.p_group_id, value: formData.p_group_name }
                 : ""
             }
@@ -148,7 +147,7 @@ const GeneralProduct = ({
               handleAutoChange("item_id", "item_name", value)
             }
             value={
-              formData.item_id != ""
+              formData.item_id !== ""
                 ? { id: formData.item_id, value: formData.item_name }
                 : ""
             }
@@ -170,7 +169,7 @@ const GeneralProduct = ({
               handleAutoChange("gg_id", "gg_name", value)
             }
             value={
-              formData.gg_id != ""
+              formData.gg_id !== ""
                 ? { id: formData.gg_id, value: formData.gg_name }
                 : ""
             }
@@ -235,7 +234,7 @@ const GeneralProduct = ({
               handleAutoChange("uom_id", "uom", value)
             }
             value={
-              formData.uom_id != ""
+              formData.uom_id !== ""
                 ? { id: formData.uom_id, value: formData.uom }
                 : ""
             }

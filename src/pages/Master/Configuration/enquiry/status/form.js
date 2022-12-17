@@ -5,9 +5,10 @@ import { CommonController } from '../../../../../_redux/controller/common.contro
 import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 const AddOrEditGroup = (props) => {
     const [groupValues, setGroupValues] = useState({
-        group_id: "",
-        group_name: "",
+        status_id: "",
+        status_name: "",
         description: ""
+
     });
     const [showMessage, setMessage] = useState({
         type: "",
@@ -16,11 +17,11 @@ const AddOrEditGroup = (props) => {
     const insertForm = async () => {
         try {
             let body = {
-                user_name: localStorage.getItem("userName"),
+
                 user_id: localStorage.getItem("userId"),
                 description: groupValues.description,
-                group_name: groupValues.group_name,
-                group_id: groupValues.group_id
+                status_name: groupValues.status_name,
+                status_id: groupValues.status_id
             }
             await CommonController.commonApiCallFilter(
                 "master/insert_group",
@@ -31,8 +32,8 @@ const AddOrEditGroup = (props) => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
                     setGroupValues({
-                        group_id: "",
-                        group_name: "",
+                        status_id: "",
+                        status_name: "",
                         description: ""
                     })
                 }
@@ -60,10 +61,10 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label="Group ID" name="group_id" value={groupValues.group_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Status ID" name="status_id" value={groupValues.status_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
-                    <TextField label="Group Name" name="group_name" value={groupValues.group_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Status Name" name="status_name" value={groupValues.status_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField multiline label="Description" value={groupValues.description} onChange={handleOnChange} name="description" fullWidth variant="outlined" size="small" />

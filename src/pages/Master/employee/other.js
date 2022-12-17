@@ -1,8 +1,5 @@
-import { Checkbox, MenuItem, TextField, Button } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import { DatePicker } from "@material-ui/pickers";
+import {TextField } from "@material-ui/core";
 import React from "react";
-
 const OtherDetails = ({ formData, handleChange }) => {
   return (
     <div className="container-fluid">

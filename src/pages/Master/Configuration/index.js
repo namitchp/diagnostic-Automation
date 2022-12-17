@@ -10,6 +10,7 @@ import { CommonController } from "../../../_redux/controller/common.controller";
 import { buttonLoader, showErrorToast } from "../../../components/common";
 import ConfigSalesOrder from "./salesOrder";
 import ConfigQuotation from "./quotation";
+import ConfigCourier from "./courier";
 
 const useStyles = makeStyles((theme) => ({
   tabs: {
@@ -48,7 +49,10 @@ const ConfigurationMaster = () => {
       name: "Sales Order",
       component:<ConfigSalesOrder list={SubMenuList}/>
     },
-   
+    {
+      name: "Courier",
+      component:<ConfigCourier list={SubMenuList}/>
+    },
     {
       name: "Type of Invoice",
       component: "",
@@ -98,12 +102,13 @@ const ConfigurationMaster = () => {
       showErrorToast(err);
     }
   };
-  useEffect(() => {
-    getfourthMenu(101);
-  }, []);
+
 
   useEffect(() => {
     getThirdMenu(12);
+  }, []);
+  useEffect(() => {
+    getfourthMenu(101);
   }, []);
   const handleIndex = (event, newValue) => {
     setSeletedIndex(newValue);
@@ -130,10 +135,8 @@ const ConfigurationMaster = () => {
               return (
                 <Tab
                   onClick={() => {
-                    console.log("bhjnm,")
                     setloadingsubMenu(true);
                     getfourthMenu(tab.transaction_id);
-
                   }}
                   className={"tab"}
                   value={index}

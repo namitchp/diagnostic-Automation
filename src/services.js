@@ -25,7 +25,7 @@ function post(apiEndpoint, payload, domain) {
     })
     .catch((err) => {
       console.log(err);
-      if (err.response != undefined && err.response.status == 401) {
+      if (err.response !== undefined && err.response.status === 401) {
         // window.open('/','_self');
       } else {
         //alert('operation not able to perform');
@@ -42,7 +42,7 @@ function image(apiEndpoint, payload) {
     })
     .catch((err) => {
       console.log(err);
-      if (err.response != undefined && err.response.status == 401) {
+      if (err.response !== undefined && err.response.status === 401) {
         // window.open('/','_self');
       } else {
         //alert('operation not able to perform');
@@ -59,7 +59,7 @@ function jsonpost(apiEndpoint, payload) {
     })
     .catch((err) => {
       console.log(err);
-      if (err.response != undefined && err.response.status == 401) {
+      if (err.response !== undefined && err.response.status === 401) {
         // window.open('/','_self');
       } else {
         //alert('operation not able to perform');
@@ -76,7 +76,7 @@ function localpost(apiEndpoint, payload) {
     })
     .catch((err) => {
       console.log(err);
-      if (err.response != undefined && err.response.status == 401) {
+      if (err.response !== undefined && err.response.status === 401) {
         // window.open('/','_self');
       } else {
         //alert('operation not able to perform');
@@ -93,7 +93,7 @@ function localget(apiEndpoint) {
     })
     .catch((err) => {
       console.log(err);
-      if (err.response != undefined && err.response.status == 401) {
+      if (err.response !== undefined && err.response.status === 401) {
         // window.open('/','_self');
       } else {
         //alert('operation not able to perform');
@@ -113,7 +113,7 @@ function get(apiEndpoint, domain) {
     })
     .catch((err) => {
       console.log(err);
-      if (err.response != undefined && err.response.status == 401) {
+      if (err.response !== undefined && err.response.status === 401) {
         // window.open('/','_self');
       } else {
         //alert('operation not able to perform');
@@ -130,7 +130,7 @@ function login(apiEndpoint, payload) {
     })
     .catch((err) => {
       console.log(err);
-      if (err.response != undefined && err.response.status == 401) {
+      if (err.response !== undefined && err.response.status === 401) {
         // window.open('/','_self');
       } else {
         //alert('operation not able to perform');

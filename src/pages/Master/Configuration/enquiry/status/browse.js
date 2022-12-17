@@ -33,7 +33,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
     setLoading(true);
     try {
       await CommonController.commonApiCall(
-        "master/browse_group",
+        "master/browse_enq_status",
         params,
         "",
         "node"
@@ -63,8 +63,8 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
   const onDelete = async (id) => {
     try {
       await CommonController.commonApiCallFilter(
-        "master/delete_group",
-        { group_id: id },
+        "master/delete_enq_status",
+        { status_id: id },
         "post",
         "node"
       )
@@ -84,8 +84,8 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
   const onPreview = async (id) => {
     try {
       await CommonController.commonApiCallFilter(
-        "master/preview_group",
-        { group_id: id },
+        "master/preview_enq_status",
+        { status_id: id },
         "post",
         "node"
       )
@@ -131,12 +131,12 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
         <DataGrid
           columns={[
             {
-              field: "group_id",
+              field: "status_id",
               headerName: "ID",
               flex: 10,
             },
             {
-              field: "group_name",
+              field: "status_name",
               headerName: "Name",
               width: 450,
             },
@@ -152,7 +152,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                 <div className="action_btns">
                   <i
                     className="fas fa-search mr-2"
-                    onClick={() => onPreview(params.row.group_id)}
+                    onClick={() => onPreview(params.row.status_id)}
                   ></i>
                   <i
                     className="far fa-edit mr-2"
@@ -160,7 +160,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                   ></i>
                   <i
                     className="far fa-trash-alt mr-2"
-                    onClick={() => onDelete(params.row.group_id)}
+                    onClick={() => onDelete(params.row.status_id)}
                   ></i>
                 </div>
               ),
@@ -196,7 +196,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
             }
           }}
           rows={browseListData}
-          getRowId={(browseListData) => browseListData.group_id}
+          getRowId={(browseListData) => browseListData.status_id}
         />
       </div>
     </>

@@ -7,7 +7,6 @@ import {
   showSuccessToast,
 } from "../../../components/common";
 import {
-  getUserFilterList,
   getUserRightList,
 } from "../../../_redux/actions/common.action";
 import { CommonController } from "../../../_redux/controller/common.controller";
@@ -16,45 +15,36 @@ const AddSupportTicket = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-
   const [userRightListArr, setUserRightList] = useState([]);
   const getuserRightListResponse = useSelector(
     (state) => state.common.userRightList
   );
-
   const [attachments, setAttachments] = useState({
     attach_file: null,
     attach_file1: null,
     attach_file2: null,
   });
-
   const [subMenuList, setSubMenuList] = useState([]);
-
   useEffect(() => {
     dispatch(getUserRightList());
     // dispatch(getUserFilterList());
   }, []);
-
-  const groupBy = (array, key) => {
-    // Return the end result
-    return array.reduce((result, currentValue) => {
-      // If an array already present for key, push it to the array. Else create an array and push the object
-      (result[currentValue[key]] = result[currentValue[key]] || []).push(
-        currentValue
-      );
-      // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
-      return result;
-    }, {}); // empty object is the initial value for result object
-  };
-
+  // const groupBy = (array, key) => {
+  //   // Return the end result
+  //   return array.reduce((result, currentValue) => {
+  //     // If an array already present for key, push it to the array. Else create an array and push the object
+  //     (result[currentValue[key]] = result[currentValue[key]] || []).push(
+  //       currentValue
+  //     );
+  //     // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+  //     return result;
+  //   }, {}); // empty object is the initial value for result object
+  // };
   useEffect(() => {
     if (getuserRightListResponse.length > 0) {
-      const groupedMenu = groupBy(getuserRightListResponse, "group_name");
-
       setUserRightList(getuserRightListResponse);
     }
   }, [getuserRightListResponse]);
-
   const handleMenuChange = (id) => {
     var tempMenuIndex = userRightListArr.findIndex((x) => x.menu_id === id);
     if (tempMenuIndex > -1) {
@@ -161,14 +151,14 @@ const AddSupportTicket = () => {
 
   const validateForm = () => {
     let errors = {};
-    if (formData.menu == "") {
+    if (formData.menu === "") {
       errors.menu = "Menu required";
     } else {
       delete errors.menu;
     }
 
     console.log(formData.type);
-    if (formData.type == "") {
+    if (formData.type === "") {
       errors.type = "Type required";
     } else {
       delete errors.type;

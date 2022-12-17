@@ -1,4 +1,4 @@
-import { Checkbox, MenuItem, TextField, Button } from "@material-ui/core";
+import { Checkbox, MenuItem, TextField} from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { DatePicker } from "@material-ui/pickers";
 import moment from "moment";
@@ -145,7 +145,7 @@ const GeneralInfoEmp = ({
             format="MM/dd/yyyy"
             inputVariant="outlined"
             label="Date of Birth (mm/dd/yyyy)"
-            value={formData.dob == "" ? null : moment(formData.dob).format()}
+            value={formData.dob === "" ? null : moment(formData.dob).format()}
             name="dob"
             onChange={(date) => handleDateChange("dob", date)}
             size="small"
@@ -291,7 +291,7 @@ const GeneralInfoEmp = ({
             variant="inline"
             inputVariant="outlined"
             label="Joining Date"
-            value={formData.joining_date == "" ? null : formData.joining_date}
+            value={formData.joining_date === "" ? null : formData.joining_date}
             onChange={(date) => handleDateChange("joining_date", date)}
             size="small"
             fullWidth
@@ -304,7 +304,7 @@ const GeneralInfoEmp = ({
             variant="inline"
             inputVariant="outlined"
             label="Leaving Date"
-            value={formData.leaving_date == "" ? null : formData.leaving_date}
+            value={formData.leaving_date === "" ? null : formData.leaving_date}
             onChange={(date) => handleDateChange("leaving_date", date)}
             size="small"
             fullWidth

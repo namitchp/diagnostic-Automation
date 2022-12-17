@@ -13,10 +13,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButtons from "../../../components/action-buttons";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
-import CustomPagination from "../../../components/CustomPagination";
-import CustomNoRowsOverlay from "../../../components/customRowComponent";
 import { selectedProductId } from "../../../_redux/actions/masters/all.action";
-
 import {
   getCategoryList,
   getGGNameList,
@@ -28,7 +25,6 @@ import {
   updateProductVerifiedStatus,
 } from "../../../_redux/actions/masters/product.action";
 import { CommonController } from "../../../_redux/controller/common.controller";
-
 const BrowseProductMaster = ({ onEdit }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsloading] = useState(false);

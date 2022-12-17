@@ -1,5 +1,4 @@
 import {
-  Checkbox,
   TextField,
   Button,
   MenuItem,
@@ -16,8 +15,6 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../components/common";
-import CustomPagination from "../../../components/CustomPagination";
-import CustomNoRowsOverlay from "../../../components/customRowComponent";
 import { Loader } from "../../../components/loader";
 import { CommonController } from "../../../_redux/controller/common.controller";
 import ActionButtons from "../../../components/action-buttons";
@@ -26,24 +23,15 @@ import { selectedEmployeeId } from "../../../_redux/actions/masters/all.action";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-
 import DialogTitle from "@material-ui/core/DialogTitle";
 import moment from "moment";
 import ImageIcon from "@material-ui/icons/Image";
 import { DatePicker } from "@material-ui/pickers";
-
-const user_id = {
-  user_id: localStorage.getItem("userId"),
-};
-
-const label = { inputProps: { "aria-label": "Checkbox" } };
 const SalesIssueBrowse = ({ onEdit }) => {
   const dispatch = useDispatch();
-
   const getuserRightListResponse = useSelector(
     (state) => state.common.userRightList
   );
-
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -63,7 +51,6 @@ const SalesIssueBrowse = ({ onEdit }) => {
     sort_column: "",
     sort_order: "desc",
   });
-
   const [bodyParam, setBodyParam] = useState({
     user_id: localStorage.getItem("userId"),
     chk_All: "1",
