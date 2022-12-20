@@ -73,7 +73,7 @@ const UserRightList = () => {
 
   const onSearch = (e) => {
     if (e.code === "Enter") {
-      const items = userRightList.filter((x) => x.employee == e.target.value);
+      const items = userRightList.filter((x) => x.employee ===e.target.value);
 
       if (items.length > 0) {
         setFilteredArray(items);
@@ -214,7 +214,7 @@ const UserRightList = () => {
                             )
                           }
                           color="primary"
-                          checked={menu.view_right == "True"}
+                          checked={menu.view_right === "True"}
                         />
                       </TableCell>
                       <TableCell>

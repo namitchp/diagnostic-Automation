@@ -2,8 +2,6 @@ import { Tab, Tabs } from "@material-ui/core";
 import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import QuotationIndex from "./subIndex";
-
-
 // const panel = [
 //   {
 //     name: "Group",
@@ -50,7 +48,7 @@ const ConfigQuotation = ({list}) => {
     switch (selectedIndex) {
       case 0:
         return <QuotationIndex />;
-        break;
+        // break;
       // case 1:
       //   return <PincodeIndex />;
       //   break;

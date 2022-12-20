@@ -31,7 +31,7 @@ const TypeIndex = () => {
         aria-label="scrollable auto tabs example"
       >
         <Tab value={0} label="Browse" />
-        <Tab value={1} label="New Group" />
+        <Tab value={1} label="New Type" />
       </Tabs>
       <div className="customtab-container w-100 py-3">
         {/* {selectedIndex === 0 ? <ConfigGroupBrowse onActionClick={(index) => handleIndex({} , index)}/>:<AddOrEditGroup onClose={(index) => handleIndex({} , index)} />} */}

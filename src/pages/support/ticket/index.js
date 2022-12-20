@@ -1,22 +1,17 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import AddSupportTicket from "./addTicket";
 import SupportTicketBrowse from "./browse";
-import SalesCostingBrowse from "./browse";
-
 const SupportTicketIndex = () => {
-  const dispatch = useDispatch();
   const [selectedIndex, setSeletedIndex] = useState(0);
-
   const handleIndex = (index) => {
     setSeletedIndex(index);
   };
-
   return (
     <div className="card card-custom gutter-b  px-7 py-3">
       <ul className="nav nav-tabs nav-tabs-line">
         <li className="nav-item">
           <a
+         
             className={`nav-link ` + (selectedIndex === 0 ? "active" : "")}
             onClick={() => {
               // dispatch(clearSelectedGodownId());
@@ -28,6 +23,7 @@ const SupportTicketIndex = () => {
         </li>
         <li className="nav-item">
           <a
+         
             className={`nav-link ` + (selectedIndex === 1 ? "active" : "")}
             onClick={() => {
               // dispatch(clearSelectedGodownId());

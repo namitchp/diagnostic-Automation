@@ -2,19 +2,13 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import AddItemGroupMaster from "./addItem";
 import ItemGroupBrowse from "./browse";
-
 // import AddMaterialCode from "./addMaterialCode";
-
 // import MaterialCodeBrowse from "./browse";
-
 const ItemGroupIndex = () => {
-  const dispatch = useDispatch();
   const [selectedIndex, setSeletedIndex] = useState(0);
-
   const handleIndex = (index) => {
     setSeletedIndex(index);
   };
-
   return (
     <div className="card card-custom gutter-b  px-7 py-3">
       <ul className="nav nav-tabs nav-tabs-line">

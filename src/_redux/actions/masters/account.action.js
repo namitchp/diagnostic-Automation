@@ -6,18 +6,15 @@ export const searchAccountMasterData = createAction(
         payload: {filters, params},
     }),
 );
-
 export const searchAccountMasterDataSuccess = createAction(
     "SEARCH_ACCOUNT_MASTER_DATA_SUCCESS",
     (data) => ({
         payload: data,
     }),
 );
-
 export const getAccountMasterFiltersList = createAction(
     "ACCOUNT_FILTER_LIST"
 );
-
 export const getAccountMasterFiltersListSuccess = createAction(
     "ACCOUNT_FILTER_LIST_SUCCESS",
     (data) => ({

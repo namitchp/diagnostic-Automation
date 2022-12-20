@@ -5,8 +5,6 @@ import { CommonController } from "../../../_redux/controller/common.controller";
 import GeneralInfoEmp from "./general";
 import OtherDetails from "./other";
 import { useSelector } from "react-redux";
-import { ifStatement } from "@babel/types";
-
 const AddEmployee = ({ onClose }) => {
   const selectedIdResponse = useSelector(
     (state) => state.AllReducersMaster.employeeId

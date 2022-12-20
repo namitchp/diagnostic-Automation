@@ -13,12 +13,10 @@ import {
 } from "@material-ui/core";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { DatePicker } from "@material-ui/pickers";
 import React, { useEffect, useState } from "react";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
 import CustomPagination from "../../../components/CustomPagination";
 import CustomNoRowsOverlay from "../../../components/customRowComponent";
-import { Loader } from "../../../components/loader";
 import { CommonController } from "../../../_redux/controller/common.controller";
 import ImageIcon from "@material-ui/icons/Image";
 import DateFilter from "../../../components/dateFilter";
@@ -112,25 +110,16 @@ const SupportTicketBrowse = (props) => {
   const handlePageChange = (param) => {
     setParams({ ...params, pageNo: param });
   };
-
   useEffect(() => {
     getBrowseListData();
     getEmployeeList();
   }, []);
-
   useEffect(() => {
     getBrowseListData();
   }, [params, bodyParam]);
-
-  const handleDateChange = (type, date) => {
-    setBodyParam({ ...bodyParam, [type]: date });
-  };
-
   const toggleRemarks = () => setRemarksModal(!remarksModal);
-
   const saveRemarks = async () => {
     setLoading(true);
-
     try {
       let formdata = new FormData();
       formdata.append("file", attachedFile);
@@ -335,7 +324,7 @@ const SupportTicketBrowse = (props) => {
           <Button
             onClick={saveRemarks}
             disabled={
-              remarks.remarks == "" || remarks.status_id == "" || loading
+              remarks.remarks === "" || remarks.status_id === "" || loading
             }
             color="primary"
           >

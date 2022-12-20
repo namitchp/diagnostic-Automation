@@ -4,7 +4,6 @@ import { getBrowseUserRight } from "../../../components/common";
 import SupportTicketApprovalBrowse from "./browse";
 
 const SupportTicketApprovalIndex = () => {
-  const dispatch = useDispatch();
   const userRight = useSelector((state) => state.common.userRightList);
 
   const [selectedIndex, setSeletedIndex] = useState(0);
@@ -27,7 +26,7 @@ const SupportTicketApprovalIndex = () => {
             Browse
           </a>
         </li>
-        {getBrowseUserRight(userRight)?.insert_right == "True" && (
+        {getBrowseUserRight(userRight)?.insert_right === "True" && (
           <li className="nav-item">
             <a
               className={`nav-link ` + (selectedIndex === 1 ? "active" : "")}

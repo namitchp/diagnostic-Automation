@@ -1,6 +1,5 @@
 import { TextField } from "@material-ui/core";
 import { DataGrid } from "@mui/x-data-grid";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
 import CustomPagination from "../../../components/CustomPagination";

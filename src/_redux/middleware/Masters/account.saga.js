@@ -1,8 +1,6 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { AccountMasterController } from "../../controller/Masters/account.controller";
 import { getAccountMasterFiltersList, getAccountMasterFiltersListSuccess, previewSelectedAccount, previewSelectedAccountSuccess, searchAccountMasterData, searchAccountMasterDataSuccess, setAccountHide, setAccountVerified } from '../../actions/masters/account.action';
- 
-
 function* searchAccountMasterSaga (action) {
     try {   
         const browseAccountMaster = yield AccountMasterController.browseAccountData(action.payload.filters, action.payload.params);
@@ -12,8 +10,6 @@ function* searchAccountMasterSaga (action) {
         yield put(searchAccountMasterDataSuccess(error));
     }
 }
-
-
 function* getAccountFilterSaga (action) {
     try {   
         const filterList = yield AccountMasterController.getAccountMasterFilters();
@@ -23,8 +19,6 @@ function* getAccountFilterSaga (action) {
         yield put(getAccountMasterFiltersListSuccess(error));
     }
 }
-
-
 function* previewSelectedAccountSaga (action) {
     try {   
         const accountDetails = yield AccountMasterController.getSelectedAccountDetails(action.payload);
@@ -34,7 +28,6 @@ function* previewSelectedAccountSaga (action) {
         yield put(previewSelectedAccountSuccess(error));
     }
 }
-
 function* setAccountHideSaga (action) {
     try {   
         const accountEdit = yield AccountMasterController.accountHideUpdate(action.payload);
@@ -43,7 +36,6 @@ function* setAccountHideSaga (action) {
         yield put(previewSelectedAccountSuccess(error));
     }
 }
-
 function* setAccountVerifiedSaga (action) {
     try {   
         const accountEdit = yield AccountMasterController.updateAccountVerified(action.payload);
@@ -55,10 +47,6 @@ function* setAccountVerifiedSaga (action) {
         yield put(previewSelectedAccountSuccess(error));
     }
 }
-
- 
-
-
 export default function* AccountMasterSaga () {
     try {
         yield takeLatest(searchAccountMasterData, searchAccountMasterSaga);

@@ -1,24 +1,18 @@
 import { TextField } from "@material-ui/core";
-
 import { DataGrid } from "@mui/x-data-grid";
-import { DatePicker } from "@material-ui/pickers";
 import React, { useEffect, useState } from "react";
 import { showErrorToast } from "../../../components/common";
 import CustomPagination from "../../../components/CustomPagination";
 import CustomNoRowsOverlay from "../../../components/customRowComponent";
-import { Loader } from "../../../components/loader";
 import { CommonController } from "../../../_redux/controller/common.controller";
 import DateFilter from "../../../components/dateFilter";
-
 const user_id = {
   user_id: localStorage.getItem("userId"),
 };
 const SupportTicketCommericialBrowse = ({ selectedPreviewId }) => {
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
-
   const [loading, setLoading] = useState(false);
-
   const [params, setParams] = useState({
     pageNo: 1,
     pageSize: 10,

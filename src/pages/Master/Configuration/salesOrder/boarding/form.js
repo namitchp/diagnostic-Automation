@@ -5,8 +5,8 @@ import { CommonController } from '../../../../../_redux/controller/common.contro
 import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 const AddOrEditGroup = (props) => {
     const [groupValues, setGroupValues] = useState({
-        group_id: "",
-        group_name: "",
+        boarding_id:0,
+        boarding_name: "",
         description: ""
     });
     const [showMessage, setMessage] = useState({
@@ -19,22 +19,18 @@ const AddOrEditGroup = (props) => {
                 user_name: localStorage.getItem("userName"),
                 user_id: localStorage.getItem("userId"),
                 description: groupValues.description,
-                group_name: groupValues.group_name,
-                group_id: groupValues.group_id
+                boarding_name: groupValues.boarding_name,
+                boarding_id: groupValues.boarding_id
             }
             await CommonController.commonApiCallFilter(
-                "master/insert_group",
+                "master/insert_sale_boarding",
                 body,
                 "post",
                 "node"
             ).then(result => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
-                    setGroupValues({
-                        group_id: "",
-                        group_name: "",
-                        description: ""
-                    })
+                    props.onClose(0);
                 }
             })
         } catch (err) {
@@ -42,7 +38,9 @@ const AddOrEditGroup = (props) => {
         }
     }
     useEffect(() => {
-        setGroupValues(props.editData)
+        if(props.editData){
+            setGroupValues(props.editData)
+            }
     }, [props.editData]);
     const onSave = () => {
         insertForm()
@@ -60,10 +58,10 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label="Group ID" name="group_id" value={groupValues.group_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Boarding ID" name="boarding_id"disabled value={groupValues.boarding_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
-                    <TextField label="Group Name" name="group_name" value={groupValues.group_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Boarding Name" name="boarding_name" value={groupValues.boarding_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField multiline label="Description" value={groupValues.description} onChange={handleOnChange} name="description" fullWidth variant="outlined" size="small" />

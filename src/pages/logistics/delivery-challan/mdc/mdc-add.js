@@ -1,24 +1,19 @@
 import {
   Button,
-  formatMs,
-  MenuItem,
   TextField,
   Fab,
 } from "@material-ui/core";
 import { Autocomplete,} from "@mui/material";
 import { DatePicker } from "@material-ui/pickers";
-
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { SimpleTable } from "../../../../components/basic-table";
 import {
   debounce,
-  
   showErrorToast,
   showSuccessToast,
 } from "../../../../components/common";
 import { CommonController } from "../../../../_redux/controller/common.controller";
-
 const AddDeliveryChallanMdc = ({ challanType }) => {
   const [tableList, settableList] = useState([]);
   const [formData, setFormData] = useState({
@@ -70,7 +65,7 @@ const [saleslist, setsaleslist] = useState(null)
   const handleDateChange = (name, date) => {
     setFormData({ ...formData, [name]: date });
   };
-
+ 
   const handleDeleteTable = (e) => {
     tableList.splice(tableList.indexOf(e), 1);
     settableList([...tableList]);

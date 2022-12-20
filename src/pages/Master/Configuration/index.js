@@ -1,4 +1,4 @@
-import react, { useEffect } from "react";
+import { useEffect } from "react";
 import { Tab, Tabs } from "@material-ui/core";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
@@ -10,7 +10,7 @@ import { CommonController } from "../../../_redux/controller/common.controller";
 import { buttonLoader, showErrorToast } from "../../../components/common";
 import ConfigSalesOrder from "./salesOrder";
 import ConfigQuotation from "./quotation";
-
+import ConfigCourier from "./courier";
 const useStyles = makeStyles((theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -18,42 +18,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ConfigurationMaster = () => {
   const classes = useStyles();
+  const [transectionId, settransectionId] = useState(101)
   const [selectedIndex, setSeletedIndex] = useState(0);
   const [MenuList, setMenuList] = useState([]);
   const [SubMenuList, setSubMenuList] = useState([]);
   const [loading, setloading] = useState(true);
   const [loadingsubMenu, setloadingsubMenu] = useState(true);
-  const panel = [
-    {
-      name: "Account",
-      component: <ConfigAccountIndex list={SubMenuList} />,
-    },
-    {
-      name: "Product",
-      component: <ConfigProductIndex list={SubMenuList} />,
-    },
-    {
-      name: "Sales Enquiry",
-      component: <ConfigEnquiryIndex list={SubMenuList}/>,
-    },
-    {
-      name: "Costing",
-      component: <ConfigCostingIndex list={SubMenuList}/>,
-    },
-    {
-      name: "Quotation",
-      component: <ConfigQuotation list={SubMenuList}/>,
-    },
-    {
-      name: "Sales Order",
-      component:<ConfigSalesOrder list={SubMenuList}/>
-    },
-   
-    {
-      name: "Type of Invoice",
-      component: "",
-    },
-  ];
+  const panel = {
+    101: <ConfigAccountIndex list={SubMenuList} />,
+    102: <ConfigProductIndex list={SubMenuList} />,
+    103: <ConfigEnquiryIndex list={SubMenuList} />,
+    104: <ConfigCostingIndex list={SubMenuList} />,
+    105: <ConfigQuotation list={SubMenuList} />,
+    106: <ConfigSalesOrder list={SubMenuList} />,
+    107: <ConfigCourier list={SubMenuList} />,
+  };
   const getThirdMenu = async (menu_id) => {
     try {
       let user_id = { user_id: localStorage.getItem("userId") };
@@ -99,12 +78,14 @@ const ConfigurationMaster = () => {
     }
   };
   useEffect(() => {
+    getThirdMenu(12);
     getfourthMenu(101);
   }, []);
-
-  useEffect(() => {
-    getThirdMenu(12);
-  }, []);
+  const handleTransectionID = (tab) => {
+    setloadingsubMenu(true);
+    getfourthMenu(tab.transaction_id);
+    settransectionId(tab.transaction_id)
+  };
   const handleIndex = (event, newValue) => {
     setSeletedIndex(newValue);
   };
@@ -129,12 +110,7 @@ const ConfigurationMaster = () => {
             {MenuList.map((tab, index) => {
               return (
                 <Tab
-                  onClick={() => {
-                    console.log("bhjnm,")
-                    setloadingsubMenu(true);
-                    getfourthMenu(tab.transaction_id);
-
-                  }}
+                  onClick={()=>handleTransectionID(tab)}
                   className={"tab"}
                   value={index}
                   key={"tab" + index}
@@ -148,9 +124,9 @@ const ConfigurationMaster = () => {
               <div className="text-center">
                 {buttonLoader(false, "Loading...", "")}
               </div>
-            ) : (panel[selectedIndex].component
+            ) : (
+              panel[transectionId]
             )}
-            {/* {panel[selectedIndex].component} */}
           </div>
         </div>
       </div>

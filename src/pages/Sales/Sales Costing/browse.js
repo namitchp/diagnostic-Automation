@@ -6,32 +6,21 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../components/common";
-import CustomPagination from "../../../components/CustomPagination";
-import CustomNoRowsOverlay from "../../../components/customRowComponent";
 import { Loader } from "../../../components/loader";
 import { CommonController } from "../../../_redux/controller/common.controller";
 import ActionButtons from "../../../components/action-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { selectedEmployeeId } from "../../../_redux/actions/masters/all.action";
-
-import moment from "moment";
-
-import { DatePicker } from "@material-ui/pickers";
 import DateFilter from "../../../components/dateFilter";
-
 const SalesCostingBrowse = ({ onEdit }) => {
   const dispatch = useDispatch();
-
   const getuserRightListResponse = useSelector(
     (state) => state.common.userRightList
   );
-
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
-
   const [markEng, setMarkEng] = useState(null);
-
   const [params, setParams] = useState({
     pageNo: 1,
     pageSize: 15,
@@ -39,7 +28,6 @@ const SalesCostingBrowse = ({ onEdit }) => {
     sort_column: "",
     sort_order: "desc",
   });
-
   const [bodyParam, setBodyParam] = useState({
     user_id: "",
     chk_All: "1",
@@ -50,19 +38,16 @@ const SalesCostingBrowse = ({ onEdit }) => {
     fromDate: null,
     toDate: null,
   });
-
   const handleParams = (event) => {
     setTimeout(() => {
       setParams({ ...params, [event.target.name]: event.target.value });
     }, 800);
   };
-
   const handleBodyParam = (event) => {
     setTimeout(() => {
       setBodyParam({ ...bodyParam, [event.target.name]: event.target.value });
     }, 800);
   };
-
   const getBrowseListData = async () => {
     setLoading(true);
     await CommonController.commonApiCall(

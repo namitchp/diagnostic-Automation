@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAccountMasterFiltersList,
-  searchAccountMasterData,
   setAccountHide,
   setAccountVerified,
 } from "../../../_redux/actions/masters/account.action";
@@ -35,22 +33,17 @@ const LightTooltip = withStyles((theme) => ({
     fontSize: 11,
   },
 }))(Tooltip);
-
 const user_id = {
   user_id: localStorage.getItem("userId"),
 };
-
 const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
- 
   const dispatch = useDispatch();
   const getuserRightListResponse = useSelector(
     (state) => state.common.userRightList
   );
-
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
-
   const [accountMasterFilter, setAccountMasterFilter] = useState({
     region_name: "",
     group_name: "",
@@ -58,13 +51,10 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
     mark_engg: "",
     account_type:accountType
   });
-
   const [tempVerifed, setTempVerified] = useState([]);
-
   const [regionList, setRegionList] = useState([]);
   const [groupList, setGroupList] = useState([]);
   const [enggList, setEnggList] = useState([]);
-
   const [params, setParams] = useState({
     pageNo: 1,
     pageSize: 15,
@@ -72,7 +62,6 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
     sort_column: "",
     sort_order: "",
   });
-
   let columns = [
     {
       field: "id",
@@ -214,6 +203,13 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
       width: 150,
       hide: false,
     },
+   
+    {
+      field: "datetime",
+      headerName: "Date Time",
+      width: 120,
+      hide: false,
+    },
     {
       field: "",
       headerName: "Actions",
@@ -237,12 +233,6 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
         />
       ),
       width: 120,
-    },
-    {
-      field: "datetime",
-      headerName: "Date Time",
-      width: 120,
-      hide: false,
     },
   ];
 
