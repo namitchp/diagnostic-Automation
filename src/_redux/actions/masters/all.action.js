@@ -1,22 +1,17 @@
 import { createAction } from "@reduxjs/toolkit";
-
 export const selectedComboMLFBId = createAction(
   "SELECTED_COMBO_MLFB_ID",
   (id) => ({
     payload: id,
   })
 );
-
 export const clearSelectedComboId = createAction(
   "CLEAR_SELECTED_COMBO_MLFB_ID"
 );
-
 export const selectedGodownId = createAction("SELECTED_GODOWN_ID", (id) => ({
   payload: id,
 }));
-
 export const clearSelectedGodownId = createAction("CLEAR_SELECTED_GODOWN_ID");
-
 export const selectedItemGroupId = createAction(
   "SELECTED_ITEMGROUP_ID",
   (id) => ({

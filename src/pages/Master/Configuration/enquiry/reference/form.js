@@ -5,7 +5,7 @@ import { CommonController } from '../../../../../_redux/controller/common.contro
 import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 const AddOrEditGroup = (props) => {
     const [groupValues, setGroupValues] = useState({
-        enq_ref_id: "",
+        enq_ref_id:0,
         enq_ref: "",
         description: ""
     });
@@ -29,11 +29,7 @@ const AddOrEditGroup = (props) => {
             ).then(result => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
-                    setGroupValues({
-                        enq_ref_id: "",
-                        enq_ref: "",
-                        description: ""
-                    })
+                    props.onClose(0);
                 }
             })
         } catch (err) {
@@ -41,7 +37,9 @@ const AddOrEditGroup = (props) => {
         }
     }
     useEffect(() => {
+        if(props.editData){
         setGroupValues(props.editData)
+        }
     }, [props.editData]);
     const onSave = () => {
         insertForm()
@@ -59,14 +57,14 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label="Reference ID" name="enq_ref_id" value={groupValues.enq_ref_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Reference ID" name="enq_ref_id" value={groupValues.enq_ref_id} disabled onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField label="Reference Name" name="enq_ref" value={groupValues.enq_ref} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <TextField multiline label="Description" value={groupValues.description} onChange={handleOnChange} name="description" fullWidth variant="outlined" size="small" />
-                </div>
+                </div> */}
                 <div className="col-md-12 mt-3 text-right">
                     <Button variant="contained" className="mr-2" onClick={onCancelClick} disableElevation>Cancel</Button>
                     {groupValues.type == "preview" ? "" : <Button variant="contained" onClick={onSave} color="primary" disableElevation>Save</Button>}

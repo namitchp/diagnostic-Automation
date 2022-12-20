@@ -5,7 +5,7 @@ import { showErrorToast, showSuccessToast } from '../../../../../components/comm
 import { CommonController } from '../../../../../_redux/controller/common.controller';
 const AddOrEditPincode = (props) => {
     const [formValues , setFormValues] = useState({
-        pin_code_id:"",
+        pin_code_id:0,
         pin_code_no:"",
         city:"",
         state:"",
@@ -23,6 +23,7 @@ const AddOrEditPincode = (props) => {
             user_name: localStorage.getItem("userName"),
             user_id: localStorage.getItem("userId"),
             description:formValues.description,
+            pin_code_id:formValues.pin_code_id,
             pin_code_no:formValues.pin_code_no,
             city:formValues.city,
             state:formValues.state,
@@ -38,21 +39,16 @@ const AddOrEditPincode = (props) => {
     ).then(result=>{
         if(result.status==200){
             showSuccessToast(result.message)
-        setFormValues({
-            pin_code_id:"",
-            pin_code_no:"",
-            city:"",
-            state:"",
-            district:"",
-            description:"",
-        })
+            props.onClose(0);
         }})
         }catch(err){
             showErrorToast(err)
         }
     }
    useEffect(() => {
+    if(props.editData){
             setFormValues(props.editData)
+    }
         },[props.editData]);
          const onSave = () => {
             insertForm()
@@ -90,6 +86,9 @@ const AddOrEditPincode = (props) => {
     return <React.Fragment>
         <div className="container-fluid">
             <div className="row">
+            <div className="col-md-4 mb-3">
+                    <TextField label="Pincode ID" type="number"disabled name="pin_code_id" value={formValues.pin_code_id} onChange={handleOnChange} fullWidth variant="outlined" size="small"/>
+                </div>
                 <div className="col-md-4 mb-3">
                     <TextField label="Pincode" type="number" name="pin_code_no" value={formValues.pin_code_no} onChange={handleOnChange} fullWidth variant="outlined" size="small"/>
                 </div>
@@ -102,9 +101,9 @@ const AddOrEditPincode = (props) => {
                 <div className="col-md-4">
                     <TextField label="District" name="district" value={formValues.district} onChange={handleOnChange} fullWidth variant="outlined" size="small"/>
                 </div>
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <TextField multiline label="Description" name="description" value={formValues.description} onChange={handleOnChange} fullWidth variant="outlined" size="small"/>
-                </div>
+                </div> */}
                  
                 <div className="col-md-12 mt-3 text-right">
                     <Button variant="contained" className="mr-2" onClick={onCancelClick} disableElevation>Cancel</Button>

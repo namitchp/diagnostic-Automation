@@ -140,11 +140,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
               headerName: "Name",
               width: 450,
             },
-            {
-              field: "description",
-              headerName: "Description",
-              width: 450,
-            },
+           
             {
               field: "",
               headerName: "Actions",

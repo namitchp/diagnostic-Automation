@@ -5,7 +5,7 @@ import { CommonController } from '../../../../../_redux/controller/common.contro
 import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 const AddOrEditGroup = (props) => {
     const [groupValues, setGroupValues] = useState({
-        enq_priority_id: "",
+        enq_priority_id:0,
         enq_priority: "",
         description: ""
     });
@@ -30,11 +30,7 @@ const AddOrEditGroup = (props) => {
             ).then(result => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
-                    setGroupValues({
-                        enq_priority_id: "",
-                        enq_priority: "",
-                        description: ""
-                    })
+                    props.onClose(0);
                 }
             })
         } catch (err) {
@@ -42,7 +38,9 @@ const AddOrEditGroup = (props) => {
         }
     }
     useEffect(() => {
-        setGroupValues(props.editData)
+        if(props.editData){
+            setGroupValues(props.editData)
+        }
     }, [props.editData]);
     const onSave = () => {
         insertForm()
@@ -60,7 +58,7 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label="Priority ID" name="enq_priority_id" value={groupValues.enq_priority_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Priority ID" name="enq_priority_id"disabled value={groupValues.enq_priority_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField label="Priority Name" name="enq_priority" value={groupValues.enq_priority} onChange={handleOnChange} fullWidth variant="outlined" size="small" />

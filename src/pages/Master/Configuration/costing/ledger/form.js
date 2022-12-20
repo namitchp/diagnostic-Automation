@@ -5,7 +5,7 @@ import { CommonController } from '../../../../../_redux/controller/common.contro
 import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 const AddOrEditGroup = (props) => {
     const [groupValues, setGroupValues] = useState({
-        ledger_id: "",
+        ledger_id:0,
         ledger_name: "",
         description: ""
     });
@@ -23,18 +23,14 @@ const AddOrEditGroup = (props) => {
                 ledger_id: groupValues.ledger_id
             }
             await CommonController.commonApiCallFilter(
-                "master/insert_group",
+                "master/insert_cos_ledger",
                 body,
                 "post",
                 "node"
             ).then(result => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
-                    setGroupValues({
-                        ledger_id: "",
-                        ledger_name: "",
-                        description: ""
-                    })
+                    props.onClose(0);
                 }
             })
         } catch (err) {
@@ -42,7 +38,9 @@ const AddOrEditGroup = (props) => {
         }
     }
     useEffect(() => {
-        setGroupValues(props.editData)
+        if(props.editData){
+            setGroupValues(props.editData)
+        }
     }, [props.editData]);
     const onSave = () => {
         insertForm()
@@ -60,7 +58,7 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label="Leader ID" name="ledger_id" value={groupValues.ledger_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Leader ID" name="ledger_id"disabled value={groupValues.ledger_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField label="Leader Name" name="ledger_name" value={groupValues.ledger_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />

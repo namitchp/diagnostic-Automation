@@ -172,7 +172,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
           pageSize={params.pageSize}
           page={params.pageNo}
           rowsPerPageOptions={[10, 15, 25, 100]}
-          rowCount={totalRecord > 20 || 22}
+          rowCount={totalRecord}
           paginationMode="server"
           onPageSizeChange={handlePageSizeChange}
           onPageChange={handlePageChange}

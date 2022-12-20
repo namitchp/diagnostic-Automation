@@ -1,4 +1,4 @@
-import { TextField, Button, MenuItem } from "@material-ui/core";
+import { TextField} from "@material-ui/core";
 import { DataGrid } from "@mui/x-data-grid";
 
 import React, { useEffect, useState } from "react";
@@ -63,8 +63,8 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
   const onDelete = async (id) => {
     try {
       await CommonController.commonApiCallFilter(
-        "master/delete_group",
-        { Id_id: id },
+        "master/delete_sale_clasue",
+        { ld_id: id },
         "post",
         "node"
       )
@@ -84,8 +84,8 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
   const onPreview = async (id) => {
     try {
       await CommonController.commonApiCallFilter(
-        "master/preview_group",
-        { Id_id: id },
+        "master/preview_sale_clasue",
+        { ld_id: id },
         "post",
         "node"
       )
@@ -131,12 +131,12 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
         <DataGrid
           columns={[
             {
-              field: "Id_id",
+              field: "ld_id",
               headerName: "ID",
               flex: 10,
             },
             {
-              field: "Id_name",
+              field: "ld_name",
               headerName: "Name",
               width: 450,
             },
@@ -152,7 +152,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                 <div className="action_btns">
                   <i
                     className="fas fa-search mr-2"
-                    onClick={() => onPreview(params.row.Id_id)}
+                    onClick={() => onPreview(params.row.ld_id)}
                   ></i>
                   <i
                     className="far fa-edit mr-2"
@@ -160,7 +160,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                   ></i>
                   <i
                     className="far fa-trash-alt mr-2"
-                    onClick={() => onDelete(params.row.Id_id)}
+                    onClick={() => onDelete(params.row.ld_id)}
                   ></i>
                 </div>
               ),
@@ -196,7 +196,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
             }
           }}
           rows={browseListData}
-          getRowId={(browseListData) => browseListData.Id_id}
+          getRowId={(browseListData) => browseListData.ld_id}
         />
       </div>
     </>

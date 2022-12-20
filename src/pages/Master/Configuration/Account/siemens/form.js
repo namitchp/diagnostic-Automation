@@ -5,8 +5,8 @@ import { CommonController } from '../../../../../_redux/controller/common.contro
 import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 const AddOrEditGroup = (props) => {
     const [groupValues, setGroupValues] = useState({
-        se_id: "",
-        Engg_name: "",
+        se_id:0,
+        engg_name: "",
         roll_no: ""
     });
     const [showMessage, setMessage] = useState({
@@ -19,7 +19,7 @@ const AddOrEditGroup = (props) => {
                 user_name: localStorage.getItem("userName"),
                 user_id: localStorage.getItem("userId"),
                 roll_no: groupValues.roll_no,
-                engg_name: groupValues.Engg_name,
+                engg_name: groupValues.engg_name,
                 se_id: groupValues.se_id
             }
             await CommonController.commonApiCallFilter(
@@ -30,11 +30,7 @@ const AddOrEditGroup = (props) => {
             ).then(result => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
-                    setGroupValues({
-                        se_id: "",
-                        Engg_name: "",
-                        roll_no: ""
-                    })
+                    props.onClose(0);
                 }
             })
         } catch (err) {
@@ -42,7 +38,9 @@ const AddOrEditGroup = (props) => {
         }
     }
     useEffect(() => {
-        setGroupValues(props.editData)
+        if(props.editData){
+            setGroupValues(props.editData)
+        }
     }, [props.editData]);
     const onSave = () => {
         insertForm()
@@ -60,13 +58,13 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label="Siemens ID" name="se_id" value={groupValues.se_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Siemens ID" name="se_id" disabled value={groupValues.se_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField label="Roll No" name="roll_no" value={groupValues.roll_no} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
-                    <TextField multiline label="Engg Name" value={groupValues.Engg_name} onChange={handleOnChange} name="engg_name" fullWidth variant="outlined" size="small" />
+                    <TextField multiline label="Engg Name" value={groupValues.engg_name} onChange={handleOnChange} name="engg_name" fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-12 mt-3 text-right">
                     <Button variant="contained" className="mr-2" onClick={onCancelClick} disableElevation>Cancel</Button>

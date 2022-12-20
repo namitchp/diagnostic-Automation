@@ -5,7 +5,7 @@ import { CommonController } from '../../../../../_redux/controller/common.contro
 import { showErrorToast, showSuccessToast } from '../../../../../components/common';
 const AddOrEditGroup = (props) => {
     const [groupValues, setGroupValues] = useState({
-        conveyance_id: "",
+        conveyance_id:0,
         conveyance_name: "",
         description: ""
     });
@@ -30,11 +30,7 @@ const AddOrEditGroup = (props) => {
             ).then(result => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
-                    setGroupValues({
-                        conveyance_id: "",
-                        conveyance_name: "",
-                        description: ""
-                    })
+                    props.onClose(0);
                 }
             })
         } catch (err) {
@@ -42,7 +38,9 @@ const AddOrEditGroup = (props) => {
         }
     }
     useEffect(() => {
-        setGroupValues(props.editData)
+        if(props.editData){
+            setGroupValues(props.editData)
+            }
     }, [props.editData]);
     const onSave = () => {
         insertForm()
@@ -60,7 +58,7 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label="Conveyance ID" name="conveyance_id" value={groupValues.conveyance_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Conveyance ID" name="conveyance_id"disabled value={groupValues.conveyance_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField label="Conveyance Name" name="conveyance_name" value={groupValues.conveyance_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />

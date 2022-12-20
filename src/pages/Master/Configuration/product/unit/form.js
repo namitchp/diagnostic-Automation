@@ -23,18 +23,14 @@ const AddOrEditGroup = (props) => {
                 uom_id: groupValues.uom_id
             }
             await CommonController.commonApiCallFilter(
-                "master/insert_group",
+                "master/insert_unit",
                 body,
                 "post",
                 "node"
             ).then(result => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
-                    setGroupValues({
-                        uom_id: "",
-                        uom: "",
-                        description: ""
-                    })
+                    props.onClose(0);
                 }
             })
         } catch (err) {
@@ -42,7 +38,9 @@ const AddOrEditGroup = (props) => {
         }
     }
     useEffect(() => {
-        setGroupValues(props.editData)
+        if(props.editData){
+            setGroupValues(props.editData)
+            }
     }, [props.editData]);
     const onSave = () => {
         insertForm()
@@ -60,7 +58,7 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label=" ID" name="uom_id" value={groupValues.uom_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label=" ID" name="uom_id" value={groupValues.uom_id}disabled onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField label=" Name" name="uom" value={groupValues.uom} onChange={handleOnChange} fullWidth variant="outlined" size="small" />

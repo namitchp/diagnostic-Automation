@@ -7,8 +7,6 @@ export const AccountMasterController = {
     accountHideUpdate,
     updateAccountVerified
 }
-
-
 async function browseAccountData(filters,params) {
     try {
         let apiEndpoint = `Account/AccountMasterBrowse?filter_value=${params.filter_value}&page_number=${params.pageNo}&page_size=${params.pageSize}&sort_column=${params.sort_column}&sort_order=${params.sort_order}`;
@@ -75,14 +73,10 @@ async function getSelectedAccountDetails(payload) {
         return null;
     }
 }
- 
-
 async function accountHideUpdate(payload) {
     try {
         let apiEndpoint = `Account/UpdateAccountHide`;
-
         let response = await userService.post(apiEndpoint,payload);
-        
         if (response) {
             return (response.data);
         }

@@ -5,7 +5,7 @@ import { CommonController } from '../../../../_redux/controller/common.controlle
 import { showErrorToast, showSuccessToast } from '../../../../components/common';
 const AddOrEditGroup = (props) => {
     const [groupValues, setGroupValues] = useState({
-        status_id: "",
+        status_id:0,
         status_name: "",
         description: ""
     });
@@ -30,11 +30,7 @@ const AddOrEditGroup = (props) => {
             ).then(result => {
                 if (result.status == 200) {
                     showSuccessToast(result.message)
-                    setGroupValues({
-                        status_id: "",
-                        status_name: "",
-                        description: ""
-                    })
+                    props.onClose(0);
                 }
             })
         } catch (err) {
@@ -42,7 +38,9 @@ const AddOrEditGroup = (props) => {
         }
     }
     useEffect(() => {
+        if(props.editData){
         setGroupValues(props.editData)
+        }
     }, [props.editData]);
     const onSave = () => {
         insertForm()
@@ -60,7 +58,7 @@ const AddOrEditGroup = (props) => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-4">
-                    <TextField label="Status ID" name="status_id" value={groupValues.status_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
+                    <TextField label="Status ID" name="status_id"disabled value={groupValues.status_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="col-md-4">
                     <TextField label="Status Name" name="status_name" value={groupValues.status_name} onChange={handleOnChange} fullWidth variant="outlined" size="small" />

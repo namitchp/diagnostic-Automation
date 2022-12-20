@@ -63,11 +63,7 @@ const AddOrEditGroup = (props) => {
       ).then((result) => {
         if (result.status == 200) {
           showSuccessToast(result.message);
-          setGroupValues({
-            tab_id: "",
-            tab_name: "",
-            tabArray:[]
-          });
+          props.onClose(0);
         }
       });
     } catch (err) {
