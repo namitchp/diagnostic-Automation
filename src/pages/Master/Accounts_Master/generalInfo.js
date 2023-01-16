@@ -1,17 +1,16 @@
 import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { getAutoValue } from "../../../components/common";
-import { CommonController } from "../../../_redux/controller/common.controller";
-
 const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
+  const filterList = useSelector(
+    (state) => state.AccountMaster.accountFilterList
+  );
+  
+  console.log(formData)
   const [dropDownValues, setDropDownValues] = useState({
     groupList: [],
     pincodeList: [],
@@ -20,22 +19,20 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
     employeeList: [],
     seimenggList: [],
   });
-
   useEffect(() => {
-    CommonController.commonApiCallFilter("Dropdown/AccountMasterDropdown").then(
-      (data) => {
+    if(filterList?.listengg?.length>0)
+    {
         const values = {
-          groupList: data.groupList,
-          pincodeList: data.pincodeList,
-          regionList: data.regionList,
-          ratingList: data.ratingList,
-          employeeList: data.employeeList,
-          seimenggList: data.seimenggList,
+          groupList: filterList.listGroup,
+          pincodeList: filterList.pincode,
+          regionList: filterList.listregion,
+          ratingList: filterList.rating,
+          employeeList: filterList.listengg,
+          seimenggList: filterList.siemensEngg,
         };
         setDropDownValues(values);
       }
-    );
-  }, []);
+  }, [filterList]);
 
   const {
     groupList,
@@ -70,7 +67,7 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
               variant="outlined"
               size="small"
               value={formData.short_name}
-              onChange={handleChange}
+              
             />
           </div>
           <div className="col-md-12 mb-5">
@@ -88,9 +85,12 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
             <Autocomplete
               size="small"
               options={groupList}
-              getOptionLabel={(option) => option.value}
+              getOptionLabel={(option) => option.group_name}
               fullWidth
-              value={{ id: formData?.group_id, value: formData?.group_name }}
+              // value={ formData.group_name}
+               value={
+                  { group_id: formData.group_id, group_name: formData.group_name }
+              }
               onChange={(event, value) =>
                 handleAutoChange("group_id", "group_name", value)
               }
@@ -127,15 +127,16 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
             <Autocomplete
               size="small"
               options={pincodeList}
-              getOptionLabel={(option) => option.value}
+              getOptionLabel={(option) => option.pin_code_no}
               fullWidth
               value={
-                formData.pin_id != ""
-                  ? { id: formData.pin_id, value: formData.pin_code }
+                formData.pin_code_id != ""
+                  ? { pin_code_id: formData.pin_code_id, pin_code_no: formData.pin_code_no }
                   : ""
               }
+              // value={formData.pin_code}
               onChange={(event, value) =>
-                handleAutoChange("pin_id", "pin_code", value)
+                handleAutoChange("pin_code_id","pin_code_no",value)
               }
               variant="outlined"
               renderInput={(params) => (
@@ -263,8 +264,9 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
             onChange={(event, value) =>
               handleAutoChange("rating_id", "rating_name", value)
             }
-            getOptionLabel={(option) => option.value}
-            value={{ id: formData.rating_id, value: formData.rating_name }}
+            getOptionLabel={(option) => option.rating_name}
+            value={{ rating_id: formData.rating_id, rating_name: formData.rating_name }}
+            // value={formData.rating_name}
             fullWidth
             variant="outlined"
             renderInput={(params) => (
@@ -299,6 +301,7 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
         <div className="col-md-12 mb-5">
           <TextField
             label="Credit Period"
+            // type="number"
             fullWidth
             name="credit_period"
             value={formData.credit_period}
@@ -310,6 +313,7 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
         <div className="col-md-12 mb-5">
           <TextField
             label="Credit Limit"
+            type="number"
             fullWidth
             variant="outlined"
             name="credit_limit"
@@ -324,15 +328,16 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
             size="small"
             options={employeeList}
             onChange={(event, value) =>
-              handleAutoChange("", "mark_engg", value)
+              handleAutoChange("", "name", value)
             }
-            getOptionLabel={(option) => option.value}
+            getOptionLabel={(option) => option.name}
             fullWidth
             value={
-              formData.mark_engg != ""
-                ? getAutoValue("value", employeeList, formData.mark_engg)
+              formData.name != ""
+                ? getAutoValue("name", employeeList, formData.name)
                 : ""
             }
+            // value={formData.mark_engg}
             variant="outlined"
             renderInput={(params) => (
               <TextField
@@ -348,14 +353,15 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
             size="small"
             options={seimenggList || []}
             onChange={(event, value) =>
-              handleAutoChange("se_id", "siem_engg", value)
+              handleAutoChange("se_id", "Engg_name", value)
             }
             value={
-              formData?.siem_engg != ""
-                ? { id: formData?.se_id, value: formData?.siem_engg }
+              formData?.Engg_name != ""
+                ? { se_id: formData?.se_id, Engg_name: formData?.Engg_name }
                 : ""
             }
-            getOptionLabel={(option) => option.value}
+            // value={formData?.siem_engg}
+            getOptionLabel={(option) => option.Engg_name}
             fullWidth
             variant="outlined"
             renderInput={(params) => (
@@ -375,23 +381,23 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
             size="small"
           />
         </div>
-        {/* <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-5">
           <Autocomplete
             size="small"
             options={regionList}
             onChange={(event, value) =>
               handleAutoChange("region_id", "region_name", value)
             }
-            getOptionLabel={(option) => option.value}
+            getOptionLabel={(option) => option.region_name}
             fullWidth
-            value={{ id: formData.region_id, value: formData.region_name }}
+            value={{ region_id: formData.region_id, region_name: formData.region_name }}
             variant="outlined"
             renderInput={(params) => (
               <TextField {...params} label="Region" variant="outlined" />
             )}
           />
         </div>
-     */}
+    
       </div>
     </div>
   );

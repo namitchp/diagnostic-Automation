@@ -1,8 +1,27 @@
+.css-1jbbcbn-MuiDataGrid-columnHeaderTitle{
+  font-weight: 700 !important;
+  background-color:#b6b6b6;
+  font-size: 12px;
+    color:white;
+}
+.odd{
+  background-color:#f2f2f2;
+}
+.even{
+  background-color:#e6e6e6;
+}
+.css-okt5j6-MuiDataGrid-columnHeaders{
+  background-color: #b6b6b6;
+}
 @font-face {
   font-family: symbol;
   src: url(./fonts/Symbol\ Regular.ttf);
 }
-
+.custom_edit{
+  position: absolute;
+    left: 150px;
+    top: 160px;
+}
 a {
   cursor: pointer !important;
 }
@@ -96,7 +115,11 @@ input[type="number"] {
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
-
+.header-bottom.third {
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
 .menu-item .menu-link {
   font-size: 12px;
   font-weight: 500;
@@ -178,6 +201,7 @@ input[type="number"] {
   font-weight: bold;
   font-family: symbol;
   letter-spacing: 1px;
+  color:red;
 }
 
 .clock_container p {

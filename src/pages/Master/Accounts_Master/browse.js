@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setAccountHide,
-  setAccountVerified,
-} from "../../../_redux/actions/masters/account.action";
+import { getAccountMasterFiltersList } from "../../../_redux/actions/masters/account.action";
 import {
   Checkbox,
   FormControl,
@@ -21,9 +18,16 @@ import CustomPagination from "../../../components/CustomPagination";
 import CustomNoRowsOverlay from "../../../components/customRowComponent";
 import ActionButtons from "../../../components/action-buttons";
 import { selectedAccountId } from "../../../_redux/actions/masters/all.action";
-
-import { getBrowseUserRight, showErrorToast } from "../../../components/common";
+import {
+  getBrowseUserRight,
+  showErrorToast,
+  UserRight,
+} from "../../../components/common";
 import { CommonController } from "../../../_redux/controller/common.controller";
+import {
+  getFilterData,
+  updateFilterData,
+} from "../../../_redux/actions/common.action";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -33,23 +37,33 @@ const LightTooltip = withStyles((theme) => ({
     fontSize: 11,
   },
 }))(Tooltip);
-const user_id = {
-  user_id: localStorage.getItem("userId"),
-};
-const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
+
+const user_id =localStorage.getItem("userId")
+
+
+const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
+  // UserRight()
   const dispatch = useDispatch();
   const getuserRightListResponse = useSelector(
     (state) => state.common.userRightList
   );
+  const filterList = useSelector(
+    (state) => state.AccountMaster.accountFilterList
+  );
+  const filterjsonData = useSelector((state) => state.common.getFilterData);
+  const updatefilterjsonData = useSelector(
+    (state) => state.common.updateFilterData
+  );
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [filter, setfilter] = useState(false);
   const [accountMasterFilter, setAccountMasterFilter] = useState({
     region_name: "",
     group_name: "",
     verified: "",
     mark_engg: "",
-    account_type:accountType
+    account_type: accountType,
   });
   const [tempVerifed, setTempVerified] = useState([]);
   const [regionList, setRegionList] = useState([]);
@@ -62,15 +76,27 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
     sort_column: "",
     sort_order: "",
   });
+  const handleUpdateFilterData = () => {
+    let body = {
+      filterpage: { ...params },
+      filterData: { ...accountMasterFilter },
+    };
+    body.user_id = user_id;
+    body.browse_id = browse_id;
+    dispatch(updateFilterData(body));
+    // if (updatefilterjsonData.status == 200) {
+    //   // dispatch(getFilterData(1));
+    // }
+  };
   let columns = [
     {
-      field: "id",
+      field: "ID",
       headerName: "ID",
       width: 70,
       hide: false,
     },
     {
-      field: "region",
+      field: "Region",
       headerName: "Region",
       width: 180,
       hide: false,
@@ -87,68 +113,68 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
       hide: false,
     },
     {
-      field: "company",
+      field: "Company",
       headerName: "Company",
       renderCell: (params) => (
-        <LightTooltip title={params.row.company}>
-          <span>{params.row.company}</span>
+        <LightTooltip title={params.row.Company}>
+          <span>{params.row.Company}</span>
         </LightTooltip>
       ),
       width: 180,
       hide: false,
     },
     {
-      field: "address",
+      field: "Address",
       headerName: "Address",
       renderCell: (params) => (
-        <LightTooltip title={params.row.address}>
-          <span>{params.row.address}</span>
+        <LightTooltip title={params.row.Address}>
+          <span>{params.row.Address}</span>
         </LightTooltip>
       ),
       width: 300,
       hide: false,
     },
     {
-      field: "pin",
+      field: "Pin",
       headerName: "Pin",
       width: 80,
       hide: false,
     },
     {
-      field: "mobile",
+      field: "Mobile",
       headerName: "Mobile",
       renderCell: (params) => (
-        <LightTooltip title={params.row.mobile}>
-          <span>{params.row.mobile}</span>
+        <LightTooltip title={params.row.Mobile}>
+          <span>{params.row.Mobile}</span>
         </LightTooltip>
       ),
       width: 150,
       hide: false,
     },
     {
-      field: "email",
+      field: "Email",
       headerName: "Email",
       renderCell: (params) => (
-        <LightTooltip title={params.row.email}>
-          <span>{params.row.email}</span>
+        <LightTooltip title={params.row.Email}>
+          <span>{params.row.Email}</span>
         </LightTooltip>
       ),
       width: 200,
       hide: false,
     },
     {
-      field: "verified",
+      field: "edit",
       headerName: "Verified",
       renderCell: (params) => (
         <FormControlLabel
           className={"formControlLabel"}
           control={
             <Checkbox
-              defaultChecked={params.row.edit === "True"}
+              defaultChecked={params.row.edit === true}
               size="small"
               color="primary"
               onChange={(event) =>
-                updateVerifiedStatus(event.target.checked, params.id)
+                updateVerifiedStatus(event.target.checked, params.ID)
               }
               inputProps={{ "aria-label": "checkbox with small size" }}
             />
@@ -157,14 +183,14 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
             <span
               className={
                 "font_13 " +
-                (params.row.edit === "True" ||
-                tempVerifed.indexOf(params.row.id) > -1
+                (params.row.edit === true ||
+                tempVerifed.indexOf(params.row.ID) > -1
                   ? "text-success"
                   : "text-danger")
               }
             >
-              {params.row.edit === "True" ||
-              tempVerifed.indexOf(params.row.id) > -1
+              {params.row.edit === true ||
+              tempVerifed.indexOf(params.row.ID) > -1
                 ? "Verified"
                 : "Not Verified"}
             </span>
@@ -181,9 +207,9 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
         <Checkbox
           size="small"
           color="primary"
-          defaultChecked={params.row.hide === "True"}
+          defaultChecked={params.row.hide === true}
           onChange={(event) =>
-            updateHideStatus(event.target.checked, params.id)
+            updateHideStatus(event.target.checked, params.ID)
           }
           // onChange={() => console.log(params.id)}
           inputProps={{ "aria-label": "checkbox with small size" }}
@@ -203,109 +229,99 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
       width: 150,
       hide: false,
     },
-   
+
     {
       field: "datetime",
       headerName: "Date Time",
       width: 120,
       hide: false,
     },
-    {
-      field: "",
-      headerName: "Actions",
-      renderCell: (params) => (
-        <ActionButtons
-          onPreview={
-            getBrowseUserRight(getuserRightListResponse)?.level == 1
-              ? () => handleEdit(params.row.id)
-              : null
-          }
-          onEdit={
-            getBrowseUserRight(getuserRightListResponse)?.level == 1
-              ? () => handleEdit(params.row.id)
-              : null
-          }
-          // onDelete={
-          //   getBrowseUserRight(getuserRightListResponse)?.delete_right == "True"
-          //     ? () => handleDeleteRow(params.row.id)
-          //     : null
-          // }
-        />
-      ),
-      width: 120,
-    },
+    // {
+    //   field: "",
+    //   headerName: "Actions",
+    //   renderCell: (params) => (
+    //     <ActionButtons
+    //       onPreview={
+    //         getBrowseUserRight(getuserRightListResponse)?.level == 1
+    //           ? () => handleEdit(params.row.id)
+    //           : null
+    //       }
+    //       onEdit={
+    //         getBrowseUserRight(getuserRightListResponse)?.level == 1
+    //           ? () => handleEdit(params.row.id)
+    //           : null
+    //       }
+    //       // onDelete={
+    //       //   getBrowseUserRight(getuserRightListResponse)?.delete_right == "True"
+    //       //     ? () => handleDeleteRow(params.row.id)
+    //       //     : null
+    //       // }
+    //     />
+    //   ),
+    //   width: 120,
+    // },
   ];
 
   const handleFilters = (event) => {
+   
     setAccountMasterFilter({
       ...accountMasterFilter,
       [event.target.name]: event.target.value,
     });
+    setfilter(true)
+    // handleUpdateFilterData()
   };
-
   const handleParams = (event) => {
     setParams({ ...params, [event.target.name]: event.target.value });
+    setfilter(true)
   };
-
-  useEffect(() => {
-    // getUserFilter();
-    getBrowseListData();
-    getFilterListData();
-  }, []);
 
   const getBrowseListData = async () => {
     setLoading(true);
     await CommonController.commonApiCall(
-      "Account/AccountMasterBrowse",
+      "master/browse_account_master",
       params,
-      accountMasterFilter
+      accountMasterFilter,
+      "node"
     )
       .then((data) => {
-        setBrowseListData(data.data);
-        setTotalRecords(data.recordsFiltered);
+        if (data.status === 200) {
+          setBrowseListData(data.data);
+          setTotalRecords(data.totalRecords);
+        }
       })
       .catch((err) => {
         showErrorToast(err);
       });
     setLoading(false);
   };
-
-  const getFilterListData = async () => {
-    await CommonController.commonApiCallFilter(
-      "Dropdown/AccountMasterDropdown",
-      user_id,
-      "post"
-    )
-      .then((data) => {
-        setRegionList(data.regionList);
-        setGroupList(data.groupList);
-        setEnggList(data.employeeList);
-      })
-      .catch((err) => {
-        showErrorToast(err);
-      });
-  };
-
   useEffect(() => {
-    getBrowseListData();
-  }, [params, accountMasterFilter]);
-
+    if (filterList) {
+      setRegionList(filterList.listregion);
+      setGroupList(filterList.listGroup);
+      setEnggList(filterList.listengg);
+    }
+  }, [filterList]);
+ 
   const handlePageSizeChange = (param) => {
     setParams({ ...params, pageSize: param });
+    // handleUpdateFilterData();
+    setfilter(true)
   };
   const handlePageChange = (param) => {
+    console.log(param)
     setParams({ ...params, pageNo: param });
+    // handleUpdateFilterData();
+    setfilter(true)
   };
-
   const updateHideStatus = (val, id) => {
     const param = {
       company_id: id,
       hide: val ? "1" : "0",
       user_id: localStorage.getItem("userId"),
     };
-    dispatch(setAccountHide(param));
+    // dispatch(setAccountHide(param));
   };
-
   const updateVerifiedStatus = (val, id) => {
     var temp = [...tempVerifed];
     var tempIndex = temp.indexOf(id);
@@ -323,18 +339,32 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
       }
     }
     setTempVerified(temp);
-    dispatch(setAccountVerified(param));
+    // dispatch(setAccountVerified(param));
   };
-
   const handleEdit = (id) => {
-    dispatch(selectedAccountId(id));
+    // dispatch(selectedAccountId(id));
     onEdit();
   };
-
+  useEffect(() => {
+    if (filterjsonData) {
+      setParams(filterjsonData.data.filterpage);
+      setAccountMasterFilter(filterjsonData.data.filterData);
+    }
+  }, [filterjsonData]);
+  useEffect(() => {
+    dispatch(getFilterData(browse_id));
+  }, []);
+  useEffect(() => {
+    getBrowseListData();
+    if(filter){
+      handleUpdateFilterData()
+    }
+  }, [params, accountMasterFilter]);
   return (
     <React.Fragment>
       <div className="filter_box mb-5">
         <div className="row">
+          {/* <h1>zsdxcfgbhjnmk</h1> */}
           <div className="col-md-1 d-flex align-items-center">
             <h4 className="mb-0">Filters</h4>
           </div>
@@ -355,8 +385,11 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
                 {regionList.length > 0
                   ? regionList.map((region, index) => {
                       return (
-                        <MenuItem key={"region" + index} value={region.value}>
-                          {region.value}
+                        <MenuItem
+                          key={"region" + index}
+                          value={region.region_name}
+                        >
+                          {region.region_name}
                         </MenuItem>
                       );
                     })
@@ -381,8 +414,11 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
                 {groupList.length > 0
                   ? groupList.map((group, index) => {
                       return (
-                        <MenuItem key={"groupList" + index} value={group.value}>
-                          {group.value}
+                        <MenuItem
+                          key={"groupList" + index}
+                          value={group.group_name}
+                        >
+                          {group.group_name}
                         </MenuItem>
                       );
                     })
@@ -399,7 +435,7 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
                 name="verified"
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                value={accountMasterFilter.region}
+                value={accountMasterFilter.verified}
                 onChange={handleFilters}
                 label="Verified"
               >
@@ -426,8 +462,8 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
                 {enggList.length > 0
                   ? enggList.map((engg, index) => {
                       return (
-                        <MenuItem key={"enggList" + index} value={engg.value}>
-                          {engg.value}
+                        <MenuItem key={"enggList" + index} value={engg.name}>
+                          {engg.name}
                         </MenuItem>
                       );
                     })
@@ -441,8 +477,11 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
               id="outlined-basic"
               size="small"
               onKeyDown={(e) => {
+                console.log(e.keyCode);
                 if (e.keyCode === 13) {
+                  // handleUpdateFilterData();
                   handleParams(e);
+                  setfilter(true)
                 }
               }}
               name="filter_value"
@@ -461,8 +500,12 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
         <DataGrid
           pagination
           disableColumnFilter
-          pageSize={params.pageSize}
-          page={params.pageNo}
+          columns={columns}
+          pageSize={params?.pageSize}
+          page={params?.pageNo}
+          getRowClassName={(params) => {
+            return params.row.sr_no % 2 === 0 ? "even" : "odd";
+          }}
           rowsPerPageOptions={[15, 25, 50, 100]}
           rowCount={totalRecord}
           paginationMode="server"
@@ -470,11 +513,16 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
           onPageChange={handlePageChange}
           loading={loading}
           rowHeight={30}
-          components={{
-            Pagination: CustomPagination,
-            NoRowsOverlay: CustomNoRowsOverlay,
-          }}
+          components={
+            browseListData?.length > 0
+              ? {
+                  Pagination: CustomPagination,
+                  // NoRowsOverlay: CustomNoRowsOverlay,
+                }
+              : {}
+          }
           onSortModelChange={(sort) => {
+            console.log(sort[0])
             if (sort.length > 0) {
               setParams({
                 ...params,
@@ -484,12 +532,12 @@ const BrowseAccount = ({ onEdit, onPreview,accountType }) => {
             }
           }}
           // onColumnVisibilityChange={(e) => handleColumnHide(e)}
-          columns={columns}
+          getRowId={(browseListData) => browseListData.sr_no}
           rows={browseListData} //accountMasterList
+         
         />
       </div>
     </React.Fragment>
   );
 };
-
 export default BrowseAccount;

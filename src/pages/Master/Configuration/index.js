@@ -11,6 +11,7 @@ import { buttonLoader, showErrorToast } from "../../../components/common";
 import ConfigSalesOrder from "./salesOrder";
 import ConfigQuotation from "./quotation";
 import ConfigCourier from "./courier";
+import MenuStructureIndex from "./menustructure";
 const useStyles = makeStyles((theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -32,6 +33,7 @@ const ConfigurationMaster = () => {
     105: <ConfigQuotation list={SubMenuList} />,
     106: <ConfigSalesOrder list={SubMenuList} />,
     107: <ConfigCourier list={SubMenuList} />,
+    144:<MenuStructureIndex/>
   };
   const getThirdMenu = async (menu_id) => {
     try {

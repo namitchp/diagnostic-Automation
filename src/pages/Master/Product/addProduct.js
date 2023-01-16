@@ -5,13 +5,11 @@ import OtherInformation from "./other";
 import { useSelector } from "react-redux";
 import { CommonController } from "../../../_redux/controller/common.controller";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
-
 const AddNewProduct = () => {
   const selectedIdResponse = useSelector(
     (state) => state.AllReducersMaster.productId
   );
   const [selectedTab, setSelectedTab] = useState(0);
-
   const [formData, setFormData] = useState({
     product_id: "",
     product_code: "",
@@ -54,20 +52,16 @@ const AddNewProduct = () => {
     user_id: localStorage.getItem("userId"),
     user_name: "",
   });
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleCheckChange = (key, value) => {
     setFormData({ ...formData, [key]: value ? "True" : "False" });
   };
-
   const handleAutoChange = (key1, key2, value) => {
     console.log(key1, key2, value);
     setFormData({ ...formData, [key1]: value.id, [key2]: value.value });
   };
-
   const onNext = () => {
     if (selectedTab === 0) {
       setSelectedTab(1);
@@ -75,7 +69,6 @@ const AddNewProduct = () => {
       onSubmit();
     }
   };
-
   const onSubmit = () => {
     CommonController.commonApiCallFilter(
       "Product/ProductMasterInsert",
@@ -98,7 +91,6 @@ const AddNewProduct = () => {
   const onBack = () => {
     setSelectedTab(0);
   };
-
   useEffect(() => {
     if (selectedIdResponse) {
       CommonController.commonApiCallFilter("Product/PreviewProductMaster", {
@@ -119,7 +111,6 @@ const AddNewProduct = () => {
         });
     }
   }, [selectedIdResponse]);
-
   return (
     <div className="container-fluid mt-5">
       {/* {loading && <Loader />} */}
@@ -127,7 +118,7 @@ const AddNewProduct = () => {
         <li className="nav-item">
           <a
             className={`nav-link ` + (selectedTab === 0 ? "active" : "")}
-            onChange={() => setSelectedTab(0)}
+            onClick={() => setSelectedTab(0)}
           >
             General Information
           </a>
@@ -135,7 +126,7 @@ const AddNewProduct = () => {
         <li className="nav-item">
           <a
             className={`nav-link ` + (selectedTab === 1 ? "active" : "")}
-            onChange={() => setSelectedTab(1)}
+            onClick={() => setSelectedTab(1)}
           >
             Technical Information
           </a>

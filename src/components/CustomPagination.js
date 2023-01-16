@@ -9,7 +9,6 @@ import React from "react";
 
 export default function CustomPagination() {
   const apiRef = useGridApiContext();
-
   const page = useGridSelector(apiRef, gridPageSelector);
   const pageCount = useGridSelector(apiRef, gridPageCountSelector);
 
@@ -36,7 +35,7 @@ export default function CustomPagination() {
           defaultValue={page}
           onChange={(event) => {
             if (parseInt(event.target.value) > 0) {
-              apiRef?.current.setPage(parseInt(event.target.value));
+              apiRef.current.setPage(parseInt(event.target.value));
             }
           }}
           style={{ width: 50 }}
@@ -49,7 +48,7 @@ export default function CustomPagination() {
         count={pageCount}
         page={page}
         onChange={(event, value) => {
-          apiRef?.current.setPage(value);
+          apiRef.current.setPage(value);
         }}
       />
     </React.Fragment>

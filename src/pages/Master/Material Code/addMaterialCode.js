@@ -48,7 +48,6 @@ const AddMaterialCode = ({ onCancel }) => {
   );
   const [loading, setLoading] = useState(false);
   const [partyNameList, setPartyNameList] = useState([]);
-  const [selectedMaterialData, setSelectedMaterialData] = useState(null);
   const [selectedParty, setSelectedParty] = useState(null);
   const [selectedCustomerList, setSelectedCustomerList] = useState([]);
   const [showPickCustomer, setPickCustomer] = useState(false);
@@ -341,7 +340,6 @@ const AddMaterialCode = ({ onCancel }) => {
     }
     setSelectedItemsList(tempNewList);
   };
-
   const calculateDisPer = (event, item) => {
     var tempNewList = [...selectedItemsList];
     var tempIndx = tempNewList.findIndex(

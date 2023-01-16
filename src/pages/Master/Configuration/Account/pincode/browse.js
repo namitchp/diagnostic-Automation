@@ -204,6 +204,7 @@ const BrowsePincode = ({ type, onEdit, onPreviewData }) => {
           }}
           rows={browseListData}
           getRowId={(browseListData) => browseListData.pin_code_id}
+          getRowClassName={(params)=>params.row.pin_code_id%2?"odd" :"even"}
         />
       </div>
     </>

@@ -1,8 +1,8 @@
 import "./App.css";
+import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./pages/Auth/Login";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import React from "react";
 import DateFnsUtils from "@date-io/date-fns";
 import MainLayout from "./layouts/layout";
 import SwitchApp from "./pages";

@@ -1,13 +1,10 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
-
 const Submenu = (props) => {
   const { list, onSubMenuChange } = props;
   const selectedMenu = window.location.pathname.split("/")[1];
-  const selectedSubMenu = window.location.pathname.split("/")[2];
-  // console.log(selectedSubMenu);
-  // console.log(selectedMenu);
+  const selectedSubMenu = window.location.pathname.split("/")[3];
+  const selectedSubMenusec = window.location.pathname.split("/")[2];
   return (
     <div className="header-bottom submenu">
       <div className="px-3">
@@ -33,13 +30,14 @@ const Submenu = (props) => {
                               .replace(/[^a-zA-Z ]/g, "")
                               .replace(/\s+/g, "-")
                               .toLowerCase()
-                              ? "active"
+                              // ? "active text-success"
+                              ? "bg-danger text-white"
                               : "")
                           }
-                          to={`/${selectedMenu.toLowerCase()}/${item.transaction_name
+                          to={`/${selectedMenu.toLowerCase()}/${selectedSubMenusec}/${item.transaction_name
                             .replace(/[^a-zA-Z ]/g, "")
                             .replace(/\s+/g, "-")
-                            .toLowerCase()}`}
+                            .toLowerCase()}/${item.transaction_id}`}
                         >
                           {" "}
                           <span className="menu-text">

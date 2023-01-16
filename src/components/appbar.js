@@ -10,16 +10,18 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import logo from "../assets/image/logo.png";
 
 import user from "../assets/image/user.jpg";
 import moment from "moment";
 import AirplayIcon from "@material-ui/icons/Airplay";
-
+import SwipeableTemporaryDrawer from "./leftModal";
+import { CommonController } from "../_redux/controller/common.controller";
+import { id } from "date-fns/locale";
+import { nodeUrl } from "../config";
 const auth = localStorage.getItem("login");
 const userName = localStorage.getItem("userName");
-
 function CircularProgressWithLabel(props) {
   return (
     <Box position="relative" display="inline-flex">
@@ -48,9 +50,10 @@ function CircularProgressWithLabel(props) {
     </Box>
   );
 }
-
 const MainBar = ({ onMenuClick }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] =useState(null);
+  const [profilePrev, setprofilePrev] = useState({right:false})
+  const [profileList, setprofileList] = useState("")
   const open = Boolean(anchorEl);
   const [time, setTime] = useState({
     hrs: moment().format("h"),
@@ -60,19 +63,23 @@ const MainBar = ({ onMenuClick }) => {
     minValue: Math.ceil((parseInt(moment().format("mm")) * 2 + 1) / 10) * 10,
     secValue: Math.ceil((parseInt(moment().format("ss")) * 1.6 + 1) / 10) * 10,
   });
-
-  useEffect(() => {
-    calculateTime();
-  }, []);
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+    const profilePrevlist=async()=>{
+     await CommonController.commonApiCallFilter('user/profile_prev',{user_id:localStorage.getItem("userId")},"post","node")
+     .then(result=>{
+      if(result.status===200){
+        setprofileList(result.data)
+      }
+     }).catch(err=>{
+      console.log(err)
+     })
+    }
   const handleClose = () => {
+setprofilePrev({...profilePrev,right:true})
     setAnchorEl(null);
   };
-
   const calculateTime = () => {
     setInterval(() => {
       setTime({
@@ -88,18 +95,15 @@ const MainBar = ({ onMenuClick }) => {
       });
     }, 1000);
   };
-
-  const handleLogOut = () => {
-    localStorage.clear();
-    window.location = "/login";
-  };
-
   const handleSwitch = () => {
     window.location = `http://erp.diag.in/SwitchLogin.aspx?${localStorage.getItem(
       "encrypt_userId"
     )}`;
   };
-
+  useEffect(() => {
+    calculateTime();
+    profilePrevlist();
+  },[]);
   return (
     <AppBar position="static" className="theme_bg" elevation={0}>
       <Toolbar variant="dense" disableGutters>
@@ -160,22 +164,13 @@ const MainBar = ({ onMenuClick }) => {
                     <Button
                       variant="default"
                       className="bg-white switch_btn mx-3 mt-2"
-                      variant="contained"
+                      // variant="contained"
                       onClick={handleSwitch}
                       disableElevation
                     >
                       <AirplayIcon />
                     </Button>
                   </div>
-
-                  {/* <IconButton
-                                        aria-label="account of current user"
-                                        aria-controls="menu-appbar"
-                                        aria-haspopup="true"
-                                        onClick={handleSwitch}
-                                        color="inherit" variant="contained">
-                                         
-                                    </IconButton> */}
                   {auth && (
                     <div className="clock_container ml-3">
                       <p className="mb-0">{userName}</p>
@@ -184,15 +179,15 @@ const MainBar = ({ onMenuClick }) => {
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         className="pt-2 pb-0"
-                        onClick={handleMenu}
+                        onClick={handleClose}
                         color="inherit"
                       >
                         <div className="user_header d-flex align-items-center">
-                          <Avatar alt="Remy Sharp" src={user} />
+                          <Avatar alt="Remy Sharp"  src={`${nodeUrl + profileList.image_path}`} />
                           {/* <span className="ml-3">{userName}</span> */}
                         </div>
                       </IconButton>
-                      <Menu
+                      {/* <Menu
                         id="menu-appbar"
                         anchorEl={anchorEl}
                         getContentAnchorEl={null}
@@ -206,11 +201,11 @@ const MainBar = ({ onMenuClick }) => {
                           horizontal: "center",
                         }}
                         open={open}
-                        onClose={handleClose}
+                        onClick={handleClose}
                       >
                         <MenuItem onClick={handleClose}>Profile</MenuItem>
                         <MenuItem onClick={handleLogOut}>Logout</MenuItem>
-                      </Menu>
+                      </Menu> */}
                     </div>
                   )}
                 </div>
@@ -219,8 +214,8 @@ const MainBar = ({ onMenuClick }) => {
           </div>
         </div>
       </Toolbar>
+     <SwipeableTemporaryDrawer leftTrue={profilePrev} profileList={profileList} updateImage={useCallback(()=>profilePrevlist(),[profileList])}/>
     </AppBar>
   );
 };
-
 export default MainBar;

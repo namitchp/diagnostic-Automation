@@ -6,87 +6,106 @@ import GeneralInfo from "./generalInfo";
 import AccountTNC from "./tnc";
 import { Button } from "@material-ui/core";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
-
-const AddAccountMaster = () => {
+const AddAccountMaster = ({handleAddAccount}) => {
   const selectedIdResponse = useSelector(
     (state) => state.AllReducersMaster.accountId
   );
-
+  console.log(selectedIdResponse)
   const [selectedIndex, setSeletedIndex] = useState(0);
+  const [dropdownList, setdropdownList] = useState([])
   const [formData, setFormData] = useState({
-    datetime: "",
-    short_name: "",
-    mobile: "",
-    mark_engg: "",
-    edit: "",
-    hide: "",
-    district: "",
-    state: "",
-    city: "",
-    region_name: "",
-    group_name: "",
-    verified: null,
-    company_id: "",
-    company_name: "",
-    group_id: "",
-    address1: "",
-    address2: "",
-    pin_id: "",
-    pin_code: "",
-    region_id: "",
-    phone1: "",
-    phone2: "",
-    fax: "",
-    email: "",
-    website: "",
-    rating_id: "",
-    rating_name: "",
-    se_id: "",
-    siem_engg: "",
-    remarks: "",
-    distance: "",
-    credit_limit: "",
-    credit_period: "",
-    range: "",
-    division: "",
-    comm: "",
-    ecc_no: "",
-    ser_tax_no: "",
-    pan_no: "",
-    tin_no: "",
-    cst_no: "",
-    lst_no: "",
-    pla_no: "",
-    user_id: localStorage.getItem("userId"),
+    company_id:0,
+    company_name:"",  
+    short_name:"",
+    group_id :"", 
+    group_name:"",
+    address1 :"",  
+    address2 :"",  
+    pin_id :"",  
+    pin_code:"",  
+    region_id :"",  
+    region_name:"",  
+    phone1:"",  
+    phone2:"",  
+    mobile:"",  
+    fax:"",  
+    email :"",  
+    website :"",  
+    rating_id:"",  
+    rating_name :"",  
+    // mark_engg :"",  
+    name:"",
+    se_id:"",  
+    Engg_name :"",  
+    // sim_enng
+    remarks:"" ,  
+    distance:"",  
+    credit_limit :null,  
+    credit_period:"",  
+    range:"",  
+    division:"",  
+    comm:"",  
+    ecc_no:"",  
+    ser_tax_no:"",  
+    pan_no:"",  
+    tin_no:"",  
+    cst_no:"",  
+    lst_no:"",  
+    pla_no:"",  
+    edit:"",  
+    hide:"",  
+    boarding_id:"",  
+    delivery_id:"",  
+    exciseduty_id:"",  
+    finance_id:"",  
+    freight_id:"",  
+    insurance_id :"",  
+    inspection_id :"",  
+    ld_id:"",  
+    loading_id:"",  
+    mode_of_dispatch_id:"",  
+    octroi_id:"",  
+    payment_id:"",  
+    pf_id:"",  
+    salestax_id:"",  
+    servicetax_id:"",  
+    validity_id:"",  
+    conveyance_id:"",  
+    travel_id:"",  
     user_name: localStorage.getItem("userName"),
-    new_identity: null,
-    pf_id: "",
-    exciseduty_id: "",
-    salestax_id: "",
-    freight_id: "",
-    insurance_id: "",
-    inspection_id: "",
-    mode_of_dispatch_id: "",
-    delivery_id: "",
-    octroi_id: "",
-    servicetax_id: "",
-    travel_id: "",
-    conveyance_id: "",
-    loading_id: "",
-    boarding_id: "",
-    ld_id: "",
-    validity_id: "",
-    payment_id: "",
-    finance_id: "",
-    tcs_per: "",
-    add_user_id: "",
-    edit_user_id: "",
-    edit_user_name: "",
-    add_user_name: "",
-    edatetime: "",
+    user_id: localStorage.getItem("userId"),
+    account_type:"",
     cpersonList: [],
     partyList: [],
   });
+  useEffect(() => {
+    CommonController.commonApiCallFilter(
+      "master/dropdown_term_and_condition",{},"post","node"
+    ).then((data) => {
+      console.log(data)
+      const list = {
+        pfList: data.pf,
+        exciseDutyList: data.exciseDuty,
+        salesTaxList: data.saleTax,
+        freightList: data.freight,
+        insuranceList: data.insurance,
+        inspectionList: data.inspection,
+        modList: data.modeOfDispatch,
+        deliveryList: data.delivery,
+        octroiList: data.octroi,
+        servicetaxList: data.serviceTax,
+        travelChgrList: data.travel,
+        conveyanceList: data.conveyance,
+        loadingList: data.loading,
+        boardingList: data.boarding,
+        validityList: data.validity,
+        paymentList: data.payment,
+        financeList: data.finance,
+        ldList: data.ld,
+      };
+      setdropdownList(list);
+    });
+  }, []);
 
   useEffect(() => {
     if (selectedIdResponse) {
@@ -101,22 +120,22 @@ const AddAccountMaster = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleAutoChange = (key1, key2, value) => {
+    console.log(value[key1])
+    console.log(value)
+    console.log(key1)
+    console.log(key2)
     let tempFormData = { ...formData };
 
     if (key1.trim() != "") {
-      tempFormData[key1] = value?.id;
+      tempFormData[key1] = value[key1];
     }
 
     if (key2.trim() != "") {
-      tempFormData[key2] = value?.value;
+      tempFormData[key2] = value[key2]
     }
     setFormData(tempFormData);
   };
-
-  console.log(formData);
-
   const saveForm = () => {
     let _formData = { ...formData };
 
@@ -126,15 +145,18 @@ const AddAccountMaster = () => {
     }
 
     CommonController.commonApiCallFilter(
-      "Account/AccountMasterInsert",
-      _formData
+      "master/insert_account_master",
+      _formData,"post","node"
     ).then((data) => {
-      if (data.valid) {
+      if (data.status===200) {
+        handleAddAccount()
         showSuccessToast(
           `Account Details ${
             selectedIdResponse ? "updated" : "saved"
           } successfully`
         );
+      }else {
+        showErrorToast("something went wrong");
       }
     });
   };
@@ -180,14 +202,19 @@ const AddAccountMaster = () => {
             formData={formData}
             handleChange={handleChange}
             handleAutoChange={handleAutoChange}
-            handleCPersonList={(arr) =>
-              setFormData({ ...formData, cpersonList: arr })
+            removeIndex={(data)=>setFormData({...formData,cpersonList:data})}
+            handleCPersonList={(arr) =>{
+              let cperson={...formData};
+              cperson.cpersonList.push(arr);
+              console.log(cperson);
+              setFormData(cperson);
+            }
             }
           />
         )}
 
         {selectedIndex === 2 && (
-          <AccountTNC formData={formData} handleChange={handleChange} />
+          <AccountTNC formData={formData} handleChange={handleChange} list={dropdownList} />
         )}
       </div>
       <div className="col-md-12 text-right">
@@ -213,7 +240,7 @@ const AddAccountMaster = () => {
           </Button>
         )}
 
-        <Button
+     {selectedIndex==2&&<Button
           variant="contained"
           onClick={saveForm}
           color="primary"
@@ -221,6 +248,7 @@ const AddAccountMaster = () => {
         >
           Submit
         </Button>
+        }   
       </div>
     </React.Fragment>
   );

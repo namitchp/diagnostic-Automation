@@ -1,7 +1,6 @@
 import produce from "immer";
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "../actions/auth.action";
-
 const initialState = {
     isAuthenticated:false,
     token:null,
@@ -11,14 +10,11 @@ const initialState = {
     getOtpResponse:{},
     decryptUserDetails:null
 }
-
-
 export const authReducer = createReducer(initialState, {
     [actions.requestStatus.toString()]: (state, action) =>
         produce (state, (draft) => {
             draft.loadingStatus = action.payload;
     }),
-
     [actions.checkAuthCredResponse.toString()]: (state, action) =>
         produce (state, (draft) => {
             draft.isValidCred = action.payload.valid;

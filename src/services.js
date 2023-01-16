@@ -10,6 +10,7 @@ export const userService = {
   localget,
   jsonpost,
   image,
+  uploadImage
   // getStatus
 };
 
@@ -20,6 +21,23 @@ function post(apiEndpoint, payload, domain) {
       payload,
       getOptions()
     )
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.response !== undefined && err.response.status === 401) {
+        // window.open('/','_self');
+      } else {
+        //alert('operation not able to perform');
+      }
+      return err;
+    });
+}
+
+function uploadImage(apiEndpoint, payload) {
+  return axios
+    .post(config.nodeUrl + apiEndpoint, payload, getOptionImage())
     .then((response) => {
       return response;
     })
