@@ -1,7 +1,9 @@
 import { Button } from "@material-ui/core";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
+
 export const showSuccessToast = (msg) => {
   toast.success(msg, {
     position: "bottom-right",
@@ -13,7 +15,6 @@ export const showSuccessToast = (msg) => {
     theme: "colored",
   });
 };
-
 export const showErrorToast = (msg) => {
   toast.error(msg, {
     position: "bottom-right",
@@ -25,7 +26,10 @@ export const showErrorToast = (msg) => {
     theme: "colored",
   });
 };
-
+export const UserRight=()=>{
+  const thirdmenu=useSelector((state)=>state.common.userRightListThird)
+  console.log(thirdmenu)
+}
 export const buttonLoader = (loading, label, onClick, color) => {
   return (
     <Button
@@ -41,7 +45,9 @@ export const buttonLoader = (loading, label, onClick, color) => {
 };
 export const getBrowseUserRight = (response) => {
   const pathArr = window.location.pathname.split("/").filter((x) => x != "");
-  return response.data.filter((x) => x.transaction_name.toLowerCase() == pathArr[0])[0]
+  // console.log(pathArr);
+  // console.log(response?.filter((x) => x.transaction_name.toLowerCase() == pathArr[2]));
+  return response?.filter((x) => x.transaction_name.toLowerCase() == pathArr[2])[0]
 };
 
 export const getAutoValue = (key, arr, val) => {

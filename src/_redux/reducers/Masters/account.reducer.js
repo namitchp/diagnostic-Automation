@@ -5,11 +5,10 @@ import * as actions from "../../actions/masters/account.action";
 
 const initialState = {
   isLoading: false,
-  searchAccountMasterData: {},
-  accountFilterList: null,
+  searchAccountMasterData:[],
+  accountFilterList:null,
   selectedAccountDetails: null,
 };
-
 export const AccountMasterReducer = createReducer(initialState, {
   [actions.searchAccountMasterData.toString()]: (state, action) =>
     produce(state, (draft) => {

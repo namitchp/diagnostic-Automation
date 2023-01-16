@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 const ThirdMenu = (props) => {
   const { list, onMenuChange } = props;
   const selectedMenu = window.location.pathname.split("/")[1];
-  const selectedSubMenu = window.location.pathname.split("/")[2];
-  const thirdMenu = window.location.pathname.split("/")[3];
+  const id1 = window.location.pathname.split("/")[2];
+  const selectedSubMenu = window.location.pathname.split("/")[3];
+  const id2 = window.location.pathname.split("/")[4];
+  const thirdMenu = window.location.pathname.split("/")[5];
 
   return (
-    <div className="header-bottom submenu">
+    <div className="header-bottom third">
       <div className="px-3">
         <div className="header-navs header-navs-left">
           <ul className="menu-nav mb-0 list-unstyled d-flex flex-wrap">
@@ -34,13 +36,13 @@ const ThirdMenu = (props) => {
                               .replace(/[^a-zA-Z ]/g, "")
                               .replace(/\s+/g, "-")
                               .toLowerCase()
-                              ? "active"
+                              ? "bg-danger text-white"
                               : "")
                           }
-                          to={`/${selectedMenu?.toLowerCase()}/${selectedSubMenu?.toLowerCase()}/${item.transaction_name
+                          to={`/${selectedMenu?.toLowerCase()}/${id1}/${selectedSubMenu?.toLowerCase()}/${id2}/${item.transaction_name
                             .replace(/[^a-zA-Z ]/g, "")
                             .replace(/\s+/g, "-")
-                            .toLowerCase()}`}
+                            .toLowerCase()}/${item.transaction_id}`}
                         >
                           {" "}
                           <span className="menu-text">

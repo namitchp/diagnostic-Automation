@@ -6,7 +6,6 @@ import { ConfigurationMasterReducer } from "./Masters/configuration.reducer";
 import { ProductMasterReducer } from "./Masters/product.reducer";
 import { MaterialCodeMasterReducer } from "./Masters/materialcode.reducer";
 import { AllReducers } from "./Masters/all.reducer";
-
 const createRootReducer = () =>
   combineReducers({
     auth: authReducer,

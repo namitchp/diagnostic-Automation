@@ -1,8 +1,6 @@
 import { MenuItem, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { CommonController } from "../../../_redux/controller/common.controller";
-
-const AccountTNC = ({ formData, handleChange }) => {
+const AccountTNC = ({ formData, handleChange,list }) => {
   const [dropDownValues, setDropDownValues] = useState({
     pfList: [],
     exciseDutyList: [],
@@ -23,36 +21,9 @@ const AccountTNC = ({ formData, handleChange }) => {
     financeList: [],
     ldList: [],
   });
-
-  console.log(dropDownValues);
-
   useEffect(() => {
-    CommonController.commonApiCallFilter(
-      "Dropdown/AccountTermConditionDropdown"
-    ).then((data) => {
-      const list = {
-        pfList: data.pfList,
-        exciseDutyList: data.exciseDutyList,
-        salesTaxList: data.salesTaxList,
-        freightList: data.freightList,
-        insuranceList: data.insuranceList,
-        inspectionList: data.inspectionList,
-        modList: data.modList,
-        deliveryList: data.deliveryList,
-        octroiList: data.octroiList,
-        servicetaxList: data.servicetaxList,
-        travelChgrList: data.travelChgrList,
-        conveyanceList: data.conveyanceList,
-        loadingList: data.loadingList,
-        boardingList: data.boardingList,
-        validityList: data.validityList,
-        paymentList: data.paymentList,
-        financeList: data.financeList,
-        ldList: data.ldList,
-      };
       setDropDownValues(list);
-    });
-  }, []);
+  }, [list]);
 
   return (
     <div className="row">
@@ -69,8 +40,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.pfList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.pf_id} value={option.pf_id}>
+              {option.pf_name}
             </MenuItem>
           ))}
         </TextField>
@@ -81,15 +52,15 @@ const AccountTNC = ({ formData, handleChange }) => {
           select
           label="Service Tax"
           fullWidth
-          name="pf_id"
-          value={formData.pf_id}
+          name="servicetax_id"
+          value={formData.servicetax_id}
           onChange={handleChange}
           variant="outlined"
           size="small"
         >
           {dropDownValues?.servicetaxList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.servicetax_id} value={option.servicetax_id}>
+              {option.servicetax_name}
             </MenuItem>
           ))}
         </TextField>
@@ -107,8 +78,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.exciseDutyList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.exciseduty_id} value={option.exciseduty_id}>
+              {option.exciseduty_name}
             </MenuItem>
           ))}
         </TextField>
@@ -126,8 +97,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.travelChgrList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.travel_id} value={option.travel_id}>
+              {option.travel_name}
             </MenuItem>
           ))}
         </TextField>
@@ -145,8 +116,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.salesTaxList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.salestax_id} value={option.salestax_id}>
+              {option.salestax_name}
             </MenuItem>
           ))}
         </TextField>
@@ -164,8 +135,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.conveyanceList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.conveyance_id} value={option.conveyance_id}>
+              {option.conveyance_name}
             </MenuItem>
           ))}
         </TextField>
@@ -183,8 +154,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.freightList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.freight_id} value={option.freight_id}>
+              {option.freight_name}
             </MenuItem>
           ))}
         </TextField>
@@ -202,8 +173,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.loadingList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.loading_id} value={option.loading_id}>
+              {option.loading_name}
             </MenuItem>
           ))}
         </TextField>
@@ -221,8 +192,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.insuranceList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.insurance_id} value={option.insurance_id}>
+              {option.insurance_name}
             </MenuItem>
           ))}
         </TextField>
@@ -240,8 +211,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.boardingList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.boarding_id} value={option.boarding_id}>
+              {option.boarding_name}
             </MenuItem>
           ))}
         </TextField>
@@ -259,8 +230,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.inspectionList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.inspection_id} value={option.inspection_id}>
+              {option.inspection_name}
             </MenuItem>
           ))}
         </TextField>
@@ -278,8 +249,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.ldList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.ld_id} value={option.ld_id}>
+              {option.ld_name}
             </MenuItem>
           ))}
         </TextField>
@@ -297,8 +268,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.modList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.mode_of_dispatch_id} value={option.mode_of_dispatch_id}>
+              {option.mode_of_dispatch_name}
             </MenuItem>
           ))}
         </TextField>
@@ -316,8 +287,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.validityList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.validity_id} value={option.validity_id}>
+              {option.validity_name}
             </MenuItem>
           ))}
         </TextField>
@@ -335,8 +306,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.deliveryList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.delivery_id} value={option.delivery_id}>
+              {option.delivery_name}
             </MenuItem>
           ))}
         </TextField>
@@ -354,8 +325,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.paymentList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.payment_id} value={option.payment_id}>
+              {option.payment_name}
             </MenuItem>
           ))}
         </TextField>
@@ -373,8 +344,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.octroiList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.octroi_id} value={option.octroi_id}>
+              {option.octroi_name}
             </MenuItem>
           ))}
         </TextField>
@@ -392,8 +363,8 @@ const AccountTNC = ({ formData, handleChange }) => {
           size="small"
         >
           {dropDownValues?.financeList.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.value}
+            <MenuItem key={option.finance_id} value={option.finance_id}>
+              {option.finance_name}
             </MenuItem>
           ))}
         </TextField>

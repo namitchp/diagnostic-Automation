@@ -9,7 +9,6 @@ import CourierIndex from "../pages/logistics/courier";
 import CourierOutIndex from "../pages/logistics/courier/courierOut";
 import CourierInvoiceIndex from "../pages/logistics/courier/invoice";
 // import DeliveryChallanIndex from "../pages/logistics/delivery-challan";
-
 // import DeliveryChallanBrowse from "../pages/logistics/delivery-challan/browse";
 import ChallanIndexMdc from "../pages/logistics/delivery-challan/mdc";
 import SlWipIndex from "../pages/logistics/delivery-challan/slwip/index";
@@ -20,7 +19,6 @@ import MrnDcIndex from "../pages/logistics/material-receipt-note";
 import MrnPoIndex from "../pages/logistics/material-receipt-note/mrn-po";
 import ReturnableIndex from "../pages/logistics/returnable-gate-pass";
 import RrgpIndex from "../pages/logistics/returnable-gate-pass/rrgp";
-
 const Logistics = () => {
   const selectedSubMenu = window.location.pathname.split("/")[2];
   const menuLength=window.location.pathname.split('/').length;
@@ -54,7 +52,6 @@ const Logistics = () => {
           exact
           component={DeliveryChallanIndex}
         /> */}
-  
         {(menuLength<=2||selectedSubMenu==="in")&&<Redirect to="/logistics/in/mrn-dc" from="/logistics" />}
         {selectedSubMenu==="out"&&<Redirect to="/logistics/out/sl-dc" from="/logistics" />}
         {selectedSubMenu==="rgp"&&<Redirect to="/logistics/rgp/rgp" from="/logistics" />}
@@ -65,5 +62,4 @@ const Logistics = () => {
     </div>
   );
 };
-
 export default Logistics;

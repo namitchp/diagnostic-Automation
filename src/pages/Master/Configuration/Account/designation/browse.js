@@ -197,6 +197,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
           }}
           rows={browseListData}
           getRowId={(browseListData) => browseListData.designation_id}
+          getRowClassName={(params)=>params.row.designation_id%2?"odd" :"even"}
         />
       </div>
     </>

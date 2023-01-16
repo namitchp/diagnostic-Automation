@@ -14,8 +14,8 @@ export const ProductMasterController = {
 
 async function getProductBrowse(params , filters) {
     try {
-        let apiEndpoint = `Product/ProductMasterBrowse?filter_value=${params.filter_value}&page_number=${params.pageNo}&page_size=${params.pageSize}&sort_column=${params.sort_column}&sort_order=${params.sort_order}`;
-        let response = await userService.post(apiEndpoint , filters);
+        let apiEndpoint = `master/browse_product_master?filter_value=${params.filter_value}&page_number=${params.pageNo}&page_size=${params.pageSize}&sort_column=${params.sort_column}&sort_order=${params.sort_order}`;
+        let response = await userService.post(apiEndpoint , filters,"node");
         
         if (response) {
             return (response.data);
@@ -35,8 +35,8 @@ async function getProductBrowse(params , filters) {
 
 async function getCategoryList() {
     try {   
-        let apiEndpoint = `Dropdown/GetCategoryList`;
-        let response = await userService.post(apiEndpoint);
+        let apiEndpoint = `master/dropdown_product`;
+        let response = await userService.post(apiEndpoint,"","node");
         
         if (response) {
             return (response.data);
@@ -101,8 +101,8 @@ async function getGGNameList() {
 
 async function updateProductVerifyStatus(param) {
     try {   
-        let apiEndpoint = `Product/UpdateProductEdit`;
-        let response = await userService.post(apiEndpoint,param);
+        let apiEndpoint = `master/update_product_edit`;
+        let response = await userService.post(apiEndpoint,param,"node");
         
         if (response) {
             return (response.data);
@@ -123,8 +123,8 @@ async function updateProductVerifyStatus(param) {
 
 async function updateProductListPrice(param) {
     try {   
-        let apiEndpoint = `Product/UpdateProductListPrice`;
-        let response = await userService.post(apiEndpoint,param);
+        let apiEndpoint = `master/update_product_list_price`;
+        let response = await userService.post(apiEndpoint,param,"node");
         
         if (response) {
             return (response.data);
@@ -145,8 +145,8 @@ async function updateProductListPrice(param) {
 
 async function updateProductLpRef(param) {
     try {   
-        let apiEndpoint = `Product/UpdateProductLPRef`;
-        let response = await userService.post(apiEndpoint,param);
+        let apiEndpoint = `master/update_product_lpf`;
+        let response = await userService.post(apiEndpoint,param,"node");
         
         if (response) {
             return (response.data);
@@ -163,12 +163,10 @@ async function updateProductLpRef(param) {
         return null;
     }
 }
-
 async function updateProductMovingNonMoving(param) {
     try {   
-        let apiEndpoint = `Product/UpdateProductMovingNonMoving`;
-        let response = await userService.post(apiEndpoint,param);
-        
+        let apiEndpoint = `master/update_product_moving`;
+        let response = await userService.post(apiEndpoint,param,"node");
         if (response) {
             return (response.data);
         }

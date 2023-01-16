@@ -1,5 +1,4 @@
 import { userService } from "../../../services";
-
 export const AccountMasterController = {
     browseAccountData,
     getAccountMasterFilters,
@@ -9,10 +8,8 @@ export const AccountMasterController = {
 }
 async function browseAccountData(filters,params) {
     try {
-        let apiEndpoint = `Account/AccountMasterBrowse?filter_value=${params.filter_value}&page_number=${params.pageNo}&page_size=${params.pageSize}&sort_column=${params.sort_column}&sort_order=${params.sort_order}`;
-
-        let response = await userService.post(apiEndpoint,filters);
-        
+        let apiEndpoint = `master/browse_account_master?filter_value=${params.filter_value}&page_number=${params.pageNo}&page_size=${params.pageSize}&sort_column=${params.sort_column}&sort_order=${params.sort_order}`;
+        let response = await userService.post(apiEndpoint,filters,"node");
         if (response) {
             return (response.data);
         }
@@ -28,14 +25,10 @@ async function browseAccountData(filters,params) {
         return null;
     }
 }
- 
-
 async function getAccountMasterFilters() {
     try {
-        let apiEndpoint = `Dropdown/AccountMasterDropdown`;
-
-        let response = await userService.post(apiEndpoint,{});
-        
+        let apiEndpoint = `master/listGroupFilterMarketingEngg`;
+        let response = await userService.post(apiEndpoint,{},"node");
         if (response) {
             return (response.data);
         }
@@ -51,7 +44,6 @@ async function getAccountMasterFilters() {
         return null;
     }
 }
- 
 async function getSelectedAccountDetails(payload) {
     try {
         let apiEndpoint = `Account/AccountMasterPreview`;
@@ -92,7 +84,6 @@ async function accountHideUpdate(payload) {
         return null;
     }
 }
-
 async function updateAccountVerified(payload) {
     try {
         let apiEndpoint = `Account/UpdateAccountEdit`;

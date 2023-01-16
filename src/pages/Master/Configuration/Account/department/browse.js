@@ -171,6 +171,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
           disableColumnFilter
           pageSize={params.pageSize}
           page={params.pageNo}
+          getRowClassName={(params)=>params.row.department_id%2?"odd" :"even"}
           rowsPerPageOptions={[10, 15, 25, 100]}
           rowCount={totalRecord}
           paginationMode="server"

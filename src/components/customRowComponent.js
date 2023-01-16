@@ -29,8 +29,6 @@ const useStyles = makeStyles(
   }),
   { defaultTheme },
 );
-
-
 export default function CustomNoRowsOverlay() {
     const classes = useStyles();
   

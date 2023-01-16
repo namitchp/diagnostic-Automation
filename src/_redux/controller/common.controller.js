@@ -1,7 +1,8 @@
 import { userService } from "../../services";
-
 export const CommonController = {
   getUserRightsList,
+  getUserRightsListSecond,
+  getUserRightsListThird,
   currenyMasking,
   getUserFilterList,
   tablePickerController, 
@@ -9,8 +10,10 @@ export const CommonController = {
   commonApiCallFilter,
   commonJsonUpdate,
   commonApiFile,
+  updateFilterData,
+  getFilterData,
+  imageUpoad
 };
-
 async function getUserRightsList() {
   try {
     let apiEndpoint = `menu/menu_list_level1?user_id=${localStorage.getItem(
@@ -32,7 +35,82 @@ async function getUserRightsList() {
     return null;
   }
 }
+async function getUserRightsListSecond(id) {
+  try {
+    let apiEndpoint = `menu/menu_list_level2?menu_id=${id}`;
+    let response = await userService.post(apiEndpoint,{user_id:localStorage.getItem(
+      "userId"
+    )},"node");
+    if (response) {
+      return response.data;
+    } else {
+      if (response.data.status !== 500) {
+        alert(response.data);
+      }
+      return null;
+    }
+  } catch (error) {
+    console.log("error", error);
+    return null;
+  }
+}
+async function getUserRightsListThird(id) {
+  try {
+    let apiEndpoint = `menu/menu_list_level3?menu_id=${id}`;
 
+    let response = await userService.post(apiEndpoint,{user_id:localStorage.getItem(
+      "userId"
+    )},"node");
+
+    if (response) {
+      return response.data;
+    } else {
+      if (response.data.status !== 500) {
+        alert(response.data);
+      }
+      return null;
+    }
+  } catch (error) {
+    console.log("error", error);
+    return null;
+  }
+}
+async function getFilterData(browse_id) {
+  try {
+    let apiEndpoint = `json/read_json?user_id=${localStorage.getItem(
+      "userId")}&browse_id=${browse_id}`;
+    let response = await userService.post(apiEndpoint,{},"node");
+
+    if (response) {
+      return response.data;
+    } else {
+      if (response.data.status !== 500) {
+        alert(response.data);
+      }
+      return null;
+    }
+  } catch (error) {
+    console.log("error", error);
+    return null;
+  }
+}
+async function updateFilterData(body) {
+  try {
+    let apiEndpoint = `json/write_json`
+    let response = await userService.post(apiEndpoint,body,"node");
+    if (response) {
+      return response.data;
+    } else {
+      if (response.data.status !== 500) {
+        alert(response.data);
+      }
+      return null;
+    }
+  } catch (error) {
+    console.log("error", error);
+    return null;
+  }
+}
 async function getUserFilterList() {
   try {
     let apiEndpoint = `user/get_user_filter?user_id=${localStorage.getItem(
@@ -71,7 +149,6 @@ export function currenyMasking(val) {
 }
 
 async function tablePickerController(url, params, domain = "") {
-  console.log(domain);
   try {
     let apiEndpoint = `${url}?filter_value=${params.filter_value}&page_number=${params.pageNo}&page_size=${params.pageSize}&sort_column=${params.sort_column}&sort_order=${params.sort_order}`;
     let response = await userService.post(apiEndpoint, {}, domain);
@@ -126,6 +203,21 @@ async function commonApiFile(url, body) {
   }
 }
 
+async function imageUpoad(url,body){
+  try{
+   let  response=await userService.uploadImage(url, body);
+   if (response) {
+    return response.data;
+  } else {
+    if (response.data.status !== 500) {
+      alert(response.data);
+    }
+  }
+  }catch(err){
+    console.log("error", err);
+    return null;
+  }
+}
 async function commonApiCallFilter(url, body, type = "post", domain = "") {
   
   try {

@@ -13,7 +13,7 @@ function* getProductBrowseSaga (action) {
 }
 
 function* getCategoryListSaga (action) {
-    try {   
+    try {    
         const response = yield ProductMasterController.getCategoryList();
         yield put(getCategoryListSuccess(response));
     } catch (error) {

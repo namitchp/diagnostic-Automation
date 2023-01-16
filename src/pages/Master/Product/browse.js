@@ -15,9 +15,6 @@ import ActionButtons from "../../../components/action-buttons";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
 import { selectedProductId } from "../../../_redux/actions/masters/all.action";
 import {
-  getCategoryList,
-  getGGNameList,
-  getLPRefList,
   getProductListBrowse,
   updateProductListPrice,
   updateProductLPRef,
@@ -25,6 +22,9 @@ import {
   updateProductVerifiedStatus,
 } from "../../../_redux/actions/masters/product.action";
 import { CommonController } from "../../../_redux/controller/common.controller";
+import CustomPagination from "../../../components/CustomPagination";
+import CustomNoRowsOverlay from "../../../components/customRowComponent";
+import { getFilterData, updateFilterData } from "../../../_redux/actions/common.action";
 const BrowseProductMaster = ({ onEdit }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsloading] = useState(false);
@@ -32,26 +32,21 @@ const BrowseProductMaster = ({ onEdit }) => {
   const getProductListResponse = useSelector(
     (state) => state.ProductMaster.productList
   );
+  const filterjsonData = useSelector((state) => state.common.getFilterData);
   const getCategoryListResponse = useSelector(
     (state) => state.ProductMaster.categoryList
-  );
-  const getLpRefListResponse = useSelector(
-    (state) => state.ProductMaster.lpRefList
-  );
-  const getGGNameListResponse = useSelector(
-    (state) => state.ProductMaster.ggNameList
   );
   const [categoryList, setCategoryList] = useState([]);
   const [lpRefList, setLpRefList] = useState([]);
   const [ggNameList, setGGNameList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [productList, setProductList] = useState([]);
   const [tempVerifed, setTempVerified] = useState([]);
+  const [totalRecord, setTotalRecords] = useState(0);
+  const [jsonfilter, setjsonfilter] = useState(false)
 
   const [productMasterFilter, setProductMasterFilter] = useState({
-    user_id: localStorage.getItem("userId"),
-    moving_non_moving: "all",
-    category: selectedCategory ? selectedCategory.value : "",
+    moving_non_moving: "All",
+    category:"",
     group: "",
     gg_name: "",
     item_name: "",
@@ -67,81 +62,93 @@ const BrowseProductMaster = ({ onEdit }) => {
     sort_column: "",
     sort_order: "",
   });
-
+  
+  const handleUpdateFilterData = () => {
+    let body = {
+      filterPage: { ...params },
+      filterData: { ...productMasterFilter },
+    };
+    body.user_id = localStorage.getItem("userId");
+    body.browse_id = 3;
+    dispatch(updateFilterData(body));
+    // if (updatefilterjsonData.status == 200) {
+    //   // dispatch(getFilterData(1));
+    // }
+  };
   const handleFilters = (event) => {
     setProductMasterFilter({
       ...productMasterFilter,
       [event.target.name]: event.target.value,
     });
+setjsonfilter(true)
   };
-
   const handleCategory = (event, value) => {
-    setSelectedCategory(value);
     setProductMasterFilter({
       ...productMasterFilter,
-      category: value ? value.value : "",
+      category: value.category_name
     });
+setjsonfilter(true)
   };
-
   const handleParams = (event) => {
     setTimeout(() => {
       setParams({ ...params, [event.target.name]: event.target.value });
+setjsonfilter(true)
     }, 800);
   };
 
   const handlePageSizeChange = (param) => {
-    setParams({ ...params, pageSize: param.pageSize });
+    setParams({ ...params, pageSize: param });
+setjsonfilter(true)
+
   };
   const handlePageChange = (param) => {
-    console.log(param);
-    setParams({ ...params, pageNo: param.page });
+    if(param>0){
+      setParams({ ...params, pageNo: param});
+      setjsonfilter(true)
+    }
+   
   };
+  useEffect(() => {
+    dispatch(getFilterData(3));
+  }, [])
+  useEffect(() => {
+    if (filterjsonData) {
+      setParams(filterjsonData.data.filterPage);
+      setProductMasterFilter(filterjsonData.data.filterData);
+    }
+  }, [filterjsonData]);
 
   useEffect(() => {
-    dispatch(getProductListBrowse(params, productMasterFilter));
-    dispatch(getCategoryList());
-    dispatch(getLPRefList());
-    dispatch(getGGNameList());
-  }, []);
-
-  useEffect(() => {
-    dispatch(getProductListBrowse(params, productMasterFilter));
+    let productMaster={...productMasterFilter};
+    productMaster.user_id=localStorage.getItem("userId")
+    dispatch(getProductListBrowse(params, productMaster));
+    if(jsonfilter){
+      handleUpdateFilterData()
+    }
   }, [productMasterFilter, params]);
 
   useEffect(() => {
     setIsloading(stateLoading);
     if (getProductListResponse) {
       setProductList(getProductListResponse.data);
+      setTotalRecords(getProductListResponse.totalRecords)
     }
   }, [getProductListResponse, stateLoading]);
 
   useEffect(() => {
     setIsloading(stateLoading);
     if (getCategoryListResponse) {
-      setCategoryList(getCategoryListResponse);
+      setCategoryList(getCategoryListResponse.category);
+      setLpRefList(getCategoryListResponse.lp);
+      setGGNameList(getCategoryListResponse.gg);
     }
   }, [getCategoryListResponse, stateLoading]);
-
-  useEffect(() => {
-    setIsloading(stateLoading);
-    if (getLpRefListResponse) {
-      setLpRefList(getLpRefListResponse);
-    }
-  }, [getLpRefListResponse, stateLoading]);
-
-  useEffect(() => {
-    setIsloading(stateLoading);
-    if (getGGNameListResponse) {
-      setGGNameList(getGGNameListResponse);
-    }
-  }, [getGGNameListResponse, stateLoading]);
-
   const updateVerifiedStatus = (value, id) => {
     var temp = [...tempVerifed];
     var tempIndex = temp.indexOf(id);
     const param = {
       product_id: id,
-      edit: value ? "1" : "0",
+      edit: value,
       user_id: localStorage.getItem("userId"),
     };
 
@@ -175,7 +182,6 @@ const BrowseProductMaster = ({ onEdit }) => {
     };
     dispatch(updateProductLPRef(params));
   };
-
   const updateProductMovingNonValue = (param, event) => {
     const params = {
       product_id: param.row.product_id,
@@ -202,7 +208,6 @@ const BrowseProductMaster = ({ onEdit }) => {
       }
     });
   };
-
   return (
     <React.Fragment>
       <div className="filter_box mb-5">
@@ -216,10 +221,10 @@ const BrowseProductMaster = ({ onEdit }) => {
                 id="combo-box-demo"
                 className="mb-3"
                 options={categoryList}
-                getOptionLabel={(option) => option.value}
+                getOptionLabel={(option) => option.category_name}
                 fullWidth
                 onChange={handleCategory}
-                value={selectedCategory || null}
+                value={productMasterFilter.category!=""?{category_name:productMasterFilter.category}:null}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -239,7 +244,7 @@ const BrowseProductMaster = ({ onEdit }) => {
                   name="group_name"
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={""}
+                  value={productMasterFilter.group}
                   onChange={handleFilters}
                   label="Group"
                 >
@@ -256,7 +261,7 @@ const BrowseProductMaster = ({ onEdit }) => {
                   name="item_name"
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={""}
+                  value={productMasterFilter.item_name}
                   label="Item Name"
                 >
                   <MenuItem value="">All</MenuItem>
@@ -281,8 +286,8 @@ const BrowseProductMaster = ({ onEdit }) => {
                   {lpRefList.length > 0
                     ? lpRefList.map((ref, index) => {
                         return (
-                          <MenuItem key={"ref" + index} value={ref.value}>
-                            {ref.value}
+                          <MenuItem key={"ref" + index} value={ref.lp_ref}>
+                            {ref.lp_ref}
                           </MenuItem>
                         );
                       })
@@ -308,8 +313,8 @@ const BrowseProductMaster = ({ onEdit }) => {
                   {ggNameList.length > 0
                     ? ggNameList.map((gg, index) => {
                         return (
-                          <MenuItem key={"ggName" + index} value={gg.id}>
-                            {gg.value}
+                          <MenuItem key={"ggName" + index} value={gg.gg_name}>
+                            {gg.gg_name}
                           </MenuItem>
                         );
                       })
@@ -333,6 +338,27 @@ const BrowseProductMaster = ({ onEdit }) => {
                   <MenuItem value={""}>All</MenuItem>
                   <MenuItem value={"Siemens"}>Siemens </MenuItem>
                   <MenuItem value={"Non-Siemens"}>Non-Siemens</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className="col-md-2">
+              <FormControl fullWidth size="small" variant="outlined">
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Moving
+                </InputLabel>
+                <Select
+                  name="moving_non_moving"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={productMasterFilter.moving_non_moving}
+                  onChange={handleFilters}
+                  label="Siemens Product"
+                >
+                  <MenuItem value={"All"}>All</MenuItem>
+                  <MenuItem value={"Old"}>Old </MenuItem>
+                  <MenuItem value={"New"}>New</MenuItem>
+                  <MenuItem value={"Panel"}>Panel</MenuItem>
+                  <MenuItem value={"Asset"}>Asset</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -364,6 +390,7 @@ const BrowseProductMaster = ({ onEdit }) => {
                 name="filter_value"
                 label="Search"
                 variant="outlined"
+                value={params?.filter_value}
               />
             </div>
             <div className="col-md-2 text-right">
@@ -379,19 +406,30 @@ const BrowseProductMaster = ({ onEdit }) => {
         <DataGrid
           pagination
           disableColumnFilter
-          pageSize={params.pageSize}
-          page={params.pageNo}
-          rowsPerPageOptions={[15, 25, 50, 100]}
-          rowCount={getProductListResponse?.recordsFiltered}
+          pageSize={params?.pageSize}
+          page={params?.pageNo}
+          rowsPerPageOptions={[10, 25, 50, 100]}
+          rowCount={totalRecord}
           paginationMode="server"
           onPageSizeChange={handlePageSizeChange}
           onPageChange={handlePageChange}
+          getRowClassName={(params) => {
+            return params.row.product_id % 2 === 0 ? "even" : "odd";
+          }}
           loading={isLoading}
-          rowHeight={30}
-          initialState={{}}
-          components={{}}
+          rowHeight={36}
+          components={
+            productList.length > 0
+              ?
+             {
+                  Pagination: CustomPagination,
+                  // NoRowsOverlay: CustomNoRowsOverlay,
+                }
+              : {}
+          }
           onSortModelChange={(sort) => {
             if (sort.length > 0) {
+              setjsonfilter(true);
               setParams({
                 ...params,
                 sort_column: sort[0].field,
@@ -509,7 +547,7 @@ const BrowseProductMaster = ({ onEdit }) => {
                   className={"formControlLabel"}
                   control={
                     <Checkbox
-                      defaultChecked={params.row.edit === "True"}
+                      defaultChecked={params.row.edit === true}
                       size="small"
                       color="primary"
                       onChange={(event) =>
@@ -527,16 +565,16 @@ const BrowseProductMaster = ({ onEdit }) => {
                     <span
                       className={
                         "font_13 " +
-                        (params.row.edit === "True" ||
-                        tempVerifed.indexOf(params.row.id) > -1
+                        (params.row.edit ===true ||
+                        tempVerifed.indexOf(params.row.product_id) > -1
                           ? "text-success"
                           : "text-danger")
                       }
                     >
                       {isLoading
                         ? "Updating"
-                        : params.row.edit === "True" ||
-                          tempVerifed.indexOf(params.row.id) > -1
+                        : params.row.edit ===true ||
+                          tempVerifed.indexOf(params.row.product_id) > -1
                         ? "Verified"
                         : "Not Verified"}
                     </span>
@@ -557,6 +595,7 @@ const BrowseProductMaster = ({ onEdit }) => {
             },
           ]}
           rows={productList}
+          getRowId={(productList) => productList.product_id}
         />
       </div>
     </React.Fragment>

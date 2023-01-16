@@ -1,6 +1,5 @@
-import { TextField, Button, MenuItem } from "@material-ui/core";
+import { TextField} from "@material-ui/core";
 import { DataGrid } from "@mui/x-data-grid";
-
 import React, { useEffect, useState } from "react";
 import {
   CommonController,
@@ -197,6 +196,8 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
           }}
           rows={browseListData}
           getRowId={(browseListData) => browseListData.group_id}
+          // getRowClassName={(params,i)=>console.log(param)}
+          getRowClassName={(params)=>params.row.group_id%2?"odd" :"even"}
         />
       </div>
     </>
