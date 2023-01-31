@@ -1,38 +1,32 @@
 import { MenuItem, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { showErrorToast } from "../../../components/common";
-import { CommonController } from "../../../_redux/controller/common.controller";
-
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { dropdownTechInformation } from "../../../_redux/actions/masters/product.action";
 const OtherInformation = ({ formData, handleChange }) => {
+  const dispatch=useDispatch();
   const [diList, setDiList] = useState([]);
   const [doList, setDoList] = useState([]);
   const [aiList, setAiList] = useState([]);
   const [aoList, setAoList] = useState([]);
   const [fcList, setFcList] = useState([]);
   const [fmList, setFmList] = useState([]);
-
   console.log(formData);
-
+const dropdownList=useSelector(state=>state.ProductMaster.dropdownTech);
+console.log(dropdownList)
+useEffect(() => {
+  dispatch(dropdownTechInformation());
+}, [])
   useEffect(() => {
-    CommonController.commonApiCallFilter("Dropdown/GetProductDi")
-      .then((data) => setDiList(data))
-      .catch((err) => showErrorToast(err));
-    CommonController.commonApiCallFilter("Dropdown/GetProductDo")
-      .then((data) => setDoList(data))
-      .catch((err) => showErrorToast(err));
-    CommonController.commonApiCallFilter("Dropdown/GetProductAi")
-      .then((data) => setAiList(data))
-      .catch((err) => showErrorToast(err));
-    CommonController.commonApiCallFilter("Dropdown/GetProductAo")
-      .then((data) => setAoList(data))
-      .catch((err) => showErrorToast(err));
-    CommonController.commonApiCallFilter("Dropdown/GetUomProductFc")
-      .then((data) => setFcList(data))
-      .catch((err) => showErrorToast(err));
-    CommonController.commonApiCallFilter("Dropdown/GetProductFm")
-      .then((data) => setFmList(data))
-      .catch((err) => showErrorToast(err));
-  }, []);
+if(dropdownList){
+setDiList(dropdownList.di);
+setDoList(dropdownList.do);
+setAiList(dropdownList.ai);
+setAoList(dropdownList.ao);
+setFcList(dropdownList.fc);
+setFmList(dropdownList.fm);
+}
+  }, [dropdownList]);
 
   return (
     <div className="container-fluid">
@@ -45,15 +39,15 @@ const OtherInformation = ({ formData, handleChange }) => {
             variant="outlined"
             name="di"
             size="small"
-            value={formData.di}
+            value={formData?.di}
             onChange={handleChange}
             fullWidth
           >
             {diList.length > 0 &&
               diList.map((di) => {
                 return (
-                  <MenuItem key={di.value} value={di.value}>
-                    {di.value}
+                  <MenuItem key={di.DI} value={di.DI}>
+                    {di.DI}
                   </MenuItem>
                 );
               })}
@@ -66,7 +60,7 @@ const OtherInformation = ({ formData, handleChange }) => {
             label="Value"
             fullWidth
             name="di_value"
-            value={formData.di_value}
+            value={formData?.di_value}
             onChange={handleChange}
           />
         </div>
@@ -78,15 +72,15 @@ const OtherInformation = ({ formData, handleChange }) => {
             variant="outlined"
             name="do"
             size="small"
-            value={formData.Do}
+            value={formData?.Do}
             onChange={handleChange}
             fullWidth
           >
             {doList.length > 0 &&
               doList.map((_do) => {
                 return (
-                  <MenuItem key={_do.value} value={_do.value}>
-                    {_do.value}
+                  <MenuItem key={_do.Do} value={_do.Do}>
+                    {_do.Do}
                   </MenuItem>
                 );
               })}
@@ -99,7 +93,7 @@ const OtherInformation = ({ formData, handleChange }) => {
             label="Value"
             fullWidth
             name="do_value"
-            value={formData.do_value}
+            value={formData?.do_value}
             onChange={handleChange}
           />
         </div>
@@ -111,15 +105,15 @@ const OtherInformation = ({ formData, handleChange }) => {
             variant="outlined"
             name="ai"
             size="small"
-            value={formData.ai}
+            value={formData?.ai}
             onChange={handleChange}
             fullWidth
           >
             {aiList.length > 0 &&
               aiList.map((ai) => {
                 return (
-                  <MenuItem key={ai.value} value={ai.value}>
-                    {ai.value}
+                  <MenuItem key={ai.Ai} value={ai.Ai}>
+                    {ai.Ai}
                   </MenuItem>
                 );
               })}
@@ -132,7 +126,7 @@ const OtherInformation = ({ formData, handleChange }) => {
             label="Value"
             fullWidth
             name="ai_value"
-            value={formData.ai_value}
+            value={formData?.ai_value}
             onChange={handleChange}
           />
         </div>
@@ -144,15 +138,15 @@ const OtherInformation = ({ formData, handleChange }) => {
             variant="outlined"
             name="ao"
             size="small"
-            value={formData.ao}
+            value={formData?.ao}
             onChange={handleChange}
             fullWidth
           >
             {aiList.length > 0 &&
               aoList.map((ao) => {
                 return (
-                  <MenuItem key={ao.value} value={ao.value}>
-                    {ao.value}
+                  <MenuItem key={ao.Ao} value={ao.Ao}>
+                    {ao.Ao}
                   </MenuItem>
                 );
               })}
@@ -164,7 +158,7 @@ const OtherInformation = ({ formData, handleChange }) => {
             size="small"
             label="Value"
             fullWidth
-            value={formData.ao_value}
+            value={formData?.ao_value}
             name="ao_value"
             onChange={handleChange}
           />
@@ -177,15 +171,15 @@ const OtherInformation = ({ formData, handleChange }) => {
             variant="outlined"
             name="fc"
             size="small"
-            value={formData.fc}
+            value={formData?.fc}
             onChange={handleChange}
             fullWidth
           >
             {fcList.length > 0 &&
               fcList.map((fc) => {
                 return (
-                  <MenuItem key={fc.value} value={fc.value}>
-                    {fc.value}
+                  <MenuItem key={fc.Fc} value={fc.Fc}>
+                    {fc.Fc}
                   </MenuItem>
                 );
               })}
@@ -198,7 +192,7 @@ const OtherInformation = ({ formData, handleChange }) => {
             label="Value"
             fullWidth
             name="fc_value"
-            value={formData.fc_value}
+            value={formData?.fc_value}
             onChange={handleChange}
           />
         </div>
@@ -206,19 +200,19 @@ const OtherInformation = ({ formData, handleChange }) => {
           <TextField
             id="outlined-select-currency2"
             select
-            label="Front Connector"
+            label="Function Module"
             variant="outlined"
             name="fm"
             size="small"
-            value={formData.fm}
+            value={formData?.fm}
             onChange={handleChange}
             fullWidth
           >
             {fmList.length > 0 &&
               fmList.map((fm) => {
                 return (
-                  <MenuItem key={fm.value} value={fm.value}>
-                    {fm.value}
+                  <MenuItem key={fm.Fm} value={fm.Fm}>
+                    {fm.Fm}
                   </MenuItem>
                 );
               })}
@@ -231,7 +225,7 @@ const OtherInformation = ({ formData, handleChange }) => {
             label="Value"
             fullWidth
             name="fm_value"
-            value={formData.fm_value}
+            value={formData?.fm_value}
             onChange={handleChange}
           />
         </div>

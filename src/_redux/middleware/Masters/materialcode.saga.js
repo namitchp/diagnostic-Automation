@@ -22,7 +22,7 @@ function* getMaterialCodeBrowseSaga(action) {
 
 function* getPartyNameListSaga(action) {
   try {
-    const listValue = yield MaterialCodeMasterController.getPartyNameList();
+    const listValue = yield MaterialCodeMasterController.getPartyNameList(action.payload);
     yield put(searchPartyNameSuccess(listValue));
   } catch (error) {
     yield null;

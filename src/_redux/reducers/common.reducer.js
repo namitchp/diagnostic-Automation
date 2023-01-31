@@ -2,16 +2,22 @@ import produce from "immer";
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "../actions/common.action";
 const initialState = {
+  userRightResponse:null,
   updateFilterData:null,
   getFilterData:null,
-  userRightListSecond: [],
-  userRightListThird: [],
-  userRightList: [],
+  userRightListSecond:null,
+  userRightListThird:null,
+  userRightList:null,
   menuId: null,
   subMenuId: null,
   filterList: null,
 };
+
 export const commonReducer = createReducer(initialState, {
+  [actions.userRight.toString()]:(state,action)=>
+produce(state,draft=>{
+  draft.userRightResponse=action.payload
+}),
 [actions.getFilterDataResponse.toString()]:(state,action)=>
 produce(state,draft=>{
   draft.getFilterData=action.payload

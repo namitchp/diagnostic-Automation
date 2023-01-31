@@ -43,7 +43,7 @@ export const SimpleTable = ({ columns, rows, onDelete, onPreview, onEdit }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.length > 0 ? (
+          {rows?.length > 0 ? (
             rows.map((row, index) => (
               <TableRow
                 key={rows[columns[0].id]}

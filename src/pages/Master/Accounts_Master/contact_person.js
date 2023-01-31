@@ -13,37 +13,44 @@ import { useSelector } from "react-redux";
 import { SimpleTable } from "../../../components/basic-table";
 import { showSuccessToast } from "../../../components/common";
 import { CommonController } from "../../../_redux/controller/common.controller";
-const ContactPerson = ({ formData, handleChange,removeIndex, handleCPersonList }) => {
+const ContactPerson = ({
+  formData,
+  handleChange,
+  removeIndex,
+  handleCPersonList,
+}) => {
   const filterList = useSelector(
     (state) => state.AccountMaster.accountFilterList
   );
-  console.log(filterList)
-const [formContact, setformContact] = useState({
-  cperson_name:"",
-  company_name:"",
-  department_id:"",
-  department_name:"",
-  designation_name:"",
-  designation_id:"",
-  mobile:"",
-  email:"",
-  phone:"",
-  extn:"", 
-  vcard_path:"",
-})
+  console.log(filterList);
+  const [formContact, setformContact] = useState({
+    cperson_name: "",
+    company_name: "",
+    department_id: "",
+    department_name: "",
+    designation_name: "",
+    designation_id: "",
+    mobile: "",
+    email: "",
+    phone: "",
+    extn: "",
+    vcard_path: "",
+  });
 
-const uploadImage=async(e)=>{
-  let value = e.target.files[0];
-  let formData = new FormData();
-  formData.append("file_path", value);
-  const response=await CommonController.imageUpoad("master/file",formData)
-  if(response.status===200){
-    showSuccessToast("Image Upload successfully")
-    setformContact({...formContact,vcard_path:response.file_name.filename})
-    console.log(response)
-  }
- 
-}
+  const uploadImage = async (e) => {
+    let value = e.target.files[0];
+    let formData = new FormData();
+    formData.append("file_path", value);
+    const response = await CommonController.imageUpoad("master/file", formData);
+    if (response.status === 200) {
+      showSuccessToast("Image Upload successfully");
+      setformContact({
+        ...formContact,
+        vcard_path: response.file_name.filename,
+      });
+      console.log(response);
+    }
+  };
   const columns = [
     {
       id: "cperson_name",
@@ -82,7 +89,7 @@ const uploadImage=async(e)=>{
       label: "Phone",
     },
     {
-      id: "",
+      id: "extn",
       numeric: false,
       disablePadding: true,
       label: "Extn",
@@ -92,50 +99,53 @@ const uploadImage=async(e)=>{
     departmentList: [],
     designationList: [],
   });
-  const handleSaveForm=()=>{
+  const handleSaveForm = () => {
     handleCPersonList(formContact);
-
-  }
-  const handleOnChange=(e,value)=>{
-  setformContact({...formContact,[e.target.name]:e.target.value})
-if(e.target.role==="option"){
-  setformContact({...formContact,department_name:value.department_name,department_id:value.department_id})
-}
-  }
+  };
+  const handleOnChange = (e, value) => {
+    setformContact({ ...formContact, [e.target.name]: e.target.value });
+    if (e.target.role === "option") {
+      setformContact({
+        ...formContact,
+        department_name: value.department_name,
+        department_id: value.department_id,
+      });
+    }
+  };
   const handleRemoveContact = (id) => {
     let personList = formData.cpersonList;
     const itemIndex = personList.findIndex((x) => x === id);
-    console.log(itemIndex)
+    console.log(itemIndex);
     if (itemIndex > -1) {
       personList.splice(itemIndex, 1);
       removeIndex(personList);
     }
   };
   useEffect(() => {
-    if(filterList?.listengg?.length>0)
-    {
-        const values = {
-          departmentList: filterList.department,
-          designationList: filterList.designation,
-        };
-        setDropDownValues(values);
-      }
+    if (filterList?.listengg?.length > 0) {
+      const values = {
+        departmentList: filterList.department,
+        designationList: filterList.designation,
+      };
+      setDropDownValues(values);
+    }
   }, [filterList]);
 
   return (
-    <div className="row">
-      <div className="col-md-4 mb-5">
-        <TextField
-          label="Company Name"
-          fullWidth
-          variant="outlined"
-          name="company_name"
-          value={formData.company_name}
-          size="small"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="col-md-4 mb-5">
+    <div className="row justify-content-sm-around">
+      <div className="col-md-5 mb-5">
+        <div className="col-md-12 mb-5">
+          <TextField
+            label="Company Name"
+            fullWidth
+            variant="outlined"
+            name="company_name"
+            value={formData.company_name}
+            size="small"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="col-md-12 mb-5">
         <TextField
           label="Contact ID"
           disabled
@@ -147,7 +157,7 @@ if(e.target.role==="option"){
           onChange={handleOnChange}
         />
       </div>
-      <div className="col-md-4 mb-5">
+      <div className="col-md-12 mb-5">
         <TextField
           label="Contact Name"
           fullWidth
@@ -158,7 +168,7 @@ if(e.target.role==="option"){
           onChange={handleOnChange}
         />
       </div>
-      <div className="col-md-4 mb-5">
+      <div className="col-md-12 mb-5">
         <Autocomplete
           size="small"
           options={dropDownValues.departmentList}
@@ -171,7 +181,7 @@ if(e.target.role==="option"){
           )}
         />
       </div>
-      <div className="col-md-4 mb-5">
+      <div className="col-md-12 mb-5">
         <Autocomplete
           size="small"
           options={dropDownValues.designationList}
@@ -184,7 +194,7 @@ if(e.target.role==="option"){
           )}
         />
       </div>
-      <div className="col-md-4 mb-5">
+      <div className="col-md-12 mb-5">
         <TextField
           label="Mobile"
           fullWidth
@@ -195,7 +205,7 @@ if(e.target.role==="option"){
           onChange={handleOnChange}
         />
       </div>
-      <div className="col-md-4 mb-5">
+      <div className="col-md-12 mb-5">
         <TextField
           label="Email"
           fullWidth
@@ -206,7 +216,7 @@ if(e.target.role==="option"){
           onChange={handleOnChange}
         />
       </div>
-      <div className="col-md-4 mb-5">
+      <div className="col-md-12 mb-5">
         <TextField
           label="Phone"
           fullWidth
@@ -217,7 +227,7 @@ if(e.target.role==="option"){
           onChange={handleOnChange}
         />
       </div>
-      <div className="col-md-4 mb-5">
+      <div className="col-md-12 mb-5">
         <TextField
           label="Extn."
           fullWidth
@@ -228,14 +238,16 @@ if(e.target.role==="option"){
           onChange={handleOnChange}
         />
       </div>
+      </div>
+
       <div className="col-md-2 mb-2">
-        <InputLabel htmlFor="file-upload" style={{ cursor: "pointer" }} >
-        Company Card
+        <InputLabel htmlFor="file-upload" style={{ cursor: "pointer" }}>
+          Company Card
         </InputLabel>
         <Input
-        id="file-upload"
-        type="file"
-        // style={{ display: "none" }}
+          id="file-upload"
+          type="file"
+          // style={{ display: "none" }}
           label="Extn."
           fullWidth
           // variant="outlined"
@@ -246,7 +258,7 @@ if(e.target.role==="option"){
         />
       </div>
       <div className="col-md-2 mt-5 ml-5 pt-4 ">
-      <Button
+        <Button
           variant="contained"
           onClick={handleSaveForm}
           color="primary"

@@ -9,42 +9,6 @@ import DepartmentIndex from "./department";
 import DesignationIndex from "./designation";
 import SiemensIndex from "./siemens";
 import SupplyItemIndex from "./supply-item";
-
-// const panel = [
-//   {
-//     name: "Group",
-//     component: "",
-//   },
-//   {
-//     name: "Pin Code",
-//     component: "",
-//   },
-//   {
-//     name: "Region",
-//     component: "",
-//   },
-//   {
-//     name: "Rating",
-//     component: "",
-//   },
-//   {
-//     name: "Department",
-//     component: "",
-//   },
-//   {
-//     name: "Designation",
-//     component: "",
-//   },
-//   {
-//     name: "Siemens",
-//     component: "",
-//   },
-//   {
-//     name: "Supply Items",
-//     component: "",
-//   },
-// ];
-
 const ConfigAccountIndex = ({list}) => {
   const [selectedIndex, setSeletedIndex] = useState(0);
 
@@ -85,12 +49,13 @@ const ConfigAccountIndex = ({list}) => {
 
   return (
     <div className="px-3">
-      <AppBar className="rounded light-tab" position="relative" elevation={0}>
+      <AppBar className="rounded " position="relative" elevation={0}>
         <Tabs
           className="w-100"
           value={selectedIndex}
           onChange={handleIndex}
-          indicatorColor="primary"
+          textColor="secondary"
+          indicatorColor="secondary"
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"

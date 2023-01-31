@@ -5,33 +5,33 @@ import OtherInformation from "./other";
 import { useSelector } from "react-redux";
 import { CommonController } from "../../../_redux/controller/common.controller";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
-const AddNewProduct = () => {
+const AddNewProduct = ({ goBrowse }) => {
   const selectedIdResponse = useSelector(
     (state) => state.AllReducersMaster.productId
   );
   const [selectedTab, setSelectedTab] = useState(0);
   const [formData, setFormData] = useState({
-    product_id: "",
+    product_id: 0,
     product_code: "",
-    category_id: "",
-    category_name: " ",
+    category_id: null,
+    category_name: "",
     p_group_name: "",
-    p_group_id: "",
-    item_id: "",
+    p_group_id: null,
+    item_id: null,
     item_name: "",
-    gg_id: "",
-    description: " ",
+    gg_id: null,
+    description: "",
     mlfb_no: "",
     grade: "",
-    tax_rate: "",
-    uom_id: "",
+    tax_rate: null,
+    uom_id: null,
     uom: "",
     package: "",
-    qty: "",
-    list_price: "",
-    margin: "",
-    pur_rate: "",
-    reorder_level: "",
+    qty: null,
+    list_price: null,
+    margin: null,
+    pur_rate: null,
+    reorder_level: null,
     lp_ref: "",
     di: "",
     di_value: "",
@@ -50,58 +50,61 @@ const AddNewProduct = () => {
     serial: "1",
     siemens_product: "0",
     user_id: localStorage.getItem("userId"),
-    user_name: "",
+    user_name: localStorage.getItem("userName"),
   });
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleCheckChange = (key, value) => {
-    setFormData({ ...formData, [key]: value ? "True" : "False" });
+    setFormData({ ...formData, [key]: value });
   };
   const handleAutoChange = (key1, key2, value) => {
     console.log(key1, key2, value);
-    setFormData({ ...formData, [key1]: value.id, [key2]: value.value });
+    setFormData({ ...formData, [key1]: value[key1], [key2]: value[key2] });
   };
   const onNext = () => {
-    if (selectedTab === 0) {
-      setSelectedTab(1);
+    if (formData?.mlfb_no == "") {
+       showErrorToast("Please Enter Unice Mlfb No");
     } else {
-      onSubmit();
+      setSelectedTab(1);
     }
   };
   const onSubmit = () => {
     CommonController.commonApiCallFilter(
-      "Product/ProductMasterInsert",
-      formData
+      "master/insert_product_master",
+      formData,
+      "post",
+      "node"
     )
       .then((data) => {
-        if (data.valid) {
+        if (data.status === 200) {
+          goBrowse();
           showSuccessToast(
-            selectedIdResponse
+            selectedIdResponse.id
               ? "Product updated successfully"
               : "Product inserted successfully"
           );
         } else {
-          showErrorToast("something went wrong");
+          showErrorToast(data.message.originalError.info.message);
         }
       })
       .catch((err) => showErrorToast("something went wrong"));
   };
-
+  console.log(formData);
   const onBack = () => {
     setSelectedTab(0);
   };
   useEffect(() => {
     if (selectedIdResponse) {
-      CommonController.commonApiCallFilter("Product/PreviewProductMaster", {
-        product_id: selectedIdResponse,
-      })
+      CommonController.commonApiCallFilter("master/preview_product_master", {
+        product_id: selectedIdResponse?.id,
+      },"post","node")
         .then((data) => {
-          // setFormData(data);
+          const value=data.data;
           let tempData = { ...formData };
           for (let key in formData) {
-            if (data.hasOwnProperty(key)) {
-              tempData[key] = data[key];
+            if (value.hasOwnProperty(key)) {
+              tempData[key] = value[key];
             }
           }
           setFormData(tempData);
@@ -115,17 +118,29 @@ const AddNewProduct = () => {
     <div className="container-fluid mt-5">
       {/* {loading && <Loader />} */}
       <ul className="nav nav-tabs nav-tabs-line">
-        <li className="nav-item">
+        <li    className={
+              "menu-item mb-2  border-bottom-0 rounded mr-2 " +
+              (selectedTab === 0 ? "menu-level2-color" : "")
+            }>
           <a
-            className={`nav-link ` + (selectedTab === 0 ? "active" : "")}
+           className={
+            `menu-link py-2 px-4 rounded d-inline-block  fw-bold ` +
+            (selectedTab === 0 ? "submenu-link-color" : "")
+          }
             onClick={() => setSelectedTab(0)}
           >
             General Information
           </a>
         </li>
-        <li className="nav-item">
+        <li className={
+              "menu-item mb-2  border-bottom-0 rounded mr-2 " +
+              (selectedTab === 1 ? "menu-level2-color" : "")
+            }>
           <a
-            className={`nav-link ` + (selectedTab === 1 ? "active" : "")}
+             className={
+              `menu-link py-2 px-4 rounded d-inline-block  fw-bold ` +
+              (selectedTab === 1 ? "submenu-link-color" : "")
+            }
             onClick={() => setSelectedTab(1)}
           >
             Technical Information
@@ -156,14 +171,24 @@ const AddNewProduct = () => {
               Back
             </Button>
           )}
-          <Button
+           {selectedTab === 0 && ( <Button
             variant="contained"
             onClick={onNext}
             color="primary"
             disableElevation
           >
-            {selectedTab === 1 ? "Submit" : "Next"}
+            Next
           </Button>
+          )}
+          {selectedIdResponse?.type=="preview"?"":(selectedTab===1&&<Button
+          variant="contained"
+          onClick={onSubmit}
+          color="primary"
+          disableElevation
+        >
+          Submit
+        </Button>
+        )}  
         </div>
       </div>
     </div>

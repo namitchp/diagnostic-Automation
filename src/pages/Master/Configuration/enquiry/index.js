@@ -58,7 +58,8 @@ const ConfigEnquiryIndex = () => {
           className="w-100"
           value={selectedIndex}
           onChange={handleIndex}
-          indicatorColor="primary"
+          textColor="secondary"
+          indicatorColor="secondary"
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"

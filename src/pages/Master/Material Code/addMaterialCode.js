@@ -21,7 +21,6 @@ import { SimpleTable } from "../../../components/basic-table";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
 import { Loader } from "../../../components/loader";
 import { TablePicker } from "../../../components/table-picker";
-// import { TablePicker } from "../../../components/table-picker";
 import { searchPartyName } from "../../../_redux/actions/masters/materialcode.action";
 import { MaterialCodeMasterController } from "../../../_redux/controller/Masters/materialcode.controller";
 
@@ -37,12 +36,12 @@ const StyledTableCell = withStyles((theme) => ({
 
 const userId = localStorage.getItem("userId");
 
-const AddMaterialCode = ({ onCancel }) => {
+const AddMaterialCode = ({ onCancel,type }) => {
   const dispatch = useDispatch();
-
   const partyNameListResponse = useSelector(
     (state) => state.MaterialCodeMaster.partyNameList
   );
+  console.log(partyNameListResponse)
   const selectedMaterialCodeId = useSelector(
     (state) => state.MaterialCodeMaster.selectedMaterialId
   );
@@ -55,8 +54,8 @@ const AddMaterialCode = ({ onCancel }) => {
   const [selectedItemsList, setSelectedItemsList] = useState([]);
 
   useEffect(() => {
-    if (Array.isArray(partyNameListResponse)) {
-      setPartyNameList(partyNameListResponse);
+    if (partyNameListResponse) {
+      setPartyNameList(partyNameListResponse.data);
     }
   }, [partyNameListResponse]);
 
@@ -75,7 +74,6 @@ const AddMaterialCode = ({ onCancel }) => {
             if (indx > -1) {
               setSelectedParty(partyNameList[indx]);
             }
-
             setSelectedCustomerList(
               renameKeyObj("customer_id", "company_id", data.codeCustomerItem)
             );
@@ -89,6 +87,7 @@ const AddMaterialCode = ({ onCancel }) => {
     }
   }, [selectedMaterialCodeId, partyNameList]);
 
+  console.log(selectedParty)
   const renameKeyObj = (from, to, arr) => {
     var temp = arr;
     var newArr = [];
@@ -122,40 +121,6 @@ const AddMaterialCode = ({ onCancel }) => {
 
     return validateObj;
   };
-
-  const insertMaterialCode = () => {
-    const validateList = validateMaterialCode();
-    if (selectedCustomerList.length < 1) {
-      showErrorToast("Pick Customer");
-    } else if (selectedItemsList.length < 1) {
-      showErrorToast("Pick Item");
-    } else if (validateList.length > 0) {
-      showErrorToast("Fill the required fields");
-    } else {
-      setLoading(true);
-      var param = {
-        tran_id: selectedMaterialCodeId ? selectedMaterialCodeId.tran_id : "0",
-        customer_id: selectedParty.id,
-        user_id: userId,
-
-        codeCustomerItem: filterCustomerList(),
-        codeProductItem: filterProductList(),
-      };
-
-      MaterialCodeMasterController.insertMaterialCode(param).then((data) => {
-        if (data.valid) {
-          showSuccessToast(data.type);
-          onCancel();
-        } else {
-          showErrorToast(data.type);
-        }
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
-      });
-    }
-  };
-
   const filterProductList = () => {
     var newList = [];
     for (const item of selectedItemsList) {
@@ -173,6 +138,39 @@ const AddMaterialCode = ({ onCancel }) => {
     return newList;
   };
 
+  const insertMaterialCode = () => {
+    const validateList = validateMaterialCode();
+    if (selectedCustomerList.length < 1) {
+      showErrorToast("Pick Customer");
+    } else if (selectedItemsList.length < 1) {
+      showErrorToast("Pick Item");
+    } else if (validateList.length > 0) {
+      showErrorToast("Fill the required fields");
+    } else {
+      setLoading(true);
+      var param = {
+        tran_id: selectedMaterialCodeId ? selectedMaterialCodeId.tran_id :0,
+        customer_id: selectedParty.company_id,
+        user_id: userId,
+        customer: filterCustomerList(),
+        product: filterProductList(),
+      };
+
+      MaterialCodeMasterController.insertMaterialCode(param).then((data) => {
+        if (data.status===200) {
+          showSuccessToast(data.message);
+          onCancel();
+        } else {
+          showErrorToast(data.type);
+        }
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      });
+    }
+  };
+
+
   const filterCustomerList = () => {
     var newList = [];
     for (const customer of selectedCustomerList) {
@@ -184,11 +182,9 @@ const AddMaterialCode = ({ onCancel }) => {
 
     return newList;
   };
-
   useEffect(() => {
-    dispatch(searchPartyName());
+    dispatch(searchPartyName(type));
   }, []);
-
   const customerListColumn = [
     {
       id: "company_id",
@@ -225,7 +221,6 @@ const AddMaterialCode = ({ onCancel }) => {
     { id: "state", numeric: false, disablePadding: false, label: "State" },
     { id: "pin_code", numeric: false, disablePadding: false, label: "Pincode" },
   ];
-
   const supplyItemsColumn = [
     {
       id: "product_id",
@@ -272,7 +267,6 @@ const AddMaterialCode = ({ onCancel }) => {
       label: "List Price",
     },
   ];
-
   const selectedCustomerColumns = [
     {
       id: "company_name",
@@ -287,7 +281,6 @@ const AddMaterialCode = ({ onCancel }) => {
       label: "City",
     },
   ];
-
   const togglePickCustomer = () => setPickCustomer(!showPickCustomer);
   const togglePickItems = () => setPickItems(!showPickItems);
 
@@ -376,7 +369,7 @@ const AddMaterialCode = ({ onCancel }) => {
               id="combo-box-demo"
               options={partyNameList}
               onChange={(event, newValue) => setSelectedParty(newValue)}
-              getOptionLabel={(option) => option.value}
+              getOptionLabel={(option) => option.company_name}
               value={selectedParty}
               fullWidth
               renderInput={(params) => (
@@ -417,7 +410,10 @@ const AddMaterialCode = ({ onCancel }) => {
           <TablePicker
             selectedItems={selectedCustomerList}
             columns={customerListColumn}
-            url={"MaterialCode/MaterialCodePickCustomer"}
+            url={"master/pick_customer"}
+            isNode={"node"}
+            apiBody={{customer_type:type}}
+
             onSubmit={handlePickCustomer}
             onPickerClose={togglePickCustomer}
           />
@@ -427,7 +423,8 @@ const AddMaterialCode = ({ onCancel }) => {
           <TablePicker
             selectedItems={selectedItemsList}
             columns={supplyItemsColumn}
-            url={"MaterialCode/MaterialCodePickProduct"}
+            url={"master/pick_item"}
+            isNode={"node"}
             onSubmit={handlePickItems}
             onPickerClose={togglePickItems}
           />

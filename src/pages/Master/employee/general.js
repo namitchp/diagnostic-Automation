@@ -1,4 +1,4 @@
-import { Checkbox, MenuItem, TextField} from "@material-ui/core";
+import { Checkbox, FormControlLabel, FormGroup, MenuItem, TextField} from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { DatePicker } from "@material-ui/pickers";
 import moment from "moment";
@@ -15,8 +15,31 @@ const GeneralInfoEmp = ({
 }) => {
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-4 mb-3">
+      <div className="row justify-content-center" >
+      <div className="col-md-12">
+        
+          <FormGroup className="flex-row justify-content-end col-8">
+            <FormControlLabel
+              label="Edit"
+              checked={formData?.edit === true}
+              control={<Checkbox color="primary" />}
+              // onChange={(e) => handleCheckChange("edit", e.target.checked)}
+            />
+            <FormControlLabel
+            label="Disable"
+              checked={formData.deactivate === true}
+              control={<Checkbox color="primary" />}
+              // onChange={(e) =>
+                // handleCheckChange("deactivate", e.target.checked)
+              // }
+            
+            />
+           
+          </FormGroup>
+        </div>
+       <div className="col-md-5">
+        <div className="row">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -27,7 +50,7 @@ const GeneralInfoEmp = ({
             label="Employee ID"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -38,7 +61,7 @@ const GeneralInfoEmp = ({
             label="Attendance Code"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -49,7 +72,7 @@ const GeneralInfoEmp = ({
             label="Employee Code"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -60,7 +83,7 @@ const GeneralInfoEmp = ({
             label="Card No."
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -71,7 +94,7 @@ const GeneralInfoEmp = ({
             label="First Name"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -82,7 +105,7 @@ const GeneralInfoEmp = ({
             label="Last Name"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             value={formData.f_h_name}
@@ -93,7 +116,7 @@ const GeneralInfoEmp = ({
             fullWidth
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -104,7 +127,7 @@ const GeneralInfoEmp = ({
             label="Mother name"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             id="outlined-select-currency1"
             select
@@ -120,7 +143,7 @@ const GeneralInfoEmp = ({
             <MenuItem value={"Unmaried"}>Unmarried</MenuItem>
           </TextField>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             id="outlined-select-currency2"
             select
@@ -138,7 +161,7 @@ const GeneralInfoEmp = ({
         </div>
         {console.log(moment(formData.dob).format())}
         {console.log(formData.dob)}
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <DatePicker
             autoOk
             variant="inline"
@@ -152,7 +175,7 @@ const GeneralInfoEmp = ({
             fullWidth
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -164,7 +187,7 @@ const GeneralInfoEmp = ({
             label="Present Address"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -175,7 +198,7 @@ const GeneralInfoEmp = ({
             label="Mobile No."
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -186,7 +209,15 @@ const GeneralInfoEmp = ({
             label="Phone No."
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
+        <p>
+            Same as present address
+            <Checkbox
+              color="primary"
+              checked={formData.pr_check}
+              onChange={(e) => onCheckChange(e)}
+            />{" "}
+          </p>
           <TextField
             variant="outlined"
             fullWidth
@@ -198,16 +229,8 @@ const GeneralInfoEmp = ({
             size="small"
             label="Permanent Address"
           />
-          <p>
-            Same as present address{" "}
-            <Checkbox
-              color="primary"
-              checked={formData.pr_check}
-              onChange={(e) => onCheckChange(e)}
-            />{" "}
-          </p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -218,7 +241,7 @@ const GeneralInfoEmp = ({
             label="Phone No."
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -229,8 +252,14 @@ const GeneralInfoEmp = ({
             label="Mobile No."
           />
         </div>
+        </div>
+       </div>
+       {/*  */}
+       <div className="col-md-5">
+        <div className="row">
+       
 
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -242,41 +271,33 @@ const GeneralInfoEmp = ({
           />
         </div>
 
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <Autocomplete
             disablePortal
             id="combo-box-demo1"
             options={listValues.empList}
-            getOptionLabel={(option) => option.value}
+            getOptionLabel={(option) => option.department_name}
             fullWidth
             onChange={(event, value) =>
-              handleAutoChange("department_name", value)
+              handleAutoChange("department_id","department_name", value,"department_id","department_name")
             }
-            value={getAutoValue(
-              "value",
-              listValues.empList,
-              formData.department_name
-            )}
+            value={{department_name:formData.department_name}}
             size="small"
             renderInput={(params) => (
               <TextField {...params} variant="outlined" label="Department" />
             )}
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <Autocomplete
             disablePortal
             id="combo-box-demo2"
             options={listValues.desgnList}
-            getOptionLabel={(option) => option.value}
+            getOptionLabel={(option) => option.designation_name}
             onChange={(event, value) =>
-              handleAutoChange("designation_name", value)
+              handleAutoChange("designation_id","designation_name", value,"designation_id","designation_name")
             }
-            value={getAutoValue(
-              "value",
-              listValues.desgnList,
-              formData.designation_name
-            )}
+            value={{designation_name:formData.designation_name}}
             fullWidth
             size="small"
             renderInput={(params) => (
@@ -284,7 +305,7 @@ const GeneralInfoEmp = ({
             )}
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-7 mb-3">
           <DatePicker
             autoOk
             format="dd/MM/yyyy"
@@ -297,7 +318,7 @@ const GeneralInfoEmp = ({
             fullWidth
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-7 mb-3">
           <DatePicker
             autoOk
             format="dd/MM/yyyy"
@@ -310,7 +331,7 @@ const GeneralInfoEmp = ({
             fullWidth
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -321,7 +342,7 @@ const GeneralInfoEmp = ({
             label="Leaving Reason"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -332,7 +353,7 @@ const GeneralInfoEmp = ({
             label="Dispensary"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             multiline
@@ -344,22 +365,21 @@ const GeneralInfoEmp = ({
             label="Remark"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        {console.log(formData)}
+        <div className="col-md-12 mb-3">
           <Autocomplete
             disablePortal
             id="combo-box-demo2"
             options={listValues.depInchrList}
             fullWidth
-            getOptionLabel={(option) => option.value}
+            getOptionLabel={(option) => option.user_name}
             size="small"
             onChange={(event, value) =>
-              handleAutoChange("department_incharge", value)
+              handleAutoChange("department_inch_id","department_incharge", value,"user_id","user_name")
             }
-            value={getAutoValue(
-              "value",
-              listValues.depInchrList,
-              formData.department_incharge
-            )}
+            value={{
+              user_name:formData.department_incharge
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -369,7 +389,7 @@ const GeneralInfoEmp = ({
             )}
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             multiline
@@ -381,7 +401,7 @@ const GeneralInfoEmp = ({
             label="User Name"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -393,7 +413,13 @@ const GeneralInfoEmp = ({
             label="Password"
           />
         </div>
-      </div>
+
+        </div>
+       </div>
+
+
+       
+             </div>
     </div>
   );
 };

@@ -12,18 +12,18 @@ const AddAccountMaster = ({handleAddAccount}) => {
   );
   console.log(selectedIdResponse)
   const [selectedIndex, setSeletedIndex] = useState(0);
-  const [dropdownList, setdropdownList] = useState([])
+  const [dropdownList, setdropdownList] = useState(null)
   const [formData, setFormData] = useState({
     company_id:0,
     company_name:"",  
     short_name:"",
-    group_id :"", 
+    group_id :null, 
     group_name:"",
     address1 :"",  
     address2 :"",  
-    pin_id :"",  
+    pin_id :null,  
     pin_code:"",  
-    region_id :"",  
+    region_id :null,  
     region_name:"",  
     phone1:"",  
     phone2:"",  
@@ -31,11 +31,11 @@ const AddAccountMaster = ({handleAddAccount}) => {
     fax:"",  
     email :"",  
     website :"",  
-    rating_id:"",  
+    rating_id:null,  
     rating_name :"",  
     // mark_engg :"",  
     name:"",
-    se_id:"",  
+    se_id:null,  
     Engg_name :"",  
     // sim_enng
     remarks:"" ,  
@@ -54,24 +54,24 @@ const AddAccountMaster = ({handleAddAccount}) => {
     pla_no:"",  
     edit:"",  
     hide:"",  
-    boarding_id:"",  
-    delivery_id:"",  
-    exciseduty_id:"",  
-    finance_id:"",  
-    freight_id:"",  
-    insurance_id :"",  
-    inspection_id :"",  
-    ld_id:"",  
-    loading_id:"",  
-    mode_of_dispatch_id:"",  
-    octroi_id:"",  
-    payment_id:"",  
-    pf_id:"",  
-    salestax_id:"",  
-    servicetax_id:"",  
-    validity_id:"",  
-    conveyance_id:"",  
-    travel_id:"",  
+    boarding_id:null,  
+    delivery_id:null,  
+    exciseduty_id:null,  
+    finance_id:null,  
+    freight_id:null,  
+    insurance_id :null,  
+    inspection_id :null,  
+    ld_id:null,  
+    loading_id:null,  
+    mode_of_dispatch_id:null,  
+    octroi_id:null,  
+    payment_id:null,  
+    pf_id:null,  
+    salestax_id:null,  
+    servicetax_id:null,  
+    validity_id:null,  
+    conveyance_id:null,  
+    travel_id:null,  
     user_name: localStorage.getItem("userName"),
     user_id: localStorage.getItem("userId"),
     account_type:"",
@@ -106,25 +106,29 @@ const AddAccountMaster = ({handleAddAccount}) => {
       setdropdownList(list);
     });
   }, []);
-
   useEffect(() => {
     if (selectedIdResponse) {
-      CommonController.commonApiCallFilter("Account/AccountMasterPreview", {
-        company_id: selectedIdResponse,
-      }).then((data) => {
-        setFormData(data);
+      CommonController.commonApiCallFilter("master/preview_account_master", {
+        company_id: selectedIdResponse?.id},"post","node"
+      ).then((data) => {
+        let value=data.data
+        let tempData = { ...formData };
+          for (let key in formData) {
+console.log(value)
+            if (value.hasOwnProperty(key)) {
+              console.log(value.hasOwnProperty(key));
+              tempData[key] = value[key];
+            }
+          }
+          setFormData(tempData);
       });
     }
   }, [selectedIdResponse]);
-
+console.log(formData)
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleAutoChange = (key1, key2, value) => {
-    console.log(value[key1])
-    console.log(value)
-    console.log(key1)
-    console.log(key2)
     let tempFormData = { ...formData };
 
     if (key1.trim() != "") {
@@ -143,7 +147,6 @@ const AddAccountMaster = ({handleAddAccount}) => {
       _formData.user_id = localStorage.getItem("userId");
       _formData.user_name = localStorage.getItem("userName");
     }
-
     CommonController.commonApiCallFilter(
       "master/insert_account_master",
       _formData,"post","node"
@@ -152,7 +155,7 @@ const AddAccountMaster = ({handleAddAccount}) => {
         handleAddAccount()
         showSuccessToast(
           `Account Details ${
-            selectedIdResponse ? "updated" : "saved"
+            selectedIdResponse? "updated" : "saved"
           } successfully`
         );
       }else {
@@ -164,25 +167,25 @@ const AddAccountMaster = ({handleAddAccount}) => {
   return (
     <React.Fragment>
       <ul className="nav nav-tabs nav-tabs-line">
-        <li className="nav-item">
+        <li className={" menu-item mb-2  border-bottom-0 rounded mr-2 "+ (selectedIndex === 0 ? "menu-level2-color" : "")}>
           <a
-            className={`nav-link ` + (selectedIndex === 0 ? "active" : "")}
+           className={`menu-link py-2 px-4  d-inline-block   ` }
             onClick={() => setSeletedIndex(0)}
           >
             General Infomation
           </a>
         </li>
-        <li className="nav-item">
+        <li className={" menu-item mb-2  border-bottom-0 rounded mr-2 "+ (selectedIndex === 1 ? "menu-level2-color" : "")}>
           <a
-            className={`nav-link ` + (selectedIndex === 1 ? "active" : "")}
+          className={`menu-link py-2 px-4  d-inline-block   ` }
             onClick={() => setSeletedIndex(1)}
           >
             Contact Person
           </a>
         </li>
-        <li className="nav-item">
+        <li className={" menu-item mb-2  border-bottom-0 rounded mr-2 "+ (selectedIndex === 2 ? "menu-level2-color" : "")}>
           <a
-            className={`nav-link ` + (selectedIndex === 2 ? "active" : "")}
+            className={`menu-link py-2 px-4  d-inline-block   ` }
             onClick={() => setSeletedIndex(2)}
           >
             Terms & Conditions
@@ -239,8 +242,7 @@ const AddAccountMaster = ({handleAddAccount}) => {
             Next
           </Button>
         )}
-
-     {selectedIndex==2&&<Button
+     {selectedIdResponse?.type=="preview"?"":(selectedIndex==2&&<Button
           variant="contained"
           onClick={saveForm}
           color="primary"
@@ -248,10 +250,9 @@ const AddAccountMaster = ({handleAddAccount}) => {
         >
           Submit
         </Button>
-        }   
+        )}   
       </div>
     </React.Fragment>
   );
 };
-
 export default AddAccountMaster;

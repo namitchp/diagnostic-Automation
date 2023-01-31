@@ -12,26 +12,27 @@ const Submenu = (props) => {
           <ul className="menu-nav mb-0 list-unstyled d-flex flex-wrap">
             {list.length > 0
               ? list.map((item, index) => {
-                  if (item.level ===2) {
-                    // console.log(
-                    //   item.transaction_name
-                    //     .replace(/[^a-zA-Z ]/g, "")
-                    //     .replace(/\s+/g, "-")
-                    //     .toLowerCase()
-                    // ); 
+                  if (item.level === 2) {
                     return (
-                      <li className="menu-item" key={"sublist" + index}>
+                      <li className={"menu-item rounded  mr-2 "+ (selectedSubMenu ===
+                        item.transaction_name
+                          .replace(/[^a-zA-Z ]/g, "")
+                          .replace(/\s+/g, "-")
+                          .toLowerCase()
+                          ? // ? "active text-success"
+                            "menu-level2-color"
+                          : "")} key={"sublist" + index}>
                         <Link
-                          onClick={()=>onSubMenuChange(item.transaction_id)}
+                          onClick={() => onSubMenuChange(item.transaction_id,item)}
                           className={
-                            "menu-link py-2 px-4 rounded mr-2 d-inline-block " +
+                            "menu-link py-2 px-4 rounded d-inline-block " +
                             (selectedSubMenu ===
                             item.transaction_name
                               .replace(/[^a-zA-Z ]/g, "")
                               .replace(/\s+/g, "-")
                               .toLowerCase()
-                              // ? "active text-success"
-                              ? "bg-danger text-white"
+                              ? // ? "active text-success"
+                                "submenu-link-color"
                               : "")
                           }
                           to={`/${selectedMenu.toLowerCase()}/${selectedSubMenusec}/${item.transaction_name

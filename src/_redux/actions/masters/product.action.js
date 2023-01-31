@@ -27,12 +27,12 @@ export const getCategoryListSuccess = createAction(
 );
 
 
-export const getLPRefList = createAction(
+export const dropdownTechInformation = createAction(
     "GET_LP_REF_LIST"
 );
 
-export const getLPRefListSuccess = createAction(
-    "GET_LP_REF_LIST_SUCCESS",
+export const dropdownTechInformationSuccess= createAction(
+    "DROPDOWN_TECH_INFORMATION_SUCCESS",
     (data) => ({
         payload: data,
     }),

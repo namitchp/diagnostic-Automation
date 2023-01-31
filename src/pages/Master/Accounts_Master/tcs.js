@@ -17,7 +17,7 @@ export const TCSAccount = ({ accountType }) => {
     company_name:""
   });
   const [params, setParams] = useState({
-    pageNo: 1,
+    pageNo:0,
     pageSize: 10,
     filter_value: "",
     sort_column: "",
@@ -172,13 +172,16 @@ export const TCSAccount = ({ accountType }) => {
           getRowClassName={(params) => {
             return params.row.sr_no % 2 === 0 ? "even" : "odd";
           }}
-          rowsPerPageOptions={[1]}
           rowCount={totalRecord}
+          rowsPerPageOptions={[10]}
           paginationMode="server"
           onPageSizeChange={handlePageSizeChange}
           onPageChange={handlePageChange}
           loading={loading}
-          rowHeight={30}
+          headerHeight={42}
+          autoPageSize
+          rowHeight={35}
+          maxColumns= {6}
           components={
             browseListData.length > 0
               ? {

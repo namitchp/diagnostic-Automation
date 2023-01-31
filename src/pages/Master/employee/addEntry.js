@@ -21,7 +21,7 @@ const AddEmployee = ({ onClose }) => {
     user_id: 0,
     user_code: "",
     attendance_emp_code: "",
-    ctc_per_day: "",
+    ctc_per_day:null,
     card_no: "",
     short_name: "",
     first_name: "",
@@ -38,13 +38,16 @@ const AddEmployee = ({ onClose }) => {
     pt_phone: "",
     pt_mobile: "",
     department_name: "",
+    department_id:null,
     designation_name: "",
+    designation_id:null,
     joining_date: null,
     leaving_date: null,
     leaving_reason: "",
     dispensary: "",
     remarks: "",
     department_incharge: "",
+    department_inch_id:null,
     user_name: "",
     password: "",
     email: "",
@@ -57,22 +60,22 @@ const AddEmployee = ({ onClose }) => {
     nominee: "",
     edit_button: "",
     disable: "",
-    login_user_id: "",
+    login_user_id:null,
     login_user_name: "",
     sign_path: "",
+    userRight:[]
   });
-
   useEffect(() => {
     if (selectedIdResponse) {
-      CommonController.commonApiCallFilter("Employee/EmployeeMasterPreview", {
-        user_id: selectedIdResponse,
-      })
+      CommonController.commonApiCallFilter("master/preview_employee_master", {
+        user_id: selectedIdResponse?.id},"post","node"
+      )
         .then((data) => {
-          // setFormData(data);
+          const value=data.data;
           let tempData = { ...formData };
           for (let key in formData) {
-            if (data.hasOwnProperty(key)) {
-              tempData[key] = data[key];
+            if (value.hasOwnProperty(key)) {
+              tempData[key] = value[key];
             }
           }
           setFormData(tempData);
@@ -82,24 +85,24 @@ const AddEmployee = ({ onClose }) => {
         });
     }
   }, [selectedIdResponse]);
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleDateChange = (name, date) => {
     setFormData({ ...formData, [name]: date });
   };
-
-  const handleAutoChange = (name, value) => {
-    setFormData({ ...formData, [name]: value ? value.value : null });
+  const handleAutoChange = (id,name, value,misId,misName) => {
+    if(id.trim()!=""){
+      setFormData({ ...formData, [id]: value[misId] });
+    }
+    if(name.trim()!=""){
+    setFormData({ ...formData, [name]: value[misName]});
+  }
   };
-
   const getAutoValue = (key, arr, val) => {
     const value = arr.filter((x) => x[key] === val);
     return value && value.length > 0 ? value[0] : null;
   };
-
   const handleTabChange = (index) => {
     setSelectedTab(index);
   };
@@ -121,41 +124,35 @@ const AddEmployee = ({ onClose }) => {
   };
 
   useEffect(() => {
-    CommonController.commonApiCallFilter("Employee/EmployeeMasterDropdown")
+    CommonController.commonApiCallFilter("master/dropdown_employee","","post","node")
       .then((data) => {
+        console.log(data)
         setListValues({
-          empList: data.empList,
-          desgnList: data.desgnList,
-          depInchrList: data.depInchrList,
+          empList: data.department,
+          desgnList: data.designation,
+          depInchrList: data.incharge,
         });
       })
       .catch((err) => {
         showErrorToast(err);
       });
   }, []);
-
   const onNext = () => {
-    if (selectedTab === 0) {
       setSelectedTab(1);
-    } else {
-      onSubmit();
-    }
   };
-
   const onBack = () => {
     setSelectedTab(0);
   };
-
   const onSubmit = () => {
     CommonController.commonApiCallFilter(
-      "Employee/EmployeeMasterInsert",
-      formData
+      "master/insert_employee_master",
+      formData,"post","node"
     )
       .then((data) => {
-        if (data.valid) {
+        if (data.status===200) {
           showSuccessToast(
             `Employee ${
-              selectedIdResponse ? "updated" : "created"
+              selectedIdResponse?.id ? "updated" : "created"
             } successfully`
           );
         }
@@ -164,22 +161,21 @@ const AddEmployee = ({ onClose }) => {
         showErrorToast(err);
       });
   };
-
   return (
-    <div className="container-fluid mt-5 pt-5">
+    <div className="container-fluid mt-1 pt-1">
       {/* {loading && <Loader />} */}
       <ul className="nav nav-tabs nav-tabs-line">
-        <li className="nav-item">
+        <li className={" menu-item mb-2  border-bottom-0 rounded mr-2 "+ (selectedTab === 0 ? "menu-level2-color" : "")}>
           <a
-            className={`nav-link ` + (selectedTab === 0 ? "active" : "")}
+            className={`menu-link py-2 px-4  d-inline-block  `}
             onClick={() => handleTabChange(0)}
           >
             General Information
           </a>
         </li>
-        <li className="nav-item">
+        <li className={" menu-item mb-2  border-bottom-0 rounded mr-2 "+ (selectedTab === 1 ? "menu-level2-color" : "")}>
           <a
-            className={`nav-link ` + (selectedTab === 1 ? "active" : "")}
+            className={`menu-link py-2 px-4  d-inline-block  `}
             onClick={() => handleTabChange(1)}
           >
             Other Details
@@ -213,14 +209,24 @@ const AddEmployee = ({ onClose }) => {
               Back
             </Button>
           )}
-          <Button
+         {selectedTab === 0 && ( <Button
             variant="contained"
             onClick={onNext}
             color="primary"
             disableElevation
           >
-            {selectedTab === 1 ? "Submit" : "Next"}
+          Next
           </Button>
+           )}
+         {selectedTab === 1 && ( <Button
+            variant="contained"
+            onClick={onSubmit}
+            color="primary"
+            disableElevation
+          >
+            Submit
+          </Button>
+          )}
         </div>
       </div>
     </div>

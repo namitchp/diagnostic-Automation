@@ -1,5 +1,5 @@
 import { put, takeLatest } from "redux-saga/effects";
-import { getCategoryList, getCategoryListSuccess, getGGNameList, getGGNameListSuccess, getLPRefList, getLPRefListSuccess, getProductListBrowse, getProductListBrowseSuccess, updateProductListPrice, updateProductListPriceSuccess, updateProductLPRef, updateProductMovingNonMoving, updateProductVerifiedStatus } from "../../actions/masters/product.action";
+import { dropdownTechInformation, dropdownTechInformationSuccess, getCategoryList, getCategoryListSuccess, getGGNameList, getGGNameListSuccess, getLPRefList, getLPRefListSuccess, getProductListBrowse, getProductListBrowseSuccess, updateProductListPrice, updateProductLPRef, updateProductMovingNonMoving, updateProductVerifiedStatus } from "../../actions/masters/product.action";
 import { ProductMasterController } from "../../controller/Masters/product.controller";
 
 function* getProductBrowseSaga (action) {
@@ -21,14 +21,13 @@ function* getCategoryListSaga (action) {
         yield put(getCategoryListSuccess(error));
     }
 }
-
-function* getLPRefListSaga (action) {
+function* dropdownTechSaga (action) {
     try {   
-        const response = yield ProductMasterController.getLPRefList();
-        yield put(getLPRefListSuccess(response));
+        const response = yield ProductMasterController.dropdownTechInformation();
+        yield put(dropdownTechInformationSuccess(response));
     } catch (error) {
         yield null;
-        yield put(getLPRefListSuccess(error));
+        yield put(dropdownTechInformationSuccess(error));
     }
 }
 
@@ -88,7 +87,7 @@ export default function* ProductMasterSaga () {
     try {
         yield takeLatest(getProductListBrowse, getProductBrowseSaga);
         yield takeLatest(getCategoryList, getCategoryListSaga);   
-        yield takeLatest(getLPRefList, getLPRefListSaga);   
+        yield takeLatest(dropdownTechInformation, dropdownTechSaga);   
         yield takeLatest(getGGNameList, getGGNameListSaga);   
         yield takeLatest(updateProductVerifiedStatus, updateProductVerifiedStatusSaga);   
         yield takeLatest(updateProductListPrice, updateProductListPriceSaga);   

@@ -2,40 +2,7 @@ import { Tab, Tabs } from "@material-ui/core";
 import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import QuotationIndex from "./subIndex";
-// const panel = [
-//   {
-//     name: "Group",
-//     component: "",
-//   },
-//   {
-//     name: "Pin Code",
-//     component: "",
-//   },
-//   {
-//     name: "Region",
-//     component: "",
-//   },
-//   {
-//     name: "Rating",
-//     component: "",
-//   },
-//   {
-//     name: "Department",
-//     component: "",
-//   },
-//   {
-//     name: "Designation",
-//     component: "",
-//   },
-//   {
-//     name: "Siemens",
-//     component: "",
-//   },
-//   {
-//     name: "Supply Items",
-//     component: "",
-//   },
-// ];
+
 
 const ConfigQuotation = ({list}) => {
   const [selectedIndex, setSeletedIndex] = useState(0);
@@ -65,7 +32,8 @@ const ConfigQuotation = ({list}) => {
           className="w-100"
           value={selectedIndex}
           onChange={handleIndex}
-          indicatorColor="primary"
+          textColor="secondary"
+          indicatorColor="secondary"
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"

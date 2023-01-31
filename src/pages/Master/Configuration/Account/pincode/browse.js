@@ -19,7 +19,7 @@ const BrowsePincode = ({ type, onEdit, onPreviewData }) => {
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
   const [params, setParams] = useState({
-    pageNo: 1,
+    pageNo: 0,
     pageSize: 10,
     filter_value: "",
     sort_column: "",

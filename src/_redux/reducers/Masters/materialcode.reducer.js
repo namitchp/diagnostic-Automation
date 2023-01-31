@@ -5,7 +5,7 @@ import * as actions from "../../actions/masters/materialcode.action";
 const initialState = {
   isLoading: false,
   browseListData: null,
-  partyNameList: [],
+  partyNameList:null,
   selectedMaterialId: null,
 };
 

@@ -3,7 +3,7 @@ import { userService } from "../../../services";
 export const ProductMasterController = {
      getProductBrowse,
      getCategoryList,
-     getLPRefList,
+     dropdownTechInformation,
      getGGNameList,
      updateProductVerifyStatus,
      updateProductListPrice,
@@ -55,10 +55,10 @@ async function getCategoryList() {
 }
 
 
-async function getLPRefList() {
+async function dropdownTechInformation() {
     try {   
-        let apiEndpoint = `Dropdown/GetLpRefList`;
-        let response = await userService.post(apiEndpoint);
+        let apiEndpoint = `master/dropdown_techenical`;
+        let response = await userService.post(apiEndpoint,"","node");
         
         if (response) {
             return (response.data);

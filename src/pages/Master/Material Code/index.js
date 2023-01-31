@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearMaterialCodeEditId } from "../../../_redux/actions/masters/materialcode.action";
 import AddMaterialCode from "./addMaterialCode";
 import MaterialCodeBrowse from "./browse";
 
-const MaterialCodeIndex = () => {
+const MaterialCodeIndex = ({ type, browse_id }) => {
   const dispatch = useDispatch();
+  const userRight = useSelector((state) => state.common.userRightResponse);
   const [selectedIndex, setSeletedIndex] = useState(0);
 
   const handleIndex = (index) => {
@@ -15,28 +16,45 @@ const MaterialCodeIndex = () => {
   return (
     <div className="card card-custom gutter-b  px-7 py-3">
       <ul className="nav nav-tabs nav-tabs-line">
-        <li className="nav-item">
+        <li
+          className={
+            "menu-item mb-2  border-bottom-0 rounded mr-2 " +
+            (selectedIndex === 0 ? "menu-level2-color" : "")
+          }
+        >
           <a
-            className={`nav-link ` + (selectedIndex === 0 ? "active" : "")}
+            className={`menu-link py-2 px-4 rounded d-inline-block  fw-bold `}
             onClick={() => handleIndex(0)}
           >
             Browse
           </a>
         </li>
-        <li className="nav-item">
-          <a
-            className={`nav-link ` + (selectedIndex === 1 ? "active" : "")}
-            onClick={() => handleIndex(1)}
+        {userRight?.insert_right && (
+          <li
+            className={
+              "menu-item mb-2  border-bottom-0 rounded mr-2 " +
+              (selectedIndex === 1 ? "menu-level2-color" : "")
+            }
           >
-            Add Material Code
-          </a>
-        </li>
+            <a
+              className={`menu-link py-2 px-4 rounded d-inline-block  fw-bold `}
+              onClick={() => handleIndex(1)}
+            >
+              Add Material Code
+            </a>
+          </li>
+        )}
       </ul>
       <div className="tab-content">
         {selectedIndex === 0 ? (
-          <MaterialCodeBrowse onEditMaterial={() => handleIndex(1)} />
+          <MaterialCodeBrowse
+            onEditMaterial={() => handleIndex(1)}
+            browse_id={browse_id}
+            type={type}
+          />
         ) : (
           <AddMaterialCode
+            type={type}
             onCancel={() => {
               handleIndex(0);
               dispatch(clearMaterialCodeEditId());

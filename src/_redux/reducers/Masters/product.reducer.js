@@ -6,7 +6,7 @@ const initialState = {
     isLoading:false,
     productList:null,
     categoryList:null,
-    lpRefList:null,
+    dropdownTech:null,
     ggNameList:null
 }
 
@@ -30,14 +30,14 @@ export const ProductMasterReducer = createReducer(initialState, {
             draft.categoryList = action.payload;
             draft.isLoading = false;
     }),
-    [actions.getLPRefList.toString()]: (state, action) =>
+    [actions.dropdownTechInformation.toString()]: (state, action) =>
         produce (state, (draft) => {
             draft.isLoading = true;
     }),
-    [actions.getLPRefListSuccess.toString()]: (state, action) =>
+    [actions.dropdownTechInformationSuccess.toString()]: (state, action) =>
         produce (state, (draft) => {
             draft.isLoading = false;
-            draft.lpRefList = action.payload;
+            draft.dropdownTech = action.payload;
     }),
     [actions.getGGNameList.toString()]: (state, action) =>
         produce (state, (draft) => {
