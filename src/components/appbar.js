@@ -5,14 +5,10 @@ import {
   Button,
   CircularProgress,
   IconButton,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import React, { useCallback, useEffect, useState } from "react";
-import logo from "../assets/image/logo.png";
-
 import user from "../assets/image/user.jpg";
 import moment from "moment";
 import AirplayIcon from "@material-ui/icons/Airplay";
@@ -51,9 +47,9 @@ function CircularProgressWithLabel(props) {
   );
 }
 const MainBar = ({ onMenuClick }) => {
-  const [anchorEl, setAnchorEl] =useState(null);
-  const [profilePrev, setprofilePrev] = useState({right:false})
-  const [profileList, setprofileList] = useState("")
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [profilePrev, setprofilePrev] = useState({ right: false });
+  const [profileList, setprofileList] = useState("");
   const open = Boolean(anchorEl);
   const [time, setTime] = useState({
     hrs: moment().format("h"),
@@ -66,18 +62,24 @@ const MainBar = ({ onMenuClick }) => {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-    const profilePrevlist=async()=>{
-     await CommonController.commonApiCallFilter('user/profile_prev',{user_id:localStorage.getItem("userId")},"post","node")
-     .then(result=>{
-      if(result.status===200){
-        setprofileList(result.data)
-      }
-     }).catch(err=>{
-      console.log(err)
-     })
-    }
+  const profilePrevlist = async () => {
+    await CommonController.commonApiCallFilter(
+      "user/profile_prev",
+      { user_id: localStorage.getItem("userId") },
+      "post",
+      "node"
+    )
+      .then((result) => {
+        if (result.status === 200) {
+          setprofileList(result.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const handleClose = () => {
-setprofilePrev({...profilePrev,right:true})
+    setprofilePrev({ ...profilePrev, right: true });
     setAnchorEl(null);
   };
   const calculateTime = () => {
@@ -103,7 +105,7 @@ setprofilePrev({...profilePrev,right:true})
   useEffect(() => {
     calculateTime();
     profilePrevlist();
-  },[]);
+  }, []);
   return (
     <AppBar position="static" className="theme_bg" elevation={0}>
       <Toolbar variant="dense" disableGutters>
@@ -113,7 +115,7 @@ setprofilePrev({...profilePrev,right:true})
               <div className="logo-header">
                 {/* <img src={logo} className="img-fluid" /> */}
                 <h4 className="mb-0">DIAGNOSTIC</h4>
-                <p className="logo-text mb-0">
+                <p className="logo-text  mb-0">
                   <small>Diagnostic Automation</small>
                   <span className="ml-2">13.5</span>
                 </p>
@@ -183,7 +185,10 @@ setprofilePrev({...profilePrev,right:true})
                         color="inherit"
                       >
                         <div className="user_header d-flex align-items-center">
-                          <Avatar alt="Remy Sharp"  src={`${nodeUrl + profileList.image_path}`} />
+                          <Avatar
+                            alt="Remy Sharp"
+                            src={`${nodeUrl + profileList.image_path}`}
+                          />
                           {/* <span className="ml-3">{userName}</span> */}
                         </div>
                       </IconButton>
@@ -214,7 +219,11 @@ setprofilePrev({...profilePrev,right:true})
           </div>
         </div>
       </Toolbar>
-     <SwipeableTemporaryDrawer leftTrue={profilePrev} profileList={profileList} updateImage={useCallback(()=>profilePrevlist(),[profileList])}/>
+      <SwipeableTemporaryDrawer
+        leftTrue={profilePrev}
+        profileList={profileList}
+        updateImage={useCallback(() => profilePrevlist(), [profileList])}
+      />
     </AppBar>
   );
 };

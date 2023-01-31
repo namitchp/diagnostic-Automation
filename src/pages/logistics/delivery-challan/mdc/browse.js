@@ -2,9 +2,6 @@ import { TextField, Button, MenuItem } from "@material-ui/core";
 import { DataGrid } from "@mui/x-data-grid";
 
 import React, { useEffect, useState } from "react";
-
-
-
 import {
   CommonController,
   currenyMasking,

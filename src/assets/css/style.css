@@ -1,6 +1,5 @@
 .css-1jbbcbn-MuiDataGrid-columnHeaderTitle{
   font-weight: 700 !important;
-  background-color:#b6b6b6;
   font-size: 12px;
     color:white;
 }
@@ -11,7 +10,7 @@
   background-color:#e6e6e6;
 }
 .css-okt5j6-MuiDataGrid-columnHeaders{
-  background-color: #b6b6b6;
+  background-color: #787575;
 }
 @font-face {
   font-family: symbol;
@@ -104,15 +103,37 @@ input[type="number"] {
 
 /* Login css ends */
 
+.menu-level1-color{
+  background-color:#656668;
+  box-shadow: 0 0 7px #4b4a4a;
+  
+}
+.menu-level1-bg{
+  background-color: rgb(234, 231, 231);
+  border: 1px solid rgb(223, 109, 109);
+}
+a:hover {
+  background-color: rgb(148, 145, 140);
+}
+.menu-level1-color:hover {
+  background-color: rgb(148, 145, 140);
+}
+/* .submenu-link-color{
+  color:red !important;
+} */
+.menu-level2-color{
+  box-shadow: 0 0 3px #383737;
+  border: 1px solid rgb(223, 109, 109);
+}
 /* Submenu Css Starts */
 .header-bottom {
-  background-color: #fff;
+  background-color:#515456;
   padding: 0.5rem;
 }
 
 .header-bottom.submenu {
   background-color: rgb(211 211 211 / 25%);
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+  box-shadow: rgba(41, 40, 40, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 .header-bottom.third {
@@ -122,8 +143,8 @@ input[type="number"] {
 }
 .menu-item .menu-link {
   font-size: 12px;
-  font-weight: 500;
-  color: #444;
+  font-weight: 400;
+  color: rgb(33, 32, 32);
 }
 
 .menu-item .menu-link.active {
@@ -170,10 +191,10 @@ input[type="number"] {
 }
 
 .filter_box {
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 5px;
-  border: 1px solid #eee;
+  background: #ffffff;
+  padding: 10px;
+  /* border-radius: 5px;
+  border: 1px solid #eee; */
 }
 
 .font_13 {
@@ -197,7 +218,7 @@ input[type="number"] {
 }
 
 .logo-header h4 {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: bold;
   font-family: symbol;
   letter-spacing: 1px;
@@ -280,13 +301,14 @@ input[type="number"] {
 }
 
 .customtab-panel .customtab-container {
+  
   width: 85%;
   min-width: 85%;
 }
 
 .light-tab {
-  background-color: #ffe8e8 !important;
-  color: #d32f2f !important;
+  /* background-color: #ffe8e8 !important; */
+  /* color: #d32f2f !important; */
 }
 
 .theme-bg {
@@ -409,5 +431,6 @@ input[type="number"] {
 @media (min-width: 600px) {
   .customtab-container .MuiTab-root {
     min-width: 90px;
+    
   }
 }

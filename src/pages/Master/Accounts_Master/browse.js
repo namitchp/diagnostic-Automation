@@ -21,6 +21,7 @@ import { selectedAccountId } from "../../../_redux/actions/masters/all.action";
 import {
   getBrowseUserRight,
   showErrorToast,
+  showSuccessToast,
   UserRight,
 } from "../../../components/common";
 import { CommonController } from "../../../_redux/controller/common.controller";
@@ -28,6 +29,7 @@ import {
   getFilterData,
   updateFilterData,
 } from "../../../_redux/actions/common.action";
+import  moment from "moment";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -38,15 +40,12 @@ const LightTooltip = withStyles((theme) => ({
   },
 }))(Tooltip);
 
-const user_id =localStorage.getItem("userId")
+const user_id = localStorage.getItem("userId");
 
-
-const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
-  // UserRight()
+const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
+  const userRight = useSelector((state) => state.common.userRightResponse);
   const dispatch = useDispatch();
-  const getuserRightListResponse = useSelector(
-    (state) => state.common.userRightList
-  );
+
   const filterList = useSelector(
     (state) => state.AccountMaster.accountFilterList
   );
@@ -58,37 +57,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
   const [filter, setfilter] = useState(false);
-  const [accountMasterFilter, setAccountMasterFilter] = useState({
-    region_name: "",
-    group_name: "",
-    verified: "",
-    mark_engg: "",
-    account_type: accountType,
-  });
-  const [tempVerifed, setTempVerified] = useState([]);
-  const [regionList, setRegionList] = useState([]);
-  const [groupList, setGroupList] = useState([]);
-  const [enggList, setEnggList] = useState([]);
-  const [params, setParams] = useState({
-    pageNo: 1,
-    pageSize: 15,
-    filter_value: "",
-    sort_column: "",
-    sort_order: "",
-  });
-  const handleUpdateFilterData = () => {
-    let body = {
-      filterpage: { ...params },
-      filterData: { ...accountMasterFilter },
-    };
-    body.user_id = user_id;
-    body.browse_id = browse_id;
-    dispatch(updateFilterData(body));
-    // if (updatefilterjsonData.status == 200) {
-    //   // dispatch(getFilterData(1));
-    // }
-  };
-  let columns = [
+  const [gridColumn, setgridColumn] = useState([
     {
       field: "ID",
       headerName: "ID",
@@ -100,6 +69,12 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
       headerName: "Region",
       width: 180,
       hide: false,
+    },
+    {
+      field: "Group",
+      headerName: "Group",
+      width: 200,
+      hide: false
     },
     {
       field: "short_name",
@@ -168,6 +143,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
       renderCell: (params) => (
         <FormControlLabel
           className={"formControlLabel"}
+          disabled
           control={
             <Checkbox
               defaultChecked={params.row.edit === true}
@@ -205,13 +181,13 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
       headerName: "Hide",
       renderCell: (params) => (
         <Checkbox
+          disabled
           size="small"
           color="primary"
           defaultChecked={params.row.hide === true}
           onChange={(event) =>
             updateHideStatus(event.target.checked, params.ID)
           }
-          // onChange={() => console.log(params.id)}
           inputProps={{ "aria-label": "checkbox with small size" }}
         />
       ),
@@ -233,49 +209,72 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
     {
       field: "datetime",
       headerName: "Date Time",
+      renderCell: (params) => {
+        return moment(params.row.datetime).format("DD/MM/YYYY");
+      },
       width: 120,
       hide: false,
     },
-    // {
-    //   field: "",
-    //   headerName: "Actions",
-    //   renderCell: (params) => (
-    //     <ActionButtons
-    //       onPreview={
-    //         getBrowseUserRight(getuserRightListResponse)?.level == 1
-    //           ? () => handleEdit(params.row.id)
-    //           : null
-    //       }
-    //       onEdit={
-    //         getBrowseUserRight(getuserRightListResponse)?.level == 1
-    //           ? () => handleEdit(params.row.id)
-    //           : null
-    //       }
-    //       // onDelete={
-    //       //   getBrowseUserRight(getuserRightListResponse)?.delete_right == "True"
-    //       //     ? () => handleDeleteRow(params.row.id)
-    //       //     : null
-    //       // }
-    //     />
-    //   ),
-    //   width: 120,
-    // },
-  ];
+      {
+        field: "Actions",
+        headerName: "Actions",
+        hide: false,
+        renderCell: (params) => (
+          <ActionButtons
+            onPreview={() =>
+                handleEdit({id:params.row.ID,type:"preview"})
+               
+            }
+            onEdit={
+              userRight?.update_right
+                ? 
+                () => handleEdit({id:params.row.ID,type:"edit"})
+                : null
+            } 
+            onDelete={
+              userRight?.delete_right
+                ?
+                 () => handleDeleteRow(params.row.id)
+                : null
+            }
+          />
+        ),
+        width: 120,
+      },
+  ]);
+  //json
 
+  const [accountMasterFilter, setAccountMasterFilter] = useState({
+    region_name: "",
+    group_name: "",
+    verified: "",
+    mark_engg: "",
+    account_type: accountType,
+  });
+  const [tempVerifed, setTempVerified] = useState([]);
+  const [regionList, setRegionList] = useState([]);
+  const [groupList, setGroupList] = useState([]);
+  const [enggList, setEnggList] = useState([]);
+  const [params, setParams] = useState({
+    pageNo: 1,
+    pageSize: 15,
+    filter_value: "",
+    sort_column: "",
+    sort_order: "",
+    columns: [],
+  });
   const handleFilters = (event) => {
-   
     setAccountMasterFilter({
       ...accountMasterFilter,
       [event.target.name]: event.target.value,
     });
-    setfilter(true)
+    setfilter(true);
     // handleUpdateFilterData()
   };
-  const handleParams = (event) => {
+  const handleParams = (event) => {   
     setParams({ ...params, [event.target.name]: event.target.value });
-    setfilter(true)
+    setfilter(true);
   };
-
   const getBrowseListData = async () => {
     setLoading(true);
     await CommonController.commonApiCall(
@@ -302,17 +301,14 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
       setEnggList(filterList.listengg);
     }
   }, [filterList]);
- 
+
   const handlePageSizeChange = (param) => {
     setParams({ ...params, pageSize: param });
-    // handleUpdateFilterData();
-    setfilter(true)
+    setfilter(true);
   };
   const handlePageChange = (param) => {
-    console.log(param)
     setParams({ ...params, pageNo: param });
-    // handleUpdateFilterData();
-    setfilter(true)
+    setfilter(true);
   };
   const updateHideStatus = (val, id) => {
     const param = {
@@ -341,25 +337,66 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
     setTempVerified(temp);
     // dispatch(setAccountVerified(param));
   };
+const handleDeleteRow=(id)=>{
+  CommonController.commonApiCallFilter("master/delete_account_master", {
+    company_id:id},"post","node"
+  ).then((data) => {
+    if(data.status===200){
+      showSuccessToast("Delete Success")
+    }
+  });
+}
   const handleEdit = (id) => {
-    // dispatch(selectedAccountId(id));
+    dispatch(selectedAccountId(id));
     onEdit();
+  };
+  //json
+  const handleUpdateFilterData = () => {
+    let body = {
+      filterpage: { ...params },
+      filterData: { ...accountMasterFilter },
+    };
+    body.user_id = user_id;
+    body.browse_id = browse_id;
+    dispatch(updateFilterData(body));
+    // if (updatefilterjsonData.status == 200) {
+    //   // dispatch(getFilterData(1));
+    // }
+  };
+
+  const handleColumnHide = (e) => {
+    const index = gridColumn.findIndex((val) => val.field == e.field);
+    let columns = [...gridColumn];
+    columns[index] = { ...columns[index], hide: e.colDef.hide };
+    setgridColumn(columns);
+    setParams({ ...params, columns: columns });
+    setfilter(true);
   };
   useEffect(() => {
     if (filterjsonData) {
       setParams(filterjsonData.data.filterpage);
       setAccountMasterFilter(filterjsonData.data.filterData);
+      if(filterjsonData?.data?.filterpage?.columns?.length>0){
+        const data = filterjsonData.data.filterpage?.columns?.map((val, index) => {
+          const columns = [...gridColumn];
+        return columns[index] = { ...columns[index], hide: val.hide };
+        });
+        setgridColumn(data);
+      }
+     
     }
   }, [filterjsonData]);
   useEffect(() => {
     dispatch(getFilterData(browse_id));
+    getBrowseListData();
+    dispatch(selectedAccountId());
   }, []);
   useEffect(() => {
     getBrowseListData();
-    if(filter){
-      handleUpdateFilterData()
+    if (filter) {
+      handleUpdateFilterData();
     }
-  }, [params, accountMasterFilter]);
+  }, [params, accountMasterFilter, filter]);
   return (
     <React.Fragment>
       <div className="filter_box mb-5">
@@ -377,12 +414,12 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
                 name="region_name"
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                value={accountMasterFilter.region_name}
+                value={accountMasterFilter?.region_name}
                 onChange={handleFilters}
                 label="Region Name"
               >
                 <MenuItem value="">None</MenuItem>
-                {regionList.length > 0
+                {regionList?.length > 0
                   ? regionList.map((region, index) => {
                       return (
                         <MenuItem
@@ -406,12 +443,12 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
                 name="group_name"
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                value={accountMasterFilter.group_name}
+                value={accountMasterFilter?.group_name}
                 onChange={handleFilters}
                 label="Group"
               >
                 <MenuItem value="">None</MenuItem>
-                {groupList.length > 0
+                {groupList?.length > 0
                   ? groupList.map((group, index) => {
                       return (
                         <MenuItem
@@ -435,7 +472,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
                 name="verified"
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                value={accountMasterFilter.verified}
+                value={accountMasterFilter?.verified}
                 onChange={handleFilters}
                 label="Verified"
               >
@@ -454,12 +491,12 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
                 name="mark_engg"
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                value={accountMasterFilter.mark_engg}
+                value={accountMasterFilter?.mark_engg}
                 onChange={handleFilters}
                 label="Markt. Engg"
               >
                 <MenuItem value="">None</MenuItem>
-                {enggList.length > 0
+                {enggList?.length > 0
                   ? enggList.map((engg, index) => {
                       return (
                         <MenuItem key={"enggList" + index} value={engg.name}>
@@ -477,11 +514,10 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
               id="outlined-basic"
               size="small"
               onKeyDown={(e) => {
-                console.log(e.keyCode);
                 if (e.keyCode === 13) {
                   // handleUpdateFilterData();
                   handleParams(e);
-                  setfilter(true)
+                  setfilter(true);
                 }
               }}
               name="filter_value"
@@ -500,7 +536,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
         <DataGrid
           pagination
           disableColumnFilter
-          columns={columns}
+          columns={gridColumn}
           pageSize={params?.pageSize}
           page={params?.pageNo}
           getRowClassName={(params) => {
@@ -512,17 +548,16 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
           onPageSizeChange={handlePageSizeChange}
           onPageChange={handlePageChange}
           loading={loading}
-          rowHeight={30}
+          rowHeight={35}
           components={
             browseListData?.length > 0
               ? {
                   Pagination: CustomPagination,
-                  // NoRowsOverlay: CustomNoRowsOverlay,
+                  NoRowsOverlay: CustomNoRowsOverlay,
                 }
               : {}
           }
           onSortModelChange={(sort) => {
-            console.log(sort[0])
             if (sort.length > 0) {
               setParams({
                 ...params,
@@ -531,10 +566,9 @@ const BrowseAccount = ({ onEdit, onPreview, accountType,browse_id }) => {
               });
             }
           }}
-          // onColumnVisibilityChange={(e) => handleColumnHide(e)}
+          onColumnVisibilityChange={(e) => handleColumnHide(e)}
           getRowId={(browseListData) => browseListData.sr_no}
           rows={browseListData} //accountMasterList
-         
         />
       </div>
     </React.Fragment>

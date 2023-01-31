@@ -9,6 +9,7 @@ import {
   TableRow,
   TextField,
   Button,
+  MenuItem,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { withStyles } from "@material-ui/styles";
@@ -25,25 +26,42 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 const UserRightList = () => {
-  const [menuList, setMenuList] = useState({first_menu:[],second_menu:[],third_menu:[]});
+  const [menuList, setMenuList] = useState({
+    first_menu: [],
+    second_menu: [],
+    third_menu: [],
+  });
   const [selectedMenu, setSelectedMenu] = useState({
-    first_menu:"",
-    second_menu:"",
-    third_menu:""
+    first_menu: "",
+    second_menu: "",
+    third_menu: "",
+  });
+  const [listDepartment, setlistDepartment] = useState([]);
+  const [mainMenu, setmainMenu] = useState({
+    second_menu: false,
+    third_menu: false,
   });
   const [userRightList, setUserRightList] = useState([]);
   const [selectedUserRight, setSelectedUserRight] = useState([]);
   const [filteredArray, setFilteredArray] = useState([]);
-  const getMenuList = (id,menu) => {
-    CommonController.commonApiCallFilter("user/transaction_menu_list",{parent_id:id},"post","node")
-      .then((data) => setMenuList({...menuList,[menu]:data.data}))
+  const getMenuList = (id, menu) => {
+    CommonController.commonApiCallFilter(
+      "user/transaction_menu_list",
+      { parent_id: id },
+      "post",
+      "node"
+    )
+      .then((data) => setMenuList({ ...menuList, [menu]: data.data }))
       .catch((err) => {
         showErrorToast(err);
       });
   };
   const getUserRightList = (id) => {
     CommonController.commonApiCallFilter(
-      "user/get_transaction_right",{transaction_id:id},"post","node"
+      "user/get_transaction_right",
+      { transaction_id: id },
+      "post",
+      "node"
     )
       .then((data) => {
         setUserRightList(data.data);
@@ -53,35 +71,76 @@ const UserRightList = () => {
         showErrorToast(err);
       });
   };
-  const onSearch = (e) => {
-    console.log(e.target.value)
-    console.log(e.code)
-    if (e.code === "Enter") {
-      const items = userRightList.filter((x) => x.employee ===e.target.value);
+  const handelDepartment=(e)=>{
+const items = userRightList.filter(
+  (x) => x.department_name === e.target.value
+);
+console.log(items)
+console.log(e.target.value)
+  setFilteredArray(items);
 
+  }
+  const onSearch = (e) => {
+    if (e.code === "Enter") {
+      const items = filteredArray.filter(
+        (x) => x.employee?.split(" ")[0].toLowerCase() === e.target.value
+      );
       if (items.length > 0) {
         setFilteredArray(items);
       }
     }
   };
   useEffect(() => {
-    getMenuList(0,"first_menu");
+    getMenuList(0, "first_menu");
+    CommonController.commonApiCallFilter(
+      "master/list_department",
+      "",
+      "post",
+      "node"
+    )
+      .then((data) => setlistDepartment(data.data))
+      .catch((err) => {
+        showErrorToast(err);
+      });
   }, []);
+
+  //first level
   const handleFirstMenu = (event, value) => {
-    console.log(value)
-    setSelectedMenu({...selectedMenu,[event.target.id.split("-")[0]]:value,third_menu:"",second_menu:""});
-    if (value.transaction_id) {
-      getMenuList(value.transaction_id,"second_menu")
+    setSelectedMenu({
+      ...selectedMenu,
+      [event.target.id.split("-")[0]]: value,
+      third_menu: "",
+      second_menu: "",
+    });
+    if (value.main_form === false) {
+      setmainMenu({ ...mainMenu, second_menu: true, third_menu: false });
+      getMenuList(value.transaction_id, "second_menu");
+    } else {
+      getUserRightList(value.transaction_id);
     }
   };
+  //second level
   const handleSecondMenu = (event, value) => {
-    setSelectedMenu({...selectedMenu,[event.target.id.split("-")[0]]:value,third_menu:""});
-    if (value.transaction_id) {
-      getMenuList(value.transaction_id,"third_menu");
+    setmainMenu({ ...mainMenu, third_menu: false });
+    setSelectedMenu({
+      ...selectedMenu,
+      [event.target.id.split("-")[0]]: value,
+      third_menu: "",
+    });
+    if (value.main_form === false) {
+      setmainMenu({ ...mainMenu, third_menu: true });
+      getMenuList(value.transaction_id, "third_menu");
+    } else {
+      getUserRightList(value.transaction_id);
     }
   };
+
+  //third level
   const handleThirdMenu = (event, value) => {
-    setSelectedMenu({...selectedMenu,[event.target.id.split("-")[0]]:value});
+    setSelectedMenu({
+      ...selectedMenu,
+      [event.target.id.split("-")[0]]: value,
+    });
     if (value.transaction_id) {
       getUserRightList(value.transaction_id);
     }
@@ -100,17 +159,38 @@ const UserRightList = () => {
       setSelectedUserRight([...selectedUserRight, item]);
     }
   };
+  // /update
   const onSave = () => {
-  const body={
-      user_id:localStorage.getItem("userId"),
-      transaction_id:selectedMenu.third_menu.transaction_id,
-      transaction_name:selectedMenu.third_menu.transaction_name,
-      userRight:selectedUserRight
-    }
-    CommonController.commonApiCallFilter("user/update_user_right",body,"post","node")
+    const body = {
+      user_id: localStorage.getItem("userId"),
+      transaction_id:
+        selectedMenu.third_menu === ""
+          ? selectedMenu.second_menu.transaction_id
+          : selectedMenu.third_menu.transaction_id,
+      transaction_name:
+        selectedMenu.third_menu === ""
+          ? selectedMenu.second_menu.transaction_id
+          : selectedMenu.third_menu.transaction_id,
+      userRight: selectedUserRight,
+    };
+    CommonController.commonApiCallFilter(
+      "user/update_user_right",
+      body,
+      "post",
+      "node"
+    )
       .then((data) => {
-        if (data.status===200) {
+        if (data.status === 200) {
           showSuccessToast("User updated successfully");
+          setUserRightList([]);
+          setFilteredArray([]);
+          setSelectedUserRight([]);
+          setSelectedMenu({
+            first_menu: "",
+            second_menu: "",
+            third_menu: "",
+          });
+          setmainMenu({ second_menu: false, third_menu: false });
         } else {
           showErrorToast("something went wrong");
         }
@@ -124,7 +204,7 @@ const UserRightList = () => {
     <div className="card card-custom gutter-b  px-7 py-3">
       <div className="container-fluid p-4">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-2">
             <Autocomplete
               disablePortal
               id="first_menu"
@@ -139,43 +219,61 @@ const UserRightList = () => {
               )}
             />
           </div>
-          <div className="col-md-3">
-            <Autocomplete
-              disablePortal
-              id="second_menu"
-              options={menuList.second_menu}
-              getOptionLabel={(option) => option.transaction_name}
-              fullWidth
-              onChange={handleSecondMenu}
-              value={selectedMenu.second_menu}
-              size="small"
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Second Menu"
-                />
-              )}
-            />
-          </div>
-          <div className="col-md-3">
-            <Autocomplete
-              disablePortal
-              id="third_menu"
-              options={menuList.third_menu}
-              getOptionLabel={(option) => option.transaction_name}
-              fullWidth
-              onChange={handleThirdMenu}
-              value={selectedMenu.third_menu}
-              size="small"
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Third Menu"
-                />
-              )}
-            />
+          {mainMenu.second_menu && (
+            <div className="col-md-2">
+              <Autocomplete
+                disablePortal
+                id="second_menu"
+                options={menuList.second_menu}
+                getOptionLabel={(option) => option.transaction_name}
+                fullWidth
+                onChange={handleSecondMenu}
+                value={selectedMenu.second_menu}
+                size="small"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Second Menu"
+                  />
+                )}
+              />
+            </div>
+          )}
+          {mainMenu.third_menu && (
+            <div className="col-md-2">
+              <Autocomplete
+                disablePortal
+                id="third_menu"
+                options={menuList.third_menu}
+                getOptionLabel={(option) => option.transaction_name}
+                fullWidth
+                onChange={handleThirdMenu}
+                value={selectedMenu.third_menu}
+                size="small"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Third Menu"
+                  />
+                )}
+              />
+            </div>
+          )}
+          <div className="col-md-2">
+          <Autocomplete
+            size="small"
+            options={listDepartment}
+            onChange={handelDepartment}
+            getOptionLabel={(option) => option.department_name}
+            // value={}
+            fullWidth
+            variant="outlined"
+            renderInput={(params) => (
+              <TextField {...params} label="Department" variant="outlined" />
+            )}
+          />
           </div>
           <div className="col-md-2">
             <TextField
@@ -193,6 +291,7 @@ const UserRightList = () => {
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Transaction</StyledTableCell>
+                  <StyledTableCell>Department</StyledTableCell>
                   <StyledTableCell>View</StyledTableCell>
                   <StyledTableCell>New</StyledTableCell>
                   <StyledTableCell>Edit</StyledTableCell>
@@ -213,6 +312,7 @@ const UserRightList = () => {
                       key={index}
                     >
                       <TableCell>{menu.employee}</TableCell>
+                      <TableCell>{menu.department_name}</TableCell>
                       <TableCell>
                         <Checkbox
                           onChange={(event) =>
@@ -223,7 +323,7 @@ const UserRightList = () => {
                             )
                           }
                           color="primary"
-                          checked={menu.view_right ==true}
+                          checked={menu.view_right === true}
                         />
                       </TableCell>
                       <TableCell>
@@ -236,7 +336,7 @@ const UserRightList = () => {
                             )
                           }
                           color="primary"
-                          checked={menu.insert_right ===true}
+                          checked={menu.insert_right === true}
                         />
                       </TableCell>
                       <TableCell>
@@ -244,12 +344,12 @@ const UserRightList = () => {
                           onChange={(event) =>
                             onUserRightChange(
                               menu,
-                              "edit_button",
+                              "update_right",
                               event.target.checked
                             )
                           }
                           color="primary"
-                          checked={menu.edit_button ===true}
+                          checked={menu.update_right === true}
                         />
                       </TableCell>
                       <TableCell>
@@ -262,7 +362,7 @@ const UserRightList = () => {
                             )
                           }
                           color="primary"
-                          checked={menu.delete_right ===true}
+                          checked={menu.delete_right === true}
                         />
                       </TableCell>
                       <TableCell>
@@ -275,7 +375,7 @@ const UserRightList = () => {
                             )
                           }
                           color="primary"
-                          checked={menu.print_right ===true}
+                          checked={menu.print_right === true}
                         />
                       </TableCell>
                       <TableCell>
@@ -288,7 +388,7 @@ const UserRightList = () => {
                             )
                           }
                           color="primary"
-                          checked={menu.approve_right ===true}
+                          checked={menu.approve_right === true}
                         />
                       </TableCell>
                       {/* <TableCell>
@@ -340,7 +440,7 @@ const UserRightList = () => {
                             )
                           }
                           color="primary"
-                          checked={menu.special_column ===true}
+                          checked={menu.special_column === true}
                         />
                       </TableCell>
                     </TableRow>

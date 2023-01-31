@@ -26,12 +26,10 @@ async function getMaterialCodeBrowse(filters, params) {
     return null;
   }
 }
-
 async function getPartyNameList(filters) {
   try {
-    let apiEndpoint = `/Dropdown/GetListCompanyMaterialCode`;
-    let response = await userService.post(apiEndpoint, filters);
-
+    let apiEndpoint = `master/party_name_list`;
+    let response = await userService.post(apiEndpoint, {customer_type:filters},"node");
     if (response) {
       return response.data;
     } else {
@@ -48,8 +46,8 @@ async function getPartyNameList(filters) {
 
 async function insertMaterialCode(filters) {
   try {
-    let apiEndpoint = `/MaterialCode/MaterialCodeInsert`;
-    let response = await userService.post(apiEndpoint, filters);
+    let apiEndpoint = `master/insert_material_code`;
+    let response = await userService.post(apiEndpoint, filters,"node");
 
     if (response) {
       return response.data;
@@ -86,9 +84,8 @@ async function getMaterialDetailById(payload) {
 
 async function deleteMaterialCode(payload) {
   try {
-    let apiEndpoint = `/MaterialCode/MaterialCodeDelete`;
-    let response = await userService.post(apiEndpoint, payload);
-
+    let apiEndpoint = `master/delete_material_code`;
+    let response = await userService.post(apiEndpoint, payload,"node");
     if (response) {
       return response.data;
     } else {

@@ -101,7 +101,7 @@ const ConfigurationMaster = () => {
             value={selectedIndex}
             onChange={handleIndex}
             indicatorColor="primary"
-            className={classes.tabs}
+            className={`menu-nav`}
             aria-label="Vertical tabs example"
           >
             {loading ? (
@@ -113,7 +113,10 @@ const ConfigurationMaster = () => {
               return (
                 <Tab
                   onClick={()=>handleTransectionID(tab)}
-                  className={"tab"}
+                  className={
+                    "menu-item w-50 ml-5 m-2 py-2 px-4 border-bottom-0 rounded " +
+                    (transectionId === tab.transaction_id ? "menu-level2-color" : "")
+                  }
                   value={index}
                   key={"tab" + index}
                   label={tab.display_name}

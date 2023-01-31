@@ -147,12 +147,10 @@ export function currenyMasking(val) {
   // var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
   return format.format(parseFloat(val).toFixed(2));
 }
-
 async function tablePickerController(url, params, domain = "") {
   try {
     let apiEndpoint = `${url}?filter_value=${params.filter_value}&page_number=${params.pageNo}&page_size=${params.pageSize}&sort_column=${params.sort_column}&sort_order=${params.sort_order}`;
     let response = await userService.post(apiEndpoint, {}, domain);
-
     if (response) {
       return response.data;
     } else {
@@ -166,7 +164,6 @@ async function tablePickerController(url, params, domain = "") {
     return null;
   }
 }
-
 async function commonApiCall(url, params, body, domain) {
   try {
     let apiEndpoint = `${url}?filter_value=${params.filter_value}&page_number=${params.pageNo}&page_size=${params.pageSize}&sort_column=${params.sort_column}&sort_order=${params.sort_order}`;
@@ -184,7 +181,6 @@ async function commonApiCall(url, params, body, domain) {
     return null;
   }
 }
-
 async function commonApiFile(url, body) {
   try {
     let apiEndpoint = url;
@@ -202,7 +198,6 @@ async function commonApiFile(url, body) {
     return null;
   }
 }
-
 async function imageUpoad(url,body){
   try{
    let  response=await userService.uploadImage(url, body);
@@ -219,7 +214,6 @@ async function imageUpoad(url,body){
   }
 }
 async function commonApiCallFilter(url, body, type = "post", domain = "") {
-  
   try {
     let apiEndpoint = `${url}`;
     let response;
@@ -245,7 +239,6 @@ async function commonApiCallFilter(url, body, type = "post", domain = "") {
     return null;
   }
 }
-
 async function commonJsonUpdate(url, body) {
   try {
     let apiEndpoint = `${url}`;

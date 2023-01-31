@@ -17,7 +17,7 @@ export const searchMaterialCodeDataSuccess = createAction(
 export const searchPartyName = createAction(
   "SEARCH_PARTY_NAME_LIST",
   (filters) => ({
-    payload: { filters },
+    payload:filters ,
   })
 );
 

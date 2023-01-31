@@ -9,8 +9,6 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
   const filterList = useSelector(
     (state) => state.AccountMaster.accountFilterList
   );
-  
-  console.log(formData)
   const [dropDownValues, setDropDownValues] = useState({
     groupList: [],
     pincodeList: [],
@@ -43,8 +41,8 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
     ratingList,
   } = dropDownValues;
   return (
-    <div className="row">
-      <div className="col-md-4">
+    <div className="row justify-content-center">
+      <div className="col-md-5 ">
         <div className="row">
           <div className="col-md-12 mb-5">
             <TextField
@@ -122,8 +120,9 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
               onChange={handleChange}
             />
           </div>
+          
 
-          <div className="col-md-12 mb-5">
+          <div className="col-6 mb-5">
             <Autocomplete
               size="small"
               options={pincodeList}
@@ -144,7 +143,7 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
               )}
             />
           </div>
-          <div className="col-md-12 mb-5">
+          <div className="col-6 mb-5">
             <TextField
               label="City"
               name="city"
@@ -155,7 +154,7 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
               size="small"
             />
           </div>
-          <div className="col-md-12 mb-5">
+          <div className="col-md-6 mb-5">
             <TextField
               label="District"
               fullWidth
@@ -166,9 +165,48 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
               value={formData.district}
             />
           </div>
+          <div className="col-md-6 mb-5">
+          <TextField
+            label="State"
+            name="state"
+            value={formData.state}
+            onChange={handleChange}
+            fullWidth
+            variant="outlined"
+            size="small"
+          />
+        </div>
+        <div className="col-md-12 mb-5">
+          <Autocomplete
+            size="small"
+            options={regionList}
+            onChange={(event, value) =>
+              handleAutoChange("region_id", "region_name", value)
+            }
+            getOptionLabel={(option) => option.region_name}
+            fullWidth
+            value={{ region_id: formData.region_id, region_name: formData.region_name }}
+            variant="outlined"
+            renderInput={(params) => (
+              <TextField {...params} label="Region" variant="outlined" />
+            )}
+          />
+        </div>
+        <div className="col-md-12 mb-5">
+          <TextField
+            label="Add Supply Items"
+            fullWidth
+            variant="outlined"
+            size="small"
+            // name="pan_no"
+            // value={formData.pan_no}
+            // onChange={handleChange}
+          />
+        </div>
         </div>
       </div>
-      <div className="col-md-4">
+      <div className="col-md-5">
+        <div className="row">
         <div className="col-md-12 mb-5">
           <TextField
             label="Pan No."
@@ -274,55 +312,6 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
             )}
           />
         </div>
-      </div>
-      <div className="col-md-4">
-        <div className="col-md-12 mb-5">
-          <TextField
-            label="Remarks"
-            fullWidth
-            name="remarks"
-            value={formData.remarks}
-            onChange={handleChange}
-            variant="outlined"
-            size="small"
-          />
-        </div>
-        <div className="col-md-12 mb-5">
-          <TextField
-            label="Distance"
-            fullWidth
-            name="distance"
-            value={formData.distance}
-            onChange={handleChange}
-            variant="outlined"
-            size="small"
-          />
-        </div>
-        <div className="col-md-12 mb-5">
-          <TextField
-            label="Credit Period"
-            // type="number"
-            fullWidth
-            name="credit_period"
-            value={formData.credit_period}
-            onChange={handleChange}
-            variant="outlined"
-            size="small"
-          />
-        </div>
-        <div className="col-md-12 mb-5">
-          <TextField
-            label="Credit Limit"
-            type="number"
-            fullWidth
-            variant="outlined"
-            name="credit_limit"
-            value={formData.credit_limit}
-            onChange={handleChange}
-            size="small"
-          />
-        </div>
-
         <div className="col-md-12 mb-5">
           <Autocomplete
             size="small"
@@ -369,36 +358,54 @@ const GeneralInfo = ({ formData, handleChange, handleAutoChange }) => {
             )}
           />
         </div>
-
         <div className="col-md-12 mb-5">
           <TextField
-            label="State"
-            name="state"
-            value={formData.state}
+            label="Remarks"
+            fullWidth
+            name="remarks"
+            value={formData.remarks}
             onChange={handleChange}
-            fullWidth
             variant="outlined"
             size="small"
           />
         </div>
-        <div className="col-md-12 mb-5">
-          <Autocomplete
-            size="small"
-            options={regionList}
-            onChange={(event, value) =>
-              handleAutoChange("region_id", "region_name", value)
-            }
-            getOptionLabel={(option) => option.region_name}
+        <div className="col-12 mb-5">
+          <TextField
+            label="Distance"
             fullWidth
-            value={{ region_id: formData.region_id, region_name: formData.region_name }}
+            name="distance"
+            value={formData.distance}
+            onChange={handleChange}
             variant="outlined"
-            renderInput={(params) => (
-              <TextField {...params} label="Region" variant="outlined" />
-            )}
+            size="small"
           />
         </div>
-    
+        <div className="col-md-6 mb-5">
+          <TextField
+            label="Credit Period"
+            // type="number"
+            fullWidth
+            name="credit_period"
+            value={formData.credit_period}
+            onChange={handleChange}
+            variant="outlined"
+            size="small"
+          />
+        </div>
+        <div className="col-md-6 mb-5">
+          <TextField
+            label="Credit Limit"
+            type="number"
+            fullWidth
+            variant="outlined"
+            name="credit_limit"
+            value={formData.credit_limit}
+            onChange={handleChange}
+            size="small"
+          />
+        </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -8,12 +8,9 @@ import { TCSAccount } from "./tcs";
 import { getBrowseUserRight } from "../../../components/common";
 
 const AccountsMaster = (props) => {
+  const userRight = useSelector((state) => state.common.userRightResponse);
   const dispatch = useDispatch();
   const [selectedIndex, setSeletedIndex] = useState(0);
-  const [userRight, setuserRight] = useState({})
-const thirdMenu=useSelector((state)=>state.common.userRightListThird)
-// console.log(thirdMenu)
-// console.log(getBrowseUserRight(thirdMenu.data)?.insert_right)
   const handleActionClick = (id) => {
     var param = {
       company_id: id,
@@ -35,36 +32,36 @@ const thirdMenu=useSelector((state)=>state.common.userRightListThird)
 // }, [thirdMenu])
 
   return (
-    <div className="card card-custom gutter-b  px-7 py-3">
-      <ul className="nav nav-tabs nav-tabs-line">
-        <li className="nav-item">
+    <div className="card card-custom gutter-b  px-5 py-3">
+      <ul className="menu-nav mb-0 list-unstyled d-flex flex-wrap">
+        <li className={" menu-item mb-2  border-bottom-0 rounded mr-2 "+ (selectedIndex === 0 ? "menu-level2-color" : "")}>
           <a
-            className={`nav-link ` + (selectedIndex === 0 ? "active" : "")}
+            className={`menu-link py-2 px-4 rounded d-inline-block  fw-bold ` + (selectedIndex === 0 ? "submenu-link-color" : "")}
             onClick={() => handleIndex(0)}
           >
             Browse
           </a>
         </li>
      {/* {userRight?.insert_right&& */}
-      <li className="nav-item">
+     {userRight?.insert_right&& <li className={" menu-item mb-2  border-bottom-0 rounded mr-2 "+ (selectedIndex === 1 ? "menu-level2-color" : "")}>
       <a
-        className={`nav-link ` + (selectedIndex === 1 ? "active" : "")}
+        className={`menu-link py-2 px-4  d-inline-block   ` }
         onClick={() => handleIndex(1)}
       >
         New Account
       </a>
-    </li>
+    </li>}
      {/* }   */}
-        <li className="nav-item">
+     {userRight?.insert_right&&  <li className={" menu-item mb-2  border-bottom-0 rounded mr-2 "+ (selectedIndex === 2 ? "menu-level2-color" : "")}>
           <a
-            className={`nav-link ` + (selectedIndex === 2 ? "active" : "")}
+            className={`menu-link py-2 px-4  d-inline-block  `}
             onClick={() => handleIndex(2)}
           >
             TCS
           </a>
-        </li>
+        </li>}
       </ul>
-      <div className="tab-content">
+      <div className="container-fluid">
         {selectedIndex === 0 && (
           <BrowseAccount
             onPreview={() => setSeletedIndex(1)}
@@ -74,8 +71,8 @@ const thirdMenu=useSelector((state)=>state.common.userRightListThird)
             browse_id={props.browse_id}
           />
         )}
-        {selectedIndex === 1 && <AddAccountMaster handleAddAccount={()=>setSeletedIndex(0)} />}
-        {selectedIndex === 2 && <TCSAccount accountType={props.accountType}/>}
+        {(selectedIndex === 1 &&userRight?.insert_right) && <AddAccountMaster handleAddAccount={()=>setSeletedIndex(0)} />}
+        {(selectedIndex === 2&&userRight?.insert_right) && <TCSAccount accountType={props.accountType}/>}
       </div>
     </div>
   );

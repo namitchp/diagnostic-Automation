@@ -129,7 +129,7 @@ export const TablePicker = ({
   const [rowCount, setRowCount] = useState(0);
 
   const [params, setParams] = useState({
-    pageNo: 1,
+    pageNo: 0,
     pageSize: 10,
     filter_value: "",
     sort_column: "",

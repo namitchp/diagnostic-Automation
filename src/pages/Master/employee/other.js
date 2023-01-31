@@ -3,8 +3,10 @@ import React from "react";
 const OtherDetails = ({ formData, handleChange }) => {
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-4 mb-3">
+      <div className="row justify-content-center">
+        <div className="col-md-5">
+          <div className="row">
+          <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -15,7 +17,7 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="First Name"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -26,7 +28,7 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="Last Name"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -37,7 +39,7 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="Email"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -48,7 +50,7 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="P.F.Code"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -59,7 +61,7 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="ESI Code"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -70,7 +72,12 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="PAN No."
           />
         </div>
-        <div className="col-md-4 mb-3">
+       
+          </div>
+        </div>
+        <div className="col-md-5">
+          <div className="row">
+          <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -81,7 +88,7 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="Salary Payment Mode"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-6 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -92,7 +99,7 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="CTC Per Day"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -103,7 +110,7 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="Account No."
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -114,7 +121,7 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="Bank Name"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-md-12 mb-3">
           <TextField
             variant="outlined"
             fullWidth
@@ -125,7 +132,10 @@ const OtherDetails = ({ formData, handleChange }) => {
             label="Nominee"
           />
         </div>
-      </div>
+
+          </div>
+        </div>
+             </div>
     </div>
   );
 };
