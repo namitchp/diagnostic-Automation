@@ -12,7 +12,9 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../../../components/common";
+import { useSelector } from "react-redux";
 const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
+  const userRight = useSelector((state) => state.common.userRightResponse);
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -154,14 +156,14 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                     className="fas fa-search mr-2"
                     onClick={() => onPreview(params.row.octroi_id)}
                   ></i>
-                  <i
+                  {userRight.update_right&&<i
                     className="far fa-edit mr-2"
                     onClick={() => onEdit(params.row)}
-                  ></i>
-                  <i
+                  ></i>}
+                  {userRight.delete_right&&<i
                     className="far fa-trash-alt mr-2"
                     onClick={() => onDelete(params.row.octroi_id)}
-                  ></i>
+                  ></i>}
                 </div>
               ),
               width: 150,

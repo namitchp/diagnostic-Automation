@@ -67,16 +67,13 @@ const ConfigProductIndex = ({list}) => {
       <AppBar className="rounded light-tab" position="relative" elevation={0}>
         <Tabs
           className="w-100"
-          value={selectedIndex}
           onChange={handleIndex}
-          textColor="secondary"
-          indicatorColor="secondary"
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
           {list.map((tab, index) => {
-            return <Tab value={index} key={"tab" + index} label={tab.display_name} />;
+            return <Tab className={selectedIndex ===index ? "tabstyle" : ""} value={index} key={"tab" + index} label={tab.display_name} />;
           })}
         </Tabs>
       </AppBar>

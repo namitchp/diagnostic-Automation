@@ -1,6 +1,5 @@
 import { TextField, Button, MenuItem } from "@material-ui/core";
 import { DataGrid } from "@mui/x-data-grid";
-
 import React, { useEffect, useState } from "react";
 import {
   CommonController,
@@ -12,10 +11,12 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../../../components/common";
+import { useSelector } from "react-redux";
 const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
+  const userRight = useSelector((state) => state.common.userRightResponse);
   const [params, setParams] = useState({
     pageNo: 0,
     pageSize: 10,
@@ -154,14 +155,14 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                     className="fas fa-search mr-2"
                     onClick={() => onPreview(params.row.department_id)}
                   ></i>
-                  <i
+                 {userRight.update_right&& <i
                     className="far fa-edit mr-2"
                     onClick={() => onEdit(params.row)}
-                  ></i>
-                  <i
+                  ></i>}
+                 {userRight.delete_right&&<i
                     className="far fa-trash-alt mr-2"
                     onClick={() => onDelete(params.row.department_id)}
-                  ></i>
+                  ></i>}
                 </div>
               ),
               width: 150,

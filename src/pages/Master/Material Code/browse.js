@@ -68,8 +68,8 @@ const MaterialCodeBrowse = ({ onEditMaterial, type, browse_id }) => {
       headerName: "Actions",
       renderCell: (params) => (
         <ActionButtons
-        onPreview={() => handleEditMaterial(params.row.tran_id)}
-          onEdit={userRight?.update_right?() => handleEditMaterial(params.row.tran_id):null}
+        onPreview={() => handleEditMaterial({id:params.row.tran_id,type:"preview"})}
+          onEdit={userRight?.update_right?() => handleEditMaterial({id:params.row.tran_id,type:"edit"}):null}
           onDelete={userRight?.delete_right?() => deleteMaterialData(params.row.tran_id):null}
         />
       ),
@@ -123,7 +123,7 @@ const MaterialCodeBrowse = ({ onEditMaterial, type, browse_id }) => {
   };
 
   const handleEditMaterial = (id) => {
-    dispatch(materialCodeEditId({ tran_id: id }));
+    dispatch(materialCodeEditId(id));
     onEditMaterial();
   };
 

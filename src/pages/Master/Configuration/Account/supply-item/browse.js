@@ -12,7 +12,9 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../../../components/common";
+import { useSelector } from "react-redux";
 const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
+  const userRight = useSelector((state) => state.common.userRightResponse);
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);

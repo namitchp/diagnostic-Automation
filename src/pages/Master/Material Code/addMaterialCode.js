@@ -23,7 +23,6 @@ import { Loader } from "../../../components/loader";
 import { TablePicker } from "../../../components/table-picker";
 import { searchPartyName } from "../../../_redux/actions/masters/materialcode.action";
 import { MaterialCodeMasterController } from "../../../_redux/controller/Masters/materialcode.controller";
-
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: "#1280cf",
@@ -33,15 +32,12 @@ const StyledTableCell = withStyles((theme) => ({
     fontSize: 14,
   },
 }))(TableCell);
-
 const userId = localStorage.getItem("userId");
-
 const AddMaterialCode = ({ onCancel,type }) => {
   const dispatch = useDispatch();
   const partyNameListResponse = useSelector(
     (state) => state.MaterialCodeMaster.partyNameList
   );
-  console.log(partyNameListResponse)
   const selectedMaterialCodeId = useSelector(
     (state) => state.MaterialCodeMaster.selectedMaterialId
   );
@@ -52,32 +48,27 @@ const AddMaterialCode = ({ onCancel,type }) => {
   const [showPickCustomer, setPickCustomer] = useState(false);
   const [showPickItems, setPickItems] = useState(false);
   const [selectedItemsList, setSelectedItemsList] = useState([]);
-
   useEffect(() => {
     if (partyNameListResponse) {
       setPartyNameList(partyNameListResponse.data);
     }
   }, [partyNameListResponse]);
-
   useEffect(() => {
-    if (selectedMaterialCodeId && selectedMaterialCodeId.tran_id) {
+    if (selectedMaterialCodeId?.id) {
       setLoading(true);
       MaterialCodeMasterController.getMaterialDetailById(
-        selectedMaterialCodeId
+        selectedMaterialCodeId.id
       ).then((data) => {
-        if (data.tran_id) {
+        if (data?.data?.tran_id) {
           if (partyNameList.length > 0) {
             var indx = partyNameList.findIndex(
-              (x) => x.id === data.customer_id
+              (x) => x.company_id === data?.data?.customer_id
             );
-
             if (indx > -1) {
               setSelectedParty(partyNameList[indx]);
             }
-            setSelectedCustomerList(
-              renameKeyObj("customer_id", "company_id", data.codeCustomerItem)
-            );
-            setSelectedItemsList(data.codeProductItem);
+            setSelectedCustomerList(data.cutomer);
+            setSelectedItemsList(data.product);
           }
         }
         setTimeout(() => {
@@ -86,8 +77,6 @@ const AddMaterialCode = ({ onCancel,type }) => {
       });
     }
   }, [selectedMaterialCodeId, partyNameList]);
-
-  console.log(selectedParty)
   const renameKeyObj = (from, to, arr) => {
     var temp = arr;
     var newArr = [];
@@ -98,7 +87,6 @@ const AddMaterialCode = ({ onCancel,type }) => {
     }
     return newArr;
   };
-
   // const newArrayOfObj = selectedCustomerList.map(
   //   ({ company_id: customer_id, ...rest }) => ({
   //     customer_id,
@@ -109,7 +97,6 @@ const AddMaterialCode = ({ onCancel,type }) => {
   // useEffect(() => {
   //   setNewCustomerList(newArrayOfObj);
   // }, [newArrayOfObj]);
-
   const validateMaterialCode = () => {
     var validateObj = selectedItemsList.filter((x) => {
       if (!x.hasOwnProperty("material_code") || x.material_code === "") {
@@ -487,7 +474,6 @@ const AddMaterialCode = ({ onCancel,type }) => {
                   No Records Found
                 </TableCell>
               )} */}
-
               {selectedItemsList.length > 0 ? (
                 selectedItemsList.map((item, index) => {
                   return (
@@ -496,7 +482,7 @@ const AddMaterialCode = ({ onCancel,type }) => {
                       key={index}
                     >
                       <TableCell scope="row">{item.mlfb_no}</TableCell>
-                      <TableCell scope="row" style={{ width: 150 }}>
+                      <TableCell scope="row" style={{ width: 150 }}>   
                         {item.item_name}
                       </TableCell>
                       <TableCell scope="row">
@@ -564,7 +550,7 @@ const AddMaterialCode = ({ onCancel,type }) => {
           </Table>
         </TableContainer>
         <div className="w-100 mt-3 text-right">
-          <Button
+          {selectedMaterialCodeId?.type==="preview"?"":<Button
             color="primary"
             className="mr-2"
             onClick={insertMaterialCode}
@@ -572,7 +558,7 @@ const AddMaterialCode = ({ onCancel,type }) => {
             variant="contained"
           >
             Save
-          </Button>
+          </Button>}
           <Button
             color="primary"
             onClick={() => onCancel()}
