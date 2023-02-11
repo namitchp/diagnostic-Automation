@@ -3,9 +3,9 @@ import React, { useState } from "react";
 
 import BrowsePincode from "./browse";
 import AddOrEditPincode from "./form";
-
+import { useSelector } from "react-redux";
 const PincodeIndex = () => {
-
+  const userRight = useSelector((state) => state.common.userRightResponse);
   const [selectedIndex, setSeletedIndex] = useState(0);
   const [editdata, seteditdata] = useState("");
   const handleIndex = (event, newValue) => {
@@ -34,8 +34,8 @@ const handelPreview=(preview)=>{
         indicatorColor="primary"
         aria-label="scrollable auto tabs example"
       >
-        <Tab value={0} label="Browse" />
-        <Tab value={1} label="New Pincode" />
+        <Tab value={0} className={selectedIndex === 0 ? "tabstyle" : ""}  label="Browse" />
+        {userRight.insert_right&&<Tab className={selectedIndex === 1 ? "tabstyle" : ""}  value={1} label="New Pincode" />}
       </Tabs>
       <div className="customtab-container w-100 py-3">
         {selectedIndex === 0 ? (

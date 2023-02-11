@@ -1,7 +1,6 @@
 import { Tab, Tabs } from "@material-ui/core";
 import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
-
 import TypeIndex from "./type";
 import PriorityIndex from "./priority";
 import ReferenceIndex from "./reference";
@@ -24,7 +23,6 @@ const panel = [
     component: "",
   },
 ];
-
 const ConfigEnquiryIndex = () => {
   const [selectedIndex, setSeletedIndex] = useState(0);
 
@@ -50,22 +48,18 @@ const ConfigEnquiryIndex = () => {
         alert("Something went wrong");
     }
   };
-
   return (
     <div className="px-3">
       <AppBar className="rounded light-tab" position="relative" elevation={0}>
         <Tabs
           className="w-100"
-          value={selectedIndex}
           onChange={handleIndex}
-          textColor="secondary"
-          indicatorColor="secondary"
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
           {panel.map((tab, index) => {
-            return <Tab value={index} key={"tab" + index} label={tab.name} />;
+            return <Tab className={selectedIndex === index ? "tabstyle" : ""} value={index} key={"tab" + index} label={tab.name} />;
           })}
         </Tabs>
       </AppBar>

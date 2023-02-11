@@ -297,9 +297,8 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
   };
   useEffect(() => {
     if (filterjsonData) {
-      console.log(filterjsonData)
-      setParams(filterjsonData.data.filterPage);
-      setProductMasterFilter(filterjsonData.data.filterData);
+      setParams(filterjsonData.data?.filterPage);
+      setProductMasterFilter(filterjsonData.data?.filterData);
       if(filterjsonData?.data?.filterPage?.columns?.length>0){
         const data = filterjsonData?.data?.filterPage?.columns?.map((val, index) => {
           const columns = [...gridColumn];

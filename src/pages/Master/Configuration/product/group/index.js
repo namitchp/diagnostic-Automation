@@ -2,7 +2,9 @@ import { Tab, Tabs } from "@material-ui/core";
 import React, { useState } from "react";
 import ConfigGroupBrowse from "./browse";
 import AddOrEditGroup from "./form";
+import { useSelector } from "react-redux";
 const GroupIndex = () => {
+  const userRight = useSelector((state) => state.common.userRightResponse);
   const [selectedIndex, setSeletedIndex] = useState(0);
   const [editdata, seteditdata] = useState("");
   const handleIndex = (event, newValue) => {
@@ -31,7 +33,7 @@ const GroupIndex = () => {
         aria-label="scrollable auto tabs example"
       >
         <Tab value={0} label="Browse" />
-        <Tab value={1} label="New Group" />
+        {userRight.insert_right&&<Tab value={1} label="New Group" />}
       </Tabs>
       <div className="customtab-container w-100 py-3">
         {/* {selectedIndex === 0 ? <ConfigGroupBrowse onActionClick={(index) => handleIndex({} , index)}/>:<AddOrEditGroup onClose={(index) => handleIndex({} , index)} />} */}

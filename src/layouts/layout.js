@@ -9,7 +9,6 @@ import {
   getUserFilterList,
   getUserRightList,
 } from "../_redux/actions/common.action";
-
 const MainLayout = () => {
   const dispatch = useDispatch();
   const [showSideBar, setShowSidebar] = useState(false);

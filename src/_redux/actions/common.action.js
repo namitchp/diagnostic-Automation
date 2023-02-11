@@ -1,6 +1,6 @@
 import { createAction } from "@reduxjs/toolkit";
 export const getUserRightList = createAction("USER_RIGHTS_LIST");
-
+export const redirectMenu=createAction("REDIRECT_MENU",(data)=>({payload:data}))
 export const userRight=createAction("USER_RIGHT",(data)=>({payload:data}))
 export const getFilterData = createAction("GET_FILTER_DATA",(data)=>({
   payload:data

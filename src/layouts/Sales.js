@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Redirect, Switch, Route } from "react-router-dom";
 import SalesIssueIndex from "../pages/Sales/issues";
 import SalesMarketingIndex from "../pages/Sales/marketingVisit";
@@ -10,14 +10,22 @@ import SalesSlSoPosIndex from "../pages/Sales/salesOrder/slSoPos";
 import SalesSlSoPosSummariseIndex from "../pages/Sales/salesOrder/slSoPosSummarise";
 import SoDetail from "../pages/Sales/salesOrder/soDetail";
 import SalesSoAmdIndex from "../pages/Sales/soAmedment";
+import { ErrorPage } from "../components/errorPage";
+import { useSelector } from "react-redux";
 
 const Sales = () => {
-  const selectedSubMenu = window.location.pathname.split("/")[2];
-  const menuLength=window.location.pathname.split('/').length;
+  const userRight = useSelector((state) => state.common.userRightResponse);
+  const salesRoute = {
+    23: <Route exact path="/sales/2/enquiry/23" component={SalesIndex} />,
+    24: (
+      <Route exact path="/sales/2/costing/24" component={SalesCostingIndex} />
+    ),
+  };
   return (
     <div className="container-fluid">
       <Switch>
-        <Route exact path="/sales/enquiry" component={SalesIndex} />
+      {userRight?salesRoute[userRight.transaction_id]:""}
+        {/* <Route exact path="/sales/enquiry" component={SalesIndex} />
         <Route exact path="/sales/costing" component={SalesCostingIndex} />
         <Route exact path="/sales/quotation" component={SalesQuotationIndex} />
         <Route exact path="/sales/sales-order-amendment" component={SalesSoAmdIndex} />
@@ -36,7 +44,7 @@ const Sales = () => {
        {(selectedSubMenu==="sales-order-amendment")&& <Redirect from="/sales" to="/sales/sales-order-amendment" />}
        {(selectedSubMenu==="marketing-visit")&& <Redirect from="/sales" to="/sales/marketing-visit" />}
        {(selectedSubMenu==="issues")&& <Redirect from="/sales" to="/sales/issues" />}
-       {(selectedSubMenu==="sales-order")&& <Redirect from="/sales" to="/sales/sales-order/so-details" />}
+       {(selectedSubMenu==="sales-order")&& <Redirect from="/sales" to="/sales/sales-order/so-details" />} */}
       </Switch>
     </div>
   );

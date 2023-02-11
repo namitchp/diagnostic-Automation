@@ -41,6 +41,7 @@ const UserRightList = () => {
     second_menu: false,
     third_menu: false,
   });
+  const [department, setdepartment] = useState(null)
   const [userRightList, setUserRightList] = useState([]);
   const [selectedUserRight, setSelectedUserRight] = useState([]);
   const [filteredArray, setFilteredArray] = useState([]);
@@ -71,14 +72,14 @@ const UserRightList = () => {
         showErrorToast(err);
       });
   };
-  const handelDepartment=(e)=>{
+  const handelDepartment=(e,value)=>{
+    // setdepartment(e.target.value);
 const items = userRightList.filter(
-  (x) => x.department_name === e.target.value
+  (x) => x.department_name ===value.department_name
 );
-console.log(items)
-console.log(e.target.value)
+if(items.length>0){
   setFilteredArray(items);
-
+}
   }
   const onSearch = (e) => {
     if (e.code === "Enter") {
@@ -93,7 +94,7 @@ console.log(e.target.value)
   useEffect(() => {
     getMenuList(0, "first_menu");
     CommonController.commonApiCallFilter(
-      "master/list_department",
+      "user/department_list",
       "",
       "post",
       "node"
@@ -103,7 +104,6 @@ console.log(e.target.value)
         showErrorToast(err);
       });
   }, []);
-
   //first level
   const handleFirstMenu = (event, value) => {
     setSelectedMenu({
@@ -169,8 +169,8 @@ console.log(e.target.value)
           : selectedMenu.third_menu.transaction_id,
       transaction_name:
         selectedMenu.third_menu === ""
-          ? selectedMenu.second_menu.transaction_id
-          : selectedMenu.third_menu.transaction_id,
+          ? selectedMenu.second_menu.transaction_name
+          : selectedMenu.third_menu.transaction_name,
       userRight: selectedUserRight,
     };
     CommonController.commonApiCallFilter(
@@ -265,9 +265,8 @@ console.log(e.target.value)
           <Autocomplete
             size="small"
             options={listDepartment}
-            onChange={handelDepartment}
             getOptionLabel={(option) => option.department_name}
-            // value={}
+            onChange={handelDepartment}
             fullWidth
             variant="outlined"
             renderInput={(params) => (
@@ -290,7 +289,7 @@ console.log(e.target.value)
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Transaction</StyledTableCell>
+                  <StyledTableCell>Employee</StyledTableCell>
                   <StyledTableCell>Department</StyledTableCell>
                   <StyledTableCell>View</StyledTableCell>
                   <StyledTableCell>New</StyledTableCell>

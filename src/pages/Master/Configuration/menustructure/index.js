@@ -25,13 +25,13 @@ const MenuStructureIndex = () => {
     <div className="px-3">
       <Tabs
         className="w-100"
-        value={selectedIndex}
+        // value={selectedIndex}
         onChange={handleIndex}
-        indicatorColor="primary"
+        
         aria-label="scrollable auto tabs example"
       >
-        <Tab value={0} label="Browse" />
-       {selectedIndex===1&& <Tab value={1} label="Update Menu Structure" />}
+        <Tab value={0} className={selectedIndex ===0 ? "tabstyle" : ""} label="Browse" />
+       {selectedIndex===1&& <Tab className={selectedIndex ===1 ? "tabstyle" : ""} value={1} label="Update Menu Structure" />}
       </Tabs>
       <div className="customtab-container w-100 py-3">
         {/* {selectedIndex === 0 ? <ConfigGroupBrowse onActionClick={(index) => handleIndex({} , index)}/>:<AddOrEditGroup onClose={(index) => handleIndex({} , index)} />} */}

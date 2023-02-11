@@ -3,6 +3,13 @@
   font-size: 12px;
     color:white;
 }
+.tabstyle>.MuiTab-wrapper{
+  box-shadow: 0 0 3px #383737;
+  border-radius: 10px;
+  height: 30px;
+  border: 1px solid rgb(223, 109, 109);
+  padding: 10px;
+}
 .odd{
   background-color:#f2f2f2;
 }

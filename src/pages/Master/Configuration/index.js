@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ConfigurationMaster = () => {
   const classes = useStyles();
-  const [transectionId, settransectionId] = useState(101)
-  const [selectedIndex, setSeletedIndex] = useState(0);
+  const [transectionId, settransectionId] = useState(0);
+  const [selectedIndex, setSeletedIndex] = useState(-1);
   const [MenuList, setMenuList] = useState([]);
   const [SubMenuList, setSubMenuList] = useState([]);
   const [loading, setloading] = useState(true);
@@ -33,7 +33,7 @@ const ConfigurationMaster = () => {
     105: <ConfigQuotation list={SubMenuList} />,
     106: <ConfigSalesOrder list={SubMenuList} />,
     107: <ConfigCourier list={SubMenuList} />,
-    144:<MenuStructureIndex/>
+    144: <MenuStructureIndex />,
   };
   const getThirdMenu = async (menu_id) => {
     try {
@@ -81,12 +81,12 @@ const ConfigurationMaster = () => {
   };
   useEffect(() => {
     getThirdMenu(12);
-    getfourthMenu(101);
+    // getfourthMenu(101);
   }, []);
   const handleTransectionID = (tab) => {
     setloadingsubMenu(true);
     getfourthMenu(tab.transaction_id);
-    settransectionId(tab.transaction_id)
+    settransectionId(tab.transaction_id);
   };
   const handleIndex = (event, newValue) => {
     setSeletedIndex(newValue);
@@ -100,7 +100,6 @@ const ConfigurationMaster = () => {
             variant="scrollable"
             value={selectedIndex}
             onChange={handleIndex}
-            indicatorColor="primary"
             className={`menu-nav`}
             aria-label="Vertical tabs example"
           >
@@ -112,10 +111,9 @@ const ConfigurationMaster = () => {
             {MenuList.map((tab, index) => {
               return (
                 <Tab
-                  onClick={()=>handleTransectionID(tab)}
+                  onClick={() => handleTransectionID(tab)}
                   className={
-                    "menu-item w-50 ml-5 m-2 py-2 px-4 border-bottom-0 rounded " +
-                    (transectionId === tab.transaction_id ? "menu-level2-color" : "")
+                    transectionId === tab.transaction_id ? "tabstyle" : ""
                   }
                   value={index}
                   key={"tab" + index}
