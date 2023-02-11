@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import QuotationIndex from "./subIndex";
 
-
-const ConfigQuotation = ({list}) => {
+const ConfigQuotation = ({ list }) => {
   const [selectedIndex, setSeletedIndex] = useState(0);
 
   const handleIndex = (event, newValue) => {
@@ -15,11 +14,11 @@ const ConfigQuotation = ({list}) => {
     switch (selectedIndex) {
       case 0:
         return <QuotationIndex />;
-        // break;
+      // break;
       // case 1:
       //   return <PincodeIndex />;
       //   break;
-      
+
       default:
         alert("Something went wrong");
     }
@@ -30,16 +29,20 @@ const ConfigQuotation = ({list}) => {
       <AppBar className="rounded light-tab" position="relative" elevation={0}>
         <Tabs
           className="w-100"
-          value={selectedIndex}
           onChange={handleIndex}
-          textColor="secondary"
-          indicatorColor="secondary"
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
           {list.map((tab, index) => {
-            return <Tab value={index} key={"tab" + index} label={tab.display_name} />;
+            return (
+              <Tab
+                className={selectedIndex === index ? "tabstyle" : ""}
+                value={index}
+                key={"tab" + index}
+                label={tab.display_name}
+              />
+            );
           })}
         </Tabs>
       </AppBar>

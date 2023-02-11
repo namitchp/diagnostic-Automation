@@ -49,16 +49,13 @@ const ConfigCostingIndex = () => {
       <AppBar className="rounded light-tab" position="relative" elevation={0}>
         <Tabs
           className="w-100"
-          value={selectedIndex}
           onChange={handleIndex}
-          textColor="secondary"
-          indicatorColor="secondary"
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
           {panel.map((tab, index) => {
-            return <Tab value={index} key={"tab" + index} label={tab.name} />;
+            return <Tab className={selectedIndex === index ? "tabstyle" : ""} value={index} key={"tab" + index} label={tab.name} />;
           })}
         </Tabs>
       </AppBar>

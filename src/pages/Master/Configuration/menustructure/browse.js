@@ -15,7 +15,10 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../../components/common";
+import { useSelector } from "react-redux";
 const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
+  const userRight = useSelector((state) => state.common.userRightResponse);
+  console.log(userRight)
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -142,12 +145,12 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
             {
               field: "display_name",
               headerName: "Display Name",
-              width: 150,
+              width: 250,
             },
             {
               field: "transaction_name",
               headerName: "Transaction Name",
-              width: 150,
+              width: 250,
             },
             {
               field: "parent_transaction",
@@ -162,7 +165,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
             {
               field: "main_form",
               headerName: "Main Form",
-              width: 150,
+              width: 250,
             },
             {
               field: "sequence",
@@ -178,10 +181,11 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                     className="fas fa-search mr-2"
                     onClick={() => onPreview(params.row.p_category_id)}
                   ></i> */}
-                  <i
+                  {console.log(userRight.update_right)}
+                  {userRight.update_right&&<i
                     className="far fa-edit mr-2"
                     onClick={() => onEdit(params.row)}
-                  ></i>
+                  ></i>}
                  
                 </div>
               ),
@@ -203,14 +207,14 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
           // onPageChange={handlePageChange}
           loading={loading}
           rowHeight={30}
-          // components={
-          //   browseListData.length > 0
-          //     ? {
-          //         Pagination: CustomPagination,
-          //         NoRowsOverlay: CustomNoRowsOverlay,
-          //       }
-          //     : {}
-          // }
+          components={
+            browseListData.length > 0
+              ? {
+                  Pagination: CustomPagination,
+                  NoRowsOverlay: CustomNoRowsOverlay,
+                }
+              : {}
+          }
           onSortModelChange={(sort) => {
             if (sort.length > 0) {
               setParams({

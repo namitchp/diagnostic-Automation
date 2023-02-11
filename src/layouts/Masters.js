@@ -10,6 +10,7 @@ import ItemGroupIndex from "../pages/Master/item Group";
 import MaterialCodeIndex from "../pages/Master/Material Code";
 import ProductMasterIndex from "../pages/Master/Product";
 import UserRightList from "../pages/Master/user rights/browse";
+import Employe from "../pages/Master/user rights/browseEmoloye";
 
 const Masters = () => {
   const selectedSubMenu = window.location.pathname;
@@ -155,6 +156,13 @@ const getredirectMenu = useSelector((state) => state.common.redirectMenu);
       </Switch>
    
     ),
+    146: (
+      <Route
+        path="/masters/1/employee-master/11/menu-rights/146"
+        exact
+        component={Employe}
+      />
+    ),
   };
   return (
     <div className="">
@@ -192,6 +200,7 @@ const getredirectMenu = useSelector((state) => state.common.redirectMenu);
         )} */}
       {/* </Switch> */}
       {/* } */}
+
     </div>
   );
 };

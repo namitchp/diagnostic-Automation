@@ -2,9 +2,7 @@ import { TextField, Button, MenuItem } from "@material-ui/core";
 import { DataGrid } from "@mui/x-data-grid";
 
 import React, { useEffect, useState } from "react";
-import {
-  CommonController,
-} from "../../../../../_redux/controller/common.controller";
+import { CommonController } from "../../../../../_redux/controller/common.controller";
 import CustomPagination from "../../../../../components/CustomPagination";
 import CustomNoRowsOverlay from "../../../../../components/customRowComponent";
 import {
@@ -12,7 +10,9 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../../../components/common";
+import { useSelector } from "react-redux";
 const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
+  const userRight = useSelector((state) => state.common.userRightResponse);
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -154,14 +154,18 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                     className="fas fa-search mr-2"
                     onClick={() => onPreview(params.row.pf_id)}
                   ></i>
-                  <i
-                    className="far fa-edit mr-2"
-                    onClick={() => onEdit(params.row)}
-                  ></i>
-                  <i
-                    className="far fa-trash-alt mr-2"
-                    onClick={() => onDelete(params.row.pf_id)}
-                  ></i>
+                  {userRight.update_right && (
+                    <i
+                      className="far fa-edit mr-2"
+                      onClick={() => onEdit(params.row)}
+                    ></i>
+                  )}
+                  {userRight.delete_right && (
+                    <i
+                      className="far fa-trash-alt mr-2"
+                      onClick={() => onDelete(params.row.pf_id)}
+                    ></i>
+                  )}
                 </div>
               ),
               width: 150,

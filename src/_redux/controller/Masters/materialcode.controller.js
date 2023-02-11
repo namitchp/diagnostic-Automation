@@ -65,8 +65,8 @@ async function insertMaterialCode(filters) {
 
 async function getMaterialDetailById(payload) {
   try {
-    let apiEndpoint = `/MaterialCode/MaterialCodePreview`;
-    let response = await userService.post(apiEndpoint, payload);
+    let apiEndpoint = `master/preview_material_code`;
+    let response = await userService.post(apiEndpoint,{tran_id:payload},"node");
 
     if (response) {
       return response.data;
