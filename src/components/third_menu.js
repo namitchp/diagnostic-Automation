@@ -18,7 +18,7 @@ const ThirdMenu = (props) => {
       <div className="px-3">
         <div className="header-navs header-navs-left">
           <ul className="menu-nav mb-0 list-unstyled d-flex flex-wrap">
-            {list.length > 0
+            {list?.length > 0
               ? list.map((item, index) => {
                   if (item.level ===3) {
                     return (
@@ -30,7 +30,7 @@ const ThirdMenu = (props) => {
                           ? "menu-level2-color"
                           : "")} key={"sublist" + index}>
                         <Link
-                          onClick={()=>{onMenuChange(item)}}
+                          onClick={()=>{onMenuChange(item,index)}}
                           className={
                             "menu-link py-2 px-2 rounded d-inline-block " +
                             (thirdMenu ===
@@ -48,7 +48,7 @@ const ThirdMenu = (props) => {
                         >
                           {" "}
                           <span className="menu-text">
-                            {item.transaction_name}
+                            {item.display_name}
                           </span>
                         </Link>
                       </li>

@@ -1,6 +1,6 @@
 import React from "react";
-import {  useSelector } from "react-redux";
-import { Redirect, Route, Switch,} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Redirect, Route, Switch } from "react-router-dom";
 import AccountsMaster from "../pages/Master/Accounts_Master/index";
 import ComboMLFBIndex from "../pages/Master/combomlfb";
 import ConfigurationMaster from "../pages/Master/Configuration";
@@ -12,49 +12,107 @@ import ProductMasterIndex from "../pages/Master/Product";
 import UserRightList from "../pages/Master/user rights/browse";
 
 const Masters = () => {
+  const selectedSubMenu = window.location.pathname;
+
+  console.log(selectedSubMenu);
+const menuLength = window.location.pathname.split("/").length;
+const userRight = useSelector((state) => state.common.userRightResponse);
+const getredirectMenu = useSelector((state) => state.common.redirectMenu);
+
+
+
   const componentValue = {
     15: (
-      <Route path="/masters/1/account-master/9/customer/15" exact>
-        <AccountsMaster accountType="Customer" browse_id={1} />
-      </Route>
+      <Switch>
+        <Route path="/masters/1/account-master/9/customer/15" exact>
+          <AccountsMaster accountType="Customer" browse_id={1} />
+        </Route>
+        <Redirect
+          to="/masters/1/account-master/9/customer/15"
+          from={selectedSubMenu}
+        />
+      </Switch>
     ),
     16: (
-      <Route path="/masters/1/account-master/9/supplier/16" exact>
+      <Switch>
+ <Route path="/masters/1/account-master/9/supplier/16" exact>
         {""}
         <AccountsMaster accountType="Supplier" browse_id={2} />
       </Route>
+      <Redirect
+          to="/masters/1/account-master/9/supplier/16"
+          from={selectedSubMenu}
+        />
+      </Switch>
+     
     ),
 
     12: (
-      <Route
+      <Switch>
+         <Route
         path="/masters/1/configuration-master/12"
         exact
         component={ConfigurationMaster}
       />
+        <Redirect
+          to="/masters/1/configuration-master/12"
+          from="/masters/1"
+        />
+      </Switch>
+     
     ),
 
     17: (
-      <Route path="/masters/1/product-master/10/sl/17" strict>
+      <Switch>
+          <Route path="/masters/1/product-master/10/sl/17" strict>
         <ProductMasterIndex siemens={"Siemens"} browse_id={3} />
       </Route>
+        <Redirect
+          to="/masters/1/product-master/10/sl/17"
+          from="/masters/1"
+        />
+
+      </Switch>
+    
     ),
     18: (
-      <Route path="/masters/1/product-master/10/non-sl/18" strict>
+      <Switch>
+         <Route path="/masters/1/product-master/10/non-sl/18" strict>
         {""}
         <ProductMasterIndex siemens={"Non-Siemens"} browse_id={4} />
       </Route>
+        <Redirect
+          to="/masters/1/product-master/10/non-sl/18"
+          from="/masters/1"
+        />
+      </Switch>
+     
     ),
     19: (
-      <Route path="/masters/1/material-code/13/customer/19" exact>
+      <Switch>
+         <Route path="/masters/1/material-code/13/customer/19" exact>
         <MaterialCodeIndex type={"Customer"} browse_id={"5"} />
       </Route>
+        <Redirect
+          to="/masters/1/material-code/13/customer/19"
+          from="/masters/1"
+        />
+      </Switch>
+     
     ),
 
     20: (
-      <Route path="/masters/1/material-code/13/supplier/20" exact>
+      <Switch>
+        <Route path="/masters/1/material-code/13/supplier/20" exact>
         {""}
         <MaterialCodeIndex type={"Supplier"} browse_id={"6"} />
       </Route>
+        <Redirect
+          to="/masters/1/material-code/13/supplier/20"
+          from="/masters/1"
+        />
+      </Switch>
+      
     ),
     // <Route
     //   path="/masters/item-group-master"
@@ -70,32 +128,42 @@ const Masters = () => {
     //   component={UserRightList}
     // />
     21: (
-      <Route
+      <Switch>
+           <Route
         path="/masters/1/employee-master/11/employee/21"
         exact
         component={EmployeeIndex}
       />
+        <Redirect
+          to="/masters/1/employee-master/11/employee/21"
+          from="/masters/1"
+        />
+      </Switch>
+   
     ),
     22: (
-      <Route
+      <Switch>
+           <Route
         path="/masters/1/employee-master/11/user-rights/22"
         exact
         component={UserRightList}
       />
+        <Redirect
+          to="/masters/1/employee-master/11/user-rights/22"
+          from="/masters/1"
+        />
+      </Switch>
+   
     ),
   };
-  const selectedSubMenu = window.location.pathname
-    .split("/")
-    .filter((val) => val !== "")[2];
-  const menuLength = window.location.pathname.split("/").length;
-  const userRight = useSelector((state) => state.common.userRightResponse);
   return (
     <div className="">
       {/* {thirdMenu.status===200&& */}
-      <Switch>
-        {userRight?componentValue[userRight.transaction_id]:""}
-        {/* {(menuLength<=3||selectedSubMenu==="account-master")&&<Redirect to="/masters/1/account-master/9/customer/15" from="/masters" />}  */}
-        {/* {selectedSubMenu === "account-master" && (
+      {/* <Switch> */}
+      {userRight ? componentValue[userRight.transaction_id] : ""}
+
+      {/* {(menuLength<=3||selectedSubMenu==="account-master")&&<Redirect to="/masters/1/account-master/9/customer/15" from="/masters" />}  */}
+      {/* {selectedSubMenu === "account-master" && (
           <Redirect
             to="/masters/1/account-master/9/customer/15"
             from="/masters"
@@ -122,7 +190,7 @@ const Masters = () => {
         {selectedSubMenu === "user-right" && (
           <Redirect to="/masters/1/user-right/14" from="/masters" />
         )} */}
-      </Switch>
+      {/* </Switch> */}
       {/* } */}
     </div>
   );

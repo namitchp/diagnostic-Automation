@@ -11,12 +11,18 @@ const initialState = {
   menuId: null,
   subMenuId: null,
   filterList: null,
+  redirectMenu: null,
 };
 
 export const commonReducer = createReducer(initialState, {
+
   [actions.userRight.toString()]:(state,action)=>
 produce(state,draft=>{
   draft.userRightResponse=action.payload
+}),
+[actions.redirectMenu.toString()]:(state,action)=>
+produce(state,draft=>{
+  draft.redirectMenu=action.payload
 }),
 [actions.getFilterDataResponse.toString()]:(state,action)=>
 produce(state,draft=>{

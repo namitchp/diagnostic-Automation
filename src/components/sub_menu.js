@@ -23,7 +23,7 @@ const Submenu = (props) => {
                             "menu-level2-color"
                           : "")} key={"sublist" + index}>
                         <Link
-                          onClick={() => onSubMenuChange(item.transaction_id,item)}
+                          onClick={() => onSubMenuChange(item.transaction_id,item,index)}
                           className={
                             "menu-link py-2 px-4 rounded d-inline-block " +
                             (selectedSubMenu ===
@@ -42,7 +42,7 @@ const Submenu = (props) => {
                         >
                           {" "}
                           <span className="menu-text">
-                            {item.transaction_name}
+                            {item.display_name}
                           </span>
                         </Link>
                       </li>
