@@ -77774,15 +77774,6 @@ body {
 	background: #f2f3f7
 }
 @media (min-width: 992px) {
-	.container,
-	.container-fluid,
-	.container-lg,
-	.container-md,
-	.container-sm,
-	.container-xl,
-	.container-xxl {
-		padding: 0 25px
-	}
 	.header-fixed .wrapper {
 		padding-top: 70px
 	}

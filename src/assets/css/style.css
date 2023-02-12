@@ -42,6 +42,7 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* Login css starts */
@@ -115,10 +116,6 @@ input[type="number"] {
   box-shadow: 0 0 7px #4b4a4a;
   
 }
-.menu-level1-bg{
-  background-color: rgb(234, 231, 231);
-  border: 1px solid rgb(223, 109, 109);
-}
 a:hover {
   background-color: rgb(148, 145, 140);
 }
@@ -133,30 +130,34 @@ a:hover {
   border: 1px solid rgb(223, 109, 109);
 }
 /* Submenu Css Starts */
-.header-bottom {
+.header_menu_wrapper {
   background-color:#515456;
-  padding: 0.5rem;
+  padding: 5px 0;
 }
-
-.header-bottom.submenu {
+.header_menu_wrapper .menu-nav{
+  gap: 10px;
+}
+.header_menu_wrapper .menu-nav a.menu-link{
+  font-size: 12px;
+  color: #fff;
+  background-color: transparent;
+  border: solid 1px #fff;
+  padding: 2px 5px;
+  border-radius: 8px;
+}
+.header_menu_wrapper .menu-nav li.menu-level1-bg a.menu-link{
+    color: #000;
+    background-color: #fff;
+}
+.header_menu_wrapper.submenu {
   background-color: rgb(211 211 211 / 25%);
   box-shadow: rgba(41, 40, 40, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
-.header-bottom.third {
+.header_menu_wrapper.third {
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-}
-.menu-item .menu-link {
-  font-size: 12px;
-  font-weight: 400;
-  color: rgb(33, 32, 32);
-}
-
-.menu-item .menu-link.active {
-  background-color: rgb(211 211 211 / 68%);
-  color: #333;
 }
 
 /* Submenu Css end */
@@ -313,10 +314,10 @@ a:hover {
   min-width: 85%;
 }
 
-.light-tab {
+/* .light-tab { */
   /* background-color: #ffe8e8 !important; */
   /* color: #d32f2f !important; */
-}
+/* } */
 
 .theme-bg {
   background-image: linear-gradient(
