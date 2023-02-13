@@ -29,7 +29,7 @@ import {
   getFilterData,
   updateFilterData,
 } from "../../../_redux/actions/common.action";
-import  moment from "moment";
+import moment from "moment";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -74,7 +74,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
       field: "Group",
       headerName: "Group",
       width: 200,
-      hide: false
+      hide: false,
     },
     {
       field: "short_name",
@@ -215,32 +215,27 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
       width: 120,
       hide: false,
     },
-      {
-        field: "Actions",
-        headerName: "Actions",
-        hide: false,
-        renderCell: (params) => (
-          <ActionButtons
-            onPreview={() =>
-                handleEdit({id:params.row.ID,type:"preview"})
-               
-            }
-            onEdit={
-              userRight?.update_right
-                ? 
-                () => handleEdit({id:params.row.ID,type:"edit"})
-                : null
-            } 
-            onDelete={
-              userRight?.delete_right
-                ?
-                 () => handleDeleteRow(params.row.id)
-                : null
-            }
-          />
-        ),
-        width: 120,
-      },
+    {
+      field: "Actions",
+      headerName: "Actions",
+      hide: false,
+      renderCell: (params) => (
+        <ActionButtons
+          onPreview={() => handleEdit({ id: params.row.ID, type: "preview" })}
+          onEdit={
+            userRight?.update_right
+              ? () => handleEdit({ id: params.row.ID, type: "edit" })
+              : null
+          }
+          onDelete={
+            userRight?.delete_right
+              ? () => handleDeleteRow(params.row.id)
+              : null
+          }
+        />
+      ),
+      width: 120,
+    },
   ]);
   //json
 
@@ -271,7 +266,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
     setfilter(true);
     // handleUpdateFilterData()
   };
-  const handleParams = (event) => {   
+  const handleParams = (event) => {
     setParams({ ...params, [event.target.name]: event.target.value });
     setfilter(true);
   };
@@ -337,15 +332,20 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
     setTempVerified(temp);
     // dispatch(setAccountVerified(param));
   };
-const handleDeleteRow=(id)=>{
-  CommonController.commonApiCallFilter("master/delete_account_master", {
-    company_id:id},"post","node"
-  ).then((data) => {
-    if(data.status===200){
-      showSuccessToast("Delete Success")
-    }
-  });
-}
+  const handleDeleteRow = (id) => {
+    CommonController.commonApiCallFilter(
+      "master/delete_account_master",
+      {
+        company_id: id,
+      },
+      "post",
+      "node"
+    ).then((data) => {
+      if (data.status === 200) {
+        showSuccessToast("Delete Success");
+      }
+    });
+  };
   const handleEdit = (id) => {
     dispatch(selectedAccountId(id));
     onEdit();
@@ -376,14 +376,15 @@ const handleDeleteRow=(id)=>{
     if (filterjsonData) {
       setParams(filterjsonData.data.filterpage);
       setAccountMasterFilter(filterjsonData.data.filterData);
-      if(filterjsonData?.data?.filterpage?.columns?.length>0){
-        const data = filterjsonData.data.filterpage?.columns?.map((val, index) => {
-          const columns = [...gridColumn];
-        return columns[index] = { ...columns[index], hide: val.hide };
-        });
+      if (filterjsonData?.data?.filterpage?.columns?.length > 0) {
+        const data = filterjsonData.data.filterpage?.columns?.map(
+          (val, index) => {
+            const columns = [...gridColumn];
+            return (columns[index] = { ...columns[index], hide: val.hide });
+          }
+        );
         setgridColumn(data);
       }
-     
     }
   }, [filterjsonData]);
   useEffect(() => {
@@ -398,7 +399,7 @@ const handleDeleteRow=(id)=>{
     }
   }, [params, accountMasterFilter, filter]);
   return (
-    <React.Fragment>
+    <div className="inner_data_wrapper">
       <div className="filter_box mb-5">
         <div className="row">
           {/* <h1>zsdxcfgbhjnmk</h1> */}
@@ -532,7 +533,7 @@ const handleDeleteRow=(id)=>{
           </div>
         </div>
       </div>
-      <div style={{ height: 500, width: "100%" }}>
+      <div className="data_table_height">
         <DataGrid
           pagination
           disableColumnFilter
@@ -571,7 +572,7 @@ const handleDeleteRow=(id)=>{
           rows={browseListData} //accountMasterList
         />
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 export default BrowseAccount;

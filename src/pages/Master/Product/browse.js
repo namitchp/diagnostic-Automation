@@ -38,49 +38,49 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       field: "product_id",
       headerName: "ID",
       width: 70,
-      hide:false
+      hide: false,
     },
     {
       field: "product_code",
       headerName: "ERP Code",
       width: 180,
-      hide:false
+      hide: false,
     },
     {
       field: "category_name",
       headerName: "Category",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "p_group_name",
       headerName: "Group",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "item_name",
       headerName: "Item Name",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "description",
       headerName: "Description",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "mlfb_no",
       headerName: "MLFB No.",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "list_price",
       headerName: "List Price",
       width: 200,
-      hide:false,
+      hide: false,
       renderCell: (params) => (
         <input
           type="text"
@@ -94,19 +94,19 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       field: "grade",
       headerName: "HSN",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "tax_rate",
       headerName: "Tax Rate",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "lp_ref",
       headerName: "L.P. Ref.",
       width: 200,
-      hide:false,
+      hide: false,
       renderCell: (params) => (
         <input
           type="text"
@@ -120,25 +120,23 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       field: "gg_name",
       headerName: "GG Name",
       width: 200,
-      hide:false,
+      hide: false,
     },
     {
       field: "siemens_product",
       headerName: "Siemens Product",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "moving_non_moving",
       headerName: "Moving",
       width: 200,
-      hide:false,
+      hide: false,
       renderCell: (params) => (
         <select
           className="form-control"
-          onChange={(event) =>
-            updateProductMovingNonValue(params, event)
-          }
+          onChange={(event) => updateProductMovingNonValue(params, event)}
           defaultValue={params.row.moving_non_moving}
         >
           <option value="Old">Old</option>
@@ -152,7 +150,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       field: "edit",
       headerName: "Verified",
       width: 200,
-      hide:false,
+      hide: false,
       renderCell: (params) => (
         <FormControlLabel
           className={"formControlLabel"}
@@ -198,17 +196,25 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       headerName: "Actions",
       width: 100,
       renderCell: (params) => (
-        <ActionButtons 
-
-         onPreview={ () => handleEdit({id:params.row.product_id,type:"preview"})}
-         onEdit={userRight?.update_right? () => handleEdit({id:params.row.product_id,type:"edit"}):null}
-         onDelete={userRight?.delete_right?() => handleDeleteRow(params.row.product_id):null}
+        <ActionButtons
+          onPreview={() =>
+            handleEdit({ id: params.row.product_id, type: "preview" })
+          }
+          onEdit={
+            userRight?.update_right
+              ? () => handleEdit({ id: params.row.product_id, type: "edit" })
+              : null
+          }
+          onDelete={
+            userRight?.delete_right
+              ? () => handleDeleteRow(params.row.product_id)
+              : null
+          }
         />
       ),
-  
     },
-  ])
- 
+  ]);
+
   const getProductListResponse = useSelector(
     (state) => state.ProductMaster.productList
   );
@@ -231,7 +237,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     item_name: "",
     lp_ref: "",
     status: "",
-    verified:"",
+    verified: "",
     siemens_product: siemens,
   });
 
@@ -241,7 +247,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     filter_value: "",
     sort_column: "",
     sort_order: "",
-    columns:[],
+    columns: [],
   });
 
   const handleUpdateFilterData = () => {
@@ -282,10 +288,8 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     setjsonfilter(true);
   };
   const handlePageChange = (param) => {
-      setParams({ ...params, pageNo: param });
-      setjsonfilter(true);
-  
-  
+    setParams({ ...params, pageNo: param });
+    setjsonfilter(true);
   };
   const handleColumnHide = (e) => {
     const index = gridColumn.findIndex((val) => val.field == e.field);
@@ -299,11 +303,13 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     if (filterjsonData) {
       setParams(filterjsonData.data?.filterPage);
       setProductMasterFilter(filterjsonData.data?.filterData);
-      if(filterjsonData?.data?.filterPage?.columns?.length>0){
-        const data = filterjsonData?.data?.filterPage?.columns?.map((val, index) => {
-          const columns = [...gridColumn];
-        return columns[index] = { ...columns[index], hide: val.hide };
-        });
+      if (filterjsonData?.data?.filterPage?.columns?.length > 0) {
+        const data = filterjsonData?.data?.filterPage?.columns?.map(
+          (val, index) => {
+            const columns = [...gridColumn];
+            return (columns[index] = { ...columns[index], hide: val.hide });
+          }
+        );
         setgridColumn(data);
       }
     }
@@ -322,7 +328,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     if (jsonfilter) {
       handleUpdateFilterData();
     }
-  }, [productMasterFilter, params,jsonfilter]);
+  }, [productMasterFilter, params, jsonfilter]);
 
   useEffect(() => {
     setIsloading(stateLoading);
@@ -389,10 +395,15 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     onEdit();
   };
   const handleDeleteRow = (id) => {
-    CommonController.commonApiCallFilter("master/delete_product_master", {
-      product_id: id,
-    },"post","node").then((data) => {
-      if (data.status===200) {
+    CommonController.commonApiCallFilter(
+      "master/delete_product_master",
+      {
+        product_id: id,
+      },
+      "post",
+      "node"
+    ).then((data) => {
+      if (data.status === 200) {
         showSuccessToast("Record Deleted Successfully");
         dispatch(getProductListBrowse(params, productMasterFilter));
       } else {
@@ -401,7 +412,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     });
   };
   return (
-    <React.Fragment>
+    <div className="inner_data_wrapper">
       <div className="filter_box mb-5">
         <div className="d-flex align-items-center">
           <div className="d-flex align-items-center mr-5">
@@ -409,9 +420,9 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
           </div>
           <div className="row w-100">
             <div className="col-md-2 mb-2">
-            <FormControl fullWidth size="small" variant="outlined">
+              <FormControl fullWidth size="small" variant="outlined">
                 <InputLabel id="demo-simple-select-outlined-label">
-                Category
+                  Category
                 </InputLabel>
                 <Select
                   name="category"
@@ -425,7 +436,10 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   {categoryList?.length > 0
                     ? categoryList.map((ref, index) => {
                         return (
-                          <MenuItem key={"ref" + index} value={ref.category_name}>
+                          <MenuItem
+                            key={"ref" + index}
+                            value={ref.category_name}
+                          >
                             {ref.category_name}
                           </MenuItem>
                         );
@@ -454,8 +468,6 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   />
                 )}
               /> */}
-
-              
             </div>
             <div className="col-md-2">
               <FormControl fullWidth size="small" variant="outlined">
@@ -623,8 +635,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
           </div>
         </div>
       </div>
-
-      <div style={{ height: 500, width: "100%" }}>
+      <div className="data_table_height">
         <DataGrid
           pagination
           disableColumnFilter
@@ -655,7 +666,6 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
               });
             }
           }}
-          
           columns={gridColumn}
           rows={productList}
           getRowId={(productList) => productList.product_id}
@@ -665,7 +675,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
           onColumnVisibilityChange={(e) => handleColumnHide(e)}
         />
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

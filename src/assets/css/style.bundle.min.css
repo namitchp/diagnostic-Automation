@@ -158,7 +158,6 @@ a {
 	background-color: transparent
 }
 a:hover {
-	color: #0073e9;
 	text-decoration: underline
 }
 a:not([href]):not([class]) {
@@ -4685,9 +4684,6 @@ input[type=submit].btn-block {
 	color: #7e8299;
 	pointer-events: none;
 	cursor: default
-}
-.nav-tabs {
-	border-bottom: 1px solid #e4e6ef
 }
 .nav-tabs .nav-link {
 	margin-bottom: -1px;
@@ -77770,9 +77766,6 @@ canvas {
 		display: none!important
 	}
 }
-body {
-	background: #f2f3f7
-}
 @media (min-width: 992px) {
 	.header-fixed .wrapper {
 		padding-top: 70px
@@ -77783,7 +77776,6 @@ body {
 }
 @media (max-width: 991.98px) {
 	.container,
-	.container-fluid,
 	.container-lg,
 	.container-md,
 	.container-sm,

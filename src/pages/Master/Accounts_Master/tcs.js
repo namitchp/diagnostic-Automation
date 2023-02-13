@@ -12,12 +12,12 @@ export const TCSAccount = ({ accountType }) => {
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
   const [formData, setformData] = useState({
-    company_id:0,
+    company_id: 0,
     tcs_per: "",
-    company_name:""
+    company_name: "",
   });
   const [params, setParams] = useState({
-    pageNo:0,
+    pageNo: 0,
     pageSize: 10,
     filter_value: "",
     sort_column: "",
@@ -59,7 +59,7 @@ export const TCSAccount = ({ accountType }) => {
         if (data.status === 200) {
           showSuccessToast("success");
           getBrowseListData();
-          setformData({...formData, tcs_per: "" });
+          setformData({ ...formData, tcs_per: "" });
         }
       });
     } catch (err) {
@@ -76,13 +76,13 @@ export const TCSAccount = ({ accountType }) => {
       "post",
       "node"
     ).then((data) => {
-      if (data.status === 200){
+      if (data.status === 200) {
         setCompanyList(data[accountType]);
-      } 
+      }
     });
   }, []);
   return (
-    <div className="py-3">
+    <div className="inner_data_wrapper">
       <div className="row">
         <div className="col-md-3 ml-3">
           <Autocomplete
@@ -90,9 +90,20 @@ export const TCSAccount = ({ accountType }) => {
             options={companyList}
             getOptionLabel={(option) => option.company_name}
             fullWidth
-            value={formData.company_name!=""?{company_name:formData.company_name ,company_id:formData.company_id}:null}
+            value={
+              formData.company_name != ""
+                ? {
+                    company_name: formData.company_name,
+                    company_id: formData.company_id,
+                  }
+                : null
+            }
             onChange={(event, value) =>
-              setformData({ ...formData, company_id: value.company_id ,company_name:value.company_name})
+              setformData({
+                ...formData,
+                company_id: value.company_id,
+                company_name: value.company_name,
+              })
             }
             variant="outlined"
             renderInput={(params) => (
@@ -134,10 +145,12 @@ export const TCSAccount = ({ accountType }) => {
           size="small"
           name="company_id"
           value={params.filter_value}
-          onChange={(e)=>setParams({...params,filter_value:e.target.value})}
+          onChange={(e) =>
+            setParams({ ...params, filter_value: e.target.value })
+          }
         />
       </div>
-      <div style={{ height: 500, width: "100%" }}>
+      <div className="data_table_height">
         <DataGrid
           columns={[
             {
@@ -181,7 +194,7 @@ export const TCSAccount = ({ accountType }) => {
           headerHeight={42}
           autoPageSize
           rowHeight={35}
-          maxColumns= {6}
+          maxColumns={6}
           components={
             browseListData.length > 0
               ? {

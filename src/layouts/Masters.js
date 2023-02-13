@@ -16,11 +16,9 @@ const Masters = () => {
   const selectedSubMenu = window.location.pathname;
 
   console.log(selectedSubMenu);
-const menuLength = window.location.pathname.split("/").length;
-const userRight = useSelector((state) => state.common.userRightResponse);
-const getredirectMenu = useSelector((state) => state.common.redirectMenu);
-
-
+  const menuLength = window.location.pathname.split("/").length;
+  const userRight = useSelector((state) => state.common.userRightResponse);
+  const getredirectMenu = useSelector((state) => state.common.redirectMenu);
 
   const componentValue = {
     15: (
@@ -36,84 +34,71 @@ const getredirectMenu = useSelector((state) => state.common.redirectMenu);
     ),
     16: (
       <Switch>
- <Route path="/masters/1/account-master/9/supplier/16" exact>
-        {""}
-        <AccountsMaster accountType="Supplier" browse_id={2} />
-      </Route>
-      <Redirect
+        <Route path="/masters/1/account-master/9/supplier/16" exact>
+          {""}
+          <AccountsMaster accountType="Supplier" browse_id={2} />
+        </Route>
+        <Redirect
           to="/masters/1/account-master/9/supplier/16"
           from={selectedSubMenu}
         />
       </Switch>
-     
     ),
 
     12: (
       <Switch>
-         <Route
-        path="/masters/1/configuration-master/12"
-        exact
-        component={ConfigurationMaster}
-      />
-        <Redirect
-          to="/masters/1/configuration-master/12"
-          from="/masters/1"
+        <Route
+          path="/masters/1/configuration-master/12"
+          exact
+          component={ConfigurationMaster}
         />
+        <Redirect to="/masters/1/configuration-master/12" from="/masters/1" />
       </Switch>
-     
     ),
 
     17: (
       <Switch>
-          <Route path="/masters/1/product-master/10/sl/17" strict>
-        <ProductMasterIndex siemens={"Siemens"} browse_id={3} />
-      </Route>
-        <Redirect
-          to="/masters/1/product-master/10/sl/17"
-          from="/masters/1"
-        />
-
+        <Route path="/masters/1/product-master/10/sl/17" strict>
+          <ProductMasterIndex siemens={"Siemens"} browse_id={3} />
+        </Route>
+        <Redirect to="/masters/1/product-master/10/sl/17" from="/masters/1" />
       </Switch>
-    
     ),
     18: (
       <Switch>
-         <Route path="/masters/1/product-master/10/non-sl/18" strict>
-        {""}
-        <ProductMasterIndex siemens={"Non-Siemens"} browse_id={4} />
-      </Route>
+        <Route path="/masters/1/product-master/10/non-sl/18" strict>
+          {""}
+          <ProductMasterIndex siemens={"Non-Siemens"} browse_id={4} />
+        </Route>
         <Redirect
           to="/masters/1/product-master/10/non-sl/18"
           from="/masters/1"
         />
       </Switch>
-     
     ),
     19: (
       <Switch>
-         <Route path="/masters/1/material-code/13/customer/19" exact>
-        <MaterialCodeIndex type={"Customer"} browse_id={"5"} />
-      </Route>
+        <Route path="/masters/1/material-code/13/customer/19" exact>
+          <MaterialCodeIndex type={"Customer"} browse_id={"5"} />
+        </Route>
         <Redirect
           to="/masters/1/material-code/13/customer/19"
           from="/masters/1"
         />
       </Switch>
-     
     ),
 
     20: (
       <Switch>
         <Route path="/masters/1/material-code/13/supplier/20" exact>
-        {""}
-        <MaterialCodeIndex type={"Supplier"} browse_id={"6"} />
-      </Route>
+          {""}
+          <MaterialCodeIndex type={"Supplier"} browse_id={"6"} />
+        </Route>
         <Redirect
           to="/masters/1/material-code/13/supplier/20"
           from="/masters/1"
         />
       </Switch>
-      
     ),
     // <Route
     //   path="/masters/item-group-master"
@@ -130,31 +115,29 @@ const getredirectMenu = useSelector((state) => state.common.redirectMenu);
     // />
     21: (
       <Switch>
-           <Route
-        path="/masters/1/employee-master/11/employee/21"
-        exact
-        component={EmployeeIndex}
-      />
+        <Route
+          path="/masters/1/employee-master/11/employee/21"
+          exact
+          component={EmployeeIndex}
+        />
         <Redirect
           to="/masters/1/employee-master/11/employee/21"
           from="/masters/1"
         />
       </Switch>
-   
     ),
     22: (
       <Switch>
-           <Route
-        path="/masters/1/employee-master/11/user-rights/22"
-        exact
-        component={UserRightList}
-      />
+        <Route
+          path="/masters/1/employee-master/11/user-rights/22"
+          exact
+          component={UserRightList}
+        />
         <Redirect
           to="/masters/1/employee-master/11/user-rights/22"
           from="/masters/1"
         />
       </Switch>
-   
     ),
     146: (
       <Route
@@ -200,7 +183,6 @@ const getredirectMenu = useSelector((state) => state.common.redirectMenu);
         )} */}
       {/* </Switch> */}
       {/* } */}
-
     </div>
   );
 };

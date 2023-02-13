@@ -5,6 +5,7 @@ import OtherInformation from "./other";
 import { useSelector } from "react-redux";
 import { CommonController } from "../../../_redux/controller/common.controller";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
+import { Container } from "react-bootstrap";
 const AddNewProduct = ({ goBrowse }) => {
   const selectedIdResponse = useSelector(
     (state) => state.AllReducersMaster.productId
@@ -64,7 +65,7 @@ const AddNewProduct = ({ goBrowse }) => {
   };
   const onNext = () => {
     if (formData?.mlfb_no == "") {
-       showErrorToast("Please Enter Unice Mlfb No");
+      showErrorToast("Please Enter Unice Mlfb No");
     } else {
       setSelectedTab(1);
     }
@@ -96,11 +97,16 @@ const AddNewProduct = ({ goBrowse }) => {
   };
   useEffect(() => {
     if (selectedIdResponse) {
-      CommonController.commonApiCallFilter("master/preview_product_master", {
-        product_id: selectedIdResponse?.id,
-      },"post","node")
+      CommonController.commonApiCallFilter(
+        "master/preview_product_master",
+        {
+          product_id: selectedIdResponse?.id,
+        },
+        "post",
+        "node"
+      )
         .then((data) => {
-          const value=data.data;
+          const value = data.data;
           let tempData = { ...formData };
           for (let key in formData) {
             if (value.hasOwnProperty(key)) {
@@ -115,83 +121,89 @@ const AddNewProduct = ({ goBrowse }) => {
     }
   }, [selectedIdResponse]);
   return (
-    <div className="container-fluid mt-5">
-      {/* {loading && <Loader />} */}
-      <ul className="nav nav-tabs nav-tabs-line">
-        <li    className={
-              "menu-item mb-2  border-bottom-0 rounded mr-2 " +
-              (selectedTab === 0 ? "menu-level2-color" : "")
-            }>
-          <a
-           className={
-            `menu-link py-2 px-4 rounded d-inline-block  fw-bold ` +
-            (selectedTab === 0 ? "submenu-link-color" : "")
-          }
-            onClick={() => setSelectedTab(0)}
-          >
-            General Information
-          </a>
-        </li>
-        <li className={
-              "menu-item mb-2  border-bottom-0 rounded mr-2 " +
-              (selectedTab === 1 ? "menu-level2-color" : "")
-            }>
-          <a
-             className={
-              `menu-link py-2 px-4 rounded d-inline-block  fw-bold ` +
-              (selectedTab === 1 ? "submenu-link-color" : "")
+    <Container fluid>
+      <div className="inner_data_wrapper">
+        {/* {loading && <Loader />} */}
+        <ul className="nav nav-tabs nav-tabs-line">
+          <li
+            className={
+              "menu-item " + (selectedTab === 0 ? "menu-level2-color" : "")
             }
-            onClick={() => setSelectedTab(1)}
           >
-            Technical Information
-          </a>
-        </li>
-      </ul>
-      <div className="tab-content mt-10">
-        {selectedTab === 0 && (
-          <GeneralProduct
-            formData={formData}
-            handleChange={handleChange}
-            handleAutoChange={handleAutoChange}
-            handleCheckChange={handleCheckChange}
-          />
-        )}
-        {selectedTab === 1 && (
-          <OtherInformation formData={formData} handleChange={handleChange} />
-        )}
-        <div className="w-100 text-right">
-          {selectedTab === 1 && (
-            <Button
-              variant="contained"
-              onClick={onBack}
-              className="mr-3"
-              color="primary"
-              disableElevation
+            <a
+              className={
+                `menu-link ` + (selectedTab === 0 ? "submenu-link-color" : "")
+              }
+              onClick={() => setSelectedTab(0)}
             >
-              Back
-            </Button>
-          )}
-           {selectedTab === 0 && ( <Button
-            variant="contained"
-            onClick={onNext}
-            color="primary"
-            disableElevation
+              General Information
+            </a>
+          </li>
+          <li
+            className={
+              "menu-item " + (selectedTab === 1 ? "menu-level2-color" : "")
+            }
           >
-            Next
-          </Button>
+            <a
+              className={
+                `menu-link ` + (selectedTab === 1 ? "submenu-link-color" : "")
+              }
+              onClick={() => setSelectedTab(1)}
+            >
+              Technical Information
+            </a>
+          </li>
+        </ul>
+        <div className="tab-content inner_third_level">
+          {selectedTab === 0 && (
+            <GeneralProduct
+              formData={formData}
+              handleChange={handleChange}
+              handleAutoChange={handleAutoChange}
+              handleCheckChange={handleCheckChange}
+            />
           )}
-          {selectedIdResponse?.type=="preview"?"":(selectedTab===1&&<Button
-          variant="contained"
-          onClick={onSubmit}
-          color="primary"
-          disableElevation
-        >
-          Submit
-        </Button>
-        )}  
+          {selectedTab === 1 && (
+            <OtherInformation formData={formData} handleChange={handleChange} />
+          )}
+          <div className="w-100 text-right">
+            {selectedTab === 1 && (
+              <Button
+                variant="contained"
+                onClick={onBack}
+                className="mr-3"
+                color="primary"
+                disableElevation
+              >
+                Back
+              </Button>
+            )}
+            {selectedTab === 0 && (
+              <Button
+                variant="contained"
+                onClick={onNext}
+                color="primary"
+                disableElevation
+              >
+                Next
+              </Button>
+            )}
+            {selectedIdResponse?.type == "preview"
+              ? ""
+              : selectedTab === 1 && (
+                  <Button
+                    variant="contained"
+                    onClick={onSubmit}
+                    color="primary"
+                    disableElevation
+                  >
+                    Submit
+                  </Button>
+                )}
+          </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

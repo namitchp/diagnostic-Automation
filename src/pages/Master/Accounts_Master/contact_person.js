@@ -146,98 +146,104 @@ const ContactPerson = ({
           />
         </div>
         <div className="col-md-12 mb-5">
-        <TextField
-          label="Contact ID"
-          disabled
-          fullWidth
-          variant="outlined"
-          name="contact_id"
-          value={formData.contact_id}
-          size="small"
-          onChange={handleOnChange}
-        />
-      </div>
-      <div className="col-md-12 mb-5">
-        <TextField
-          label="Contact Name"
-          fullWidth
-          variant="outlined"
-          name="cperson_name"
-          value={formContact.cperson_name}
-          size="small"
-          onChange={handleOnChange}
-        />
-      </div>
-      <div className="col-md-12 mb-5">
-        <Autocomplete
-          size="small"
-          options={dropDownValues.departmentList}
-          getOptionLabel={(option) => option.department_name}
-          onChange={handleOnChange}
-          fullWidth
-          variant="outlined"
-          renderInput={(params) => (
-            <TextField {...params} label="Department" variant="outlined" />
-          )}
-        />
-      </div>
-      <div className="col-md-12 mb-5">
-        <Autocomplete
-          size="small"
-          options={dropDownValues.designationList}
-          getOptionLabel={(option) => option.designation_name}
-          fullWidth
-          onChange={(e,value)=>setformContact({...formContact,designation_name:value.designation_name,designation_id:value.designation_id})}
-          variant="outlined"
-          renderInput={(params) => (
-            <TextField {...params} label="Designation" variant="outlined" />
-          )}
-        />
-      </div>
-      <div className="col-md-12 mb-5">
-        <TextField
-          label="Mobile"
-          fullWidth
-          variant="outlined"
-          name="mobile"
-          value={formContact.mobile}
-          size="small"
-          onChange={handleOnChange}
-        />
-      </div>
-      <div className="col-md-12 mb-5">
-        <TextField
-          label="Email"
-          fullWidth
-          variant="outlined"
-          name="email"
-          value={formContact.email}
-          size="small"
-          onChange={handleOnChange}
-        />
-      </div>
-      <div className="col-md-12 mb-5">
-        <TextField
-          label="Phone"
-          fullWidth
-          variant="outlined"
-          name="phone"
-          value={formContact.phone}
-          size="small"
-          onChange={handleOnChange}
-        />
-      </div>
-      <div className="col-md-12 mb-5">
-        <TextField
-          label="Extn."
-          fullWidth
-          variant="outlined"
-          name="extn"
-          value={formContact.extn}
-          size="small"
-          onChange={handleOnChange}
-        />
-      </div>
+          <TextField
+            label="Contact ID"
+            disabled
+            fullWidth
+            variant="outlined"
+            name="contact_id"
+            value={formData.contact_id}
+            size="small"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="col-md-12 mb-5">
+          <TextField
+            label="Contact Name"
+            fullWidth
+            variant="outlined"
+            name="cperson_name"
+            value={formContact.cperson_name}
+            size="small"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="col-md-12 mb-5">
+          <Autocomplete
+            size="small"
+            options={dropDownValues.departmentList}
+            getOptionLabel={(option) => option.department_name}
+            onChange={handleOnChange}
+            fullWidth
+            variant="outlined"
+            renderInput={(params) => (
+              <TextField {...params} label="Department" variant="outlined" />
+            )}
+          />
+        </div>
+        <div className="col-md-12 mb-5">
+          <Autocomplete
+            size="small"
+            options={dropDownValues.designationList}
+            getOptionLabel={(option) => option.designation_name}
+            fullWidth
+            onChange={(e, value) =>
+              setformContact({
+                ...formContact,
+                designation_name: value.designation_name,
+                designation_id: value.designation_id,
+              })
+            }
+            variant="outlined"
+            renderInput={(params) => (
+              <TextField {...params} label="Designation" variant="outlined" />
+            )}
+          />
+        </div>
+        <div className="col-md-12 mb-5">
+          <TextField
+            label="Mobile"
+            fullWidth
+            variant="outlined"
+            name="mobile"
+            value={formContact.mobile}
+            size="small"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="col-md-12 mb-5">
+          <TextField
+            label="Email"
+            fullWidth
+            variant="outlined"
+            name="email"
+            value={formContact.email}
+            size="small"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="col-md-12 mb-5">
+          <TextField
+            label="Phone"
+            fullWidth
+            variant="outlined"
+            name="phone"
+            value={formContact.phone}
+            size="small"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="col-md-12 mb-5">
+          <TextField
+            label="Extn."
+            fullWidth
+            variant="outlined"
+            name="extn"
+            value={formContact.extn}
+            size="small"
+            onChange={handleOnChange}
+          />
+        </div>
       </div>
 
       <div className="col-md-2 mb-2">

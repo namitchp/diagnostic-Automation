@@ -129,13 +129,15 @@ const Header = ({ onHeaderClick }) => {
     <React.Fragment>
       <MainBar onMenuClick={() => onHeaderClick()} />
       <MainMenu list={userRightListArr} onMenuChange={handleMenuChange} />
-      <div className="mt-3">{/* <CustomBreadcrumb /> */}</div>
-      {subMenuList?.length > 0 ? (
-        <Submenu list={subMenuList} onSubMenuChange={handleSubMenu} />
-      ) : null}
-      {thirdMenuList?.length > 0 && subMenuList.length > 0 ? (
-        <ThirdMenu list={thirdMenuList} onMenuChange={handleThirdMenu} />
-      ) : null}
+      {/* <CustomBreadcrumb /> */}
+      <div className="wrapper">
+        {subMenuList?.length > 0 ? (
+          <Submenu list={subMenuList} onSubMenuChange={handleSubMenu} />
+        ) : null}
+        {thirdMenuList?.length > 0 && subMenuList.length > 0 ? (
+          <ThirdMenu list={thirdMenuList} onMenuChange={handleThirdMenu} />
+        ) : null}
+      </div>
     </React.Fragment>
   );
 };

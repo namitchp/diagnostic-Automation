@@ -26,10 +26,10 @@ export const showErrorToast = (msg) => {
     theme: "colored",
   });
 };
-export const UserRight=()=>{
-  const thirdmenu=useSelector((state)=>state.common.userRightListThird)
-  console.log(thirdmenu)
-}
+export const UserRight = () => {
+  const thirdmenu = useSelector((state) => state.common.userRightListThird);
+  console.log(thirdmenu);
+};
 export const buttonLoader = (loading, label, onClick, color) => {
   return (
     <Button
@@ -47,7 +47,9 @@ export const getBrowseUserRight = (response) => {
   const pathArr = window.location.pathname.split("/").filter((x) => x != "");
   // console.log(pathArr);
   // console.log(response?.filter((x) => x.transaction_name.toLowerCase() == pathArr[2]));
-  return response?.filter((x) => x.transaction_name.toLowerCase() == pathArr[2])[0]
+  return response?.filter(
+    (x) => x.transaction_name.toLowerCase() == pathArr[2]
+  )[0];
 };
 
 export const getAutoValue = (key, arr, val) => {

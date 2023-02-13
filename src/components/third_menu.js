@@ -1,11 +1,11 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-
 import { Link } from "react-router-dom";
 import { userRight } from "../_redux/actions/common.action";
 
 const ThirdMenu = (props) => {
-    const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const { list, onMenuChange } = props;
   const selectedMenu = window.location.pathname.split("/")[1];
   const id1 = window.location.pathname.split("/")[2];
@@ -14,25 +14,33 @@ const ThirdMenu = (props) => {
   const thirdMenu = window.location.pathname.split("/")[5];
 
   return (
-    <div className="header-bottom third">
-      <div className="px-3">
+    <Container className="header-bottom" fluid>
+      <div className="third">
         <div className="header-navs header-navs-left">
           <ul className="menu-nav mb-0 list-unstyled d-flex flex-wrap">
             {list?.length > 0
               ? list.map((item, index) => {
-                  if (item.level ===3) {
+                  if (item.level === 3) {
                     return (
-                      <li className={"menu-item rounded mr-2 "+ (thirdMenu ===
-                        item.transaction_name
-                          .replace(/[^a-zA-Z ]/g, "")
-                          .replace(/\s+/g, "-")
-                          .toLowerCase()
-                          ? "menu-level2-color"
-                          : "")} key={"sublist" + index}>
+                      <li
+                        className={
+                          "menu-item mr-2 " +
+                          (thirdMenu ===
+                          item.transaction_name
+                            .replace(/[^a-zA-Z ]/g, "")
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()
+                            ? "menu-level2-color"
+                            : "")
+                        }
+                        key={"sublist" + index}
+                      >
                         <Link
-                          onClick={()=>{onMenuChange(item,index)}}
+                          onClick={() => {
+                            onMenuChange(item, index);
+                          }}
                           className={
-                            "menu-link py-2 px-2 rounded d-inline-block " +
+                            "menu-link d-inline-block " +
                             (thirdMenu ===
                             item.transaction_name
                               .replace(/[^a-zA-Z ]/g, "")
@@ -47,9 +55,7 @@ const ThirdMenu = (props) => {
                             .toLowerCase()}/${item.transaction_id}`}
                         >
                           {" "}
-                          <span className="menu-text">
-                            {item.display_name}
-                          </span>
+                          {item.display_name}
                         </Link>
                       </li>
                     );
@@ -59,7 +65,7 @@ const ThirdMenu = (props) => {
           </ul>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
