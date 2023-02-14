@@ -14,6 +14,7 @@ import {
 import { Autocomplete } from "@material-ui/lab";
 import { withStyles } from "@material-ui/styles";
 import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
 import { CommonController } from "../../../_redux/controller/common.controller";
 const StyledTableCell = withStyles((theme) => ({
@@ -41,7 +42,7 @@ const UserRightList = () => {
     second_menu: false,
     third_menu: false,
   });
-  const [department, setdepartment] = useState(null)
+  const [department, setdepartment] = useState(null);
   const [userRightList, setUserRightList] = useState([]);
   const [selectedUserRight, setSelectedUserRight] = useState([]);
   const [filteredArray, setFilteredArray] = useState([]);
@@ -72,15 +73,15 @@ const UserRightList = () => {
         showErrorToast(err);
       });
   };
-  const handelDepartment=(e,value)=>{
+  const handelDepartment = (e, value) => {
     // setdepartment(e.target.value);
-const items = userRightList.filter(
-  (x) => x.department_name ===value.department_name
-);
-if(items.length>0){
-  setFilteredArray(items);
-}
-  }
+    const items = userRightList.filter(
+      (x) => x.department_name === value.department_name
+    );
+    if (items.length > 0) {
+      setFilteredArray(items);
+    }
+  };
   const onSearch = (e) => {
     if (e.code === "Enter") {
       const items = filteredArray.filter(
@@ -201,196 +202,209 @@ if(items.length>0){
   };
 
   return (
-    <div className="card card-custom gutter-b  px-7 py-3">
-      <div className="container-fluid p-4">
-        <div className="row">
-          <div className="col-md-2">
-            <Autocomplete
-              disablePortal
-              id="first_menu"
-              options={menuList.first_menu}
-              getOptionLabel={(option) => option.transaction_name}
-              fullWidth
-              onChange={handleFirstMenu}
-              value={selectedMenu.first_menu}
-              size="small"
-              renderInput={(params) => (
-                <TextField {...params} variant="outlined" label="First Menu" />
-              )}
-            />
-          </div>
-          {mainMenu.second_menu && (
-            <div className="col-md-2">
-              <Autocomplete
-                disablePortal
-                id="second_menu"
-                options={menuList.second_menu}
-                getOptionLabel={(option) => option.transaction_name}
-                fullWidth
-                onChange={handleSecondMenu}
-                value={selectedMenu.second_menu}
-                size="small"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    label="Second Menu"
+    <div className="main_wrapper">
+      <div className="inner_main_first">
+        <div className="inner_main_second">
+          <div className="inner_main_third">
+            <Container fluid>
+              <div className="row">
+                <div className="col-md-2">
+                  <Autocomplete
+                    disablePortal
+                    id="first_menu"
+                    options={menuList.first_menu}
+                    getOptionLabel={(option) => option.transaction_name}
+                    fullWidth
+                    onChange={handleFirstMenu}
+                    value={selectedMenu.first_menu}
+                    size="small"
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label="First Menu"
+                      />
+                    )}
                   />
+                </div>
+                {mainMenu.second_menu && (
+                  <div className="col-md-2">
+                    <Autocomplete
+                      disablePortal
+                      id="second_menu"
+                      options={menuList.second_menu}
+                      getOptionLabel={(option) => option.transaction_name}
+                      fullWidth
+                      onChange={handleSecondMenu}
+                      value={selectedMenu.second_menu}
+                      size="small"
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label="Second Menu"
+                        />
+                      )}
+                    />
+                  </div>
                 )}
-              />
-            </div>
-          )}
-          {mainMenu.third_menu && (
-            <div className="col-md-2">
-              <Autocomplete
-                disablePortal
-                id="third_menu"
-                options={menuList.third_menu}
-                getOptionLabel={(option) => option.transaction_name}
-                fullWidth
-                onChange={handleThirdMenu}
-                value={selectedMenu.third_menu}
-                size="small"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
+                {mainMenu.third_menu && (
+                  <div className="col-md-2">
+                    <Autocomplete
+                      disablePortal
+                      id="third_menu"
+                      options={menuList.third_menu}
+                      getOptionLabel={(option) => option.transaction_name}
+                      fullWidth
+                      onChange={handleThirdMenu}
+                      value={selectedMenu.third_menu}
+                      size="small"
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label="Third Menu"
+                        />
+                      )}
+                    />
+                  </div>
+                )}
+                <div className="col-md-2">
+                  <Autocomplete
+                    size="small"
+                    options={listDepartment}
+                    getOptionLabel={(option) => option.department_name}
+                    onChange={handelDepartment}
+                    fullWidth
                     variant="outlined"
-                    label="Third Menu"
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Department"
+                        variant="outlined"
+                      />
+                    )}
                   />
-                )}
-              />
-            </div>
-          )}
-          <div className="col-md-2">
-          <Autocomplete
-            size="small"
-            options={listDepartment}
-            getOptionLabel={(option) => option.department_name}
-            onChange={handelDepartment}
-            fullWidth
-            variant="outlined"
-            renderInput={(params) => (
-              <TextField {...params} label="Department" variant="outlined" />
-            )}
-          />
-          </div>
-          <div className="col-md-2">
-            <TextField
-              variant="outlined"
-              fullWidth
-              size="small"
-              label="Search"
-              onKeyDown={onSearch}
-            />
-          </div>
-        </div>
-        <Paper style={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer className="mt-4" style={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Employee</StyledTableCell>
-                  <StyledTableCell>Department</StyledTableCell>
-                  <StyledTableCell>View</StyledTableCell>
-                  <StyledTableCell>New</StyledTableCell>
-                  <StyledTableCell>Edit</StyledTableCell>
-                  <StyledTableCell>Delete</StyledTableCell>
-                  <StyledTableCell>Print</StyledTableCell>
-                  <StyledTableCell>Approve</StyledTableCell>
-                  {/* <StyledTableCell>Revise</StyledTableCell>
+                </div>
+                <div className="col-md-2">
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    label="Search"
+                    onKeyDown={onSearch}
+                  />
+                </div>
+              </div>
+              <Paper style={{ width: "100%", overflow: "hidden" }}>
+                <TableContainer className="mt-4" style={{ maxHeight: 440 }}>
+                  <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                      <TableRow>
+                        <StyledTableCell>Employee</StyledTableCell>
+                        <StyledTableCell>Department</StyledTableCell>
+                        <StyledTableCell>View</StyledTableCell>
+                        <StyledTableCell>New</StyledTableCell>
+                        <StyledTableCell>Edit</StyledTableCell>
+                        <StyledTableCell>Delete</StyledTableCell>
+                        <StyledTableCell>Print</StyledTableCell>
+                        <StyledTableCell>Approve</StyledTableCell>
+                        {/* <StyledTableCell>Revise</StyledTableCell>
                   <StyledTableCell>Allocation</StyledTableCell>
                   <StyledTableCell>High Priority</StyledTableCell> */}
-                  <StyledTableCell>Special Column</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredArray.map((menu, index) => {
-                  return (
-                    <TableRow
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                      key={index}
-                    >
-                      <TableCell>{menu.employee}</TableCell>
-                      <TableCell>{menu.department_name}</TableCell>
-                      <TableCell>
-                        <Checkbox
-                          onChange={(event) =>
-                            onUserRightChange(
-                              menu,
-                              "view_right",
-                              event.target.checked
-                            )
-                          }
-                          color="primary"
-                          checked={menu.view_right === true}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Checkbox
-                          onChange={(event) =>
-                            onUserRightChange(
-                              menu,
-                              "insert_right",
-                              event.target.checked
-                            )
-                          }
-                          color="primary"
-                          checked={menu.insert_right === true}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Checkbox
-                          onChange={(event) =>
-                            onUserRightChange(
-                              menu,
-                              "update_right",
-                              event.target.checked
-                            )
-                          }
-                          color="primary"
-                          checked={menu.update_right === true}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Checkbox
-                          onChange={(event) =>
-                            onUserRightChange(
-                              menu,
-                              "delete_right",
-                              event.target.checked
-                            )
-                          }
-                          color="primary"
-                          checked={menu.delete_right === true}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Checkbox
-                          onChange={(event) =>
-                            onUserRightChange(
-                              menu,
-                              "print_right",
-                              event.target.checked
-                            )
-                          }
-                          color="primary"
-                          checked={menu.print_right === true}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Checkbox
-                          onChange={(event) =>
-                            onUserRightChange(
-                              menu,
-                              "approve_right",
-                              event.target.checked
-                            )
-                          }
-                          color="primary"
-                          checked={menu.approve_right === true}
-                        />
-                      </TableCell>
-                      {/* <TableCell>
+                        <StyledTableCell>Special Column</StyledTableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {filteredArray.map((menu, index) => {
+                        return (
+                          <TableRow
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                            key={index}
+                          >
+                            <TableCell>{menu.employee}</TableCell>
+                            <TableCell>{menu.department_name}</TableCell>
+                            <TableCell>
+                              <Checkbox
+                                onChange={(event) =>
+                                  onUserRightChange(
+                                    menu,
+                                    "view_right",
+                                    event.target.checked
+                                  )
+                                }
+                                color="primary"
+                                checked={menu.view_right === true}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Checkbox
+                                onChange={(event) =>
+                                  onUserRightChange(
+                                    menu,
+                                    "insert_right",
+                                    event.target.checked
+                                  )
+                                }
+                                color="primary"
+                                checked={menu.insert_right === true}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Checkbox
+                                onChange={(event) =>
+                                  onUserRightChange(
+                                    menu,
+                                    "update_right",
+                                    event.target.checked
+                                  )
+                                }
+                                color="primary"
+                                checked={menu.update_right === true}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Checkbox
+                                onChange={(event) =>
+                                  onUserRightChange(
+                                    menu,
+                                    "delete_right",
+                                    event.target.checked
+                                  )
+                                }
+                                color="primary"
+                                checked={menu.delete_right === true}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Checkbox
+                                onChange={(event) =>
+                                  onUserRightChange(
+                                    menu,
+                                    "print_right",
+                                    event.target.checked
+                                  )
+                                }
+                                color="primary"
+                                checked={menu.print_right === true}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Checkbox
+                                onChange={(event) =>
+                                  onUserRightChange(
+                                    menu,
+                                    "approve_right",
+                                    event.target.checked
+                                  )
+                                }
+                                color="primary"
+                                checked={menu.approve_right === true}
+                              />
+                            </TableCell>
+                            {/* <TableCell>
                         <Checkbox
                           onChange={(event) =>
                             onUserRightChange(
@@ -429,35 +443,38 @@ if(items.length>0){
                           checked={menu.high_priority_right == "True"}
                         />
                       </TableCell> */}
-                      <TableCell>
-                        <Checkbox
-                          onChange={(event) =>
-                            onUserRightChange(
-                              menu,
-                              "special_column",
-                              event.target.checked
-                            )
-                          }
-                          color="primary"
-                          checked={menu.special_column === true}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-        <div className="w-100 mt-3 text-right">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={onSave}
-            disableElevation
-          >
-            Update
-          </Button>
+                            <TableCell>
+                              <Checkbox
+                                onChange={(event) =>
+                                  onUserRightChange(
+                                    menu,
+                                    "special_column",
+                                    event.target.checked
+                                  )
+                                }
+                                color="primary"
+                                checked={menu.special_column === true}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Paper>
+              <div className="w-100 mt-3 text-right">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={onSave}
+                  disableElevation
+                >
+                  Update
+                </Button>
+              </div>
+            </Container>
+          </div>
         </div>
       </div>
     </div>

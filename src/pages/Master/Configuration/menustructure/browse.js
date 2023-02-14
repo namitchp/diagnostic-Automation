@@ -5,9 +5,7 @@ import React, { useEffect, useState } from "react";
 // import {
 //   CommonController,
 // } from "../../../../";
-import {
-  CommonController,
-} from "../../../../_redux/controller/common.controller";
+import { CommonController } from "../../../../_redux/controller/common.controller";
 import CustomPagination from "../../../../components/CustomPagination";
 import CustomNoRowsOverlay from "../../../../components/customRowComponent";
 import {
@@ -18,7 +16,7 @@ import {
 import { useSelector } from "react-redux";
 const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
   const userRight = useSelector((state) => state.common.userRightResponse);
-  console.log(userRight)
+  console.log(userRight);
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -36,13 +34,13 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
     );
   };
   const getBrowseListData = async () => {
-    const id=localStorage.getItem("userId")
+    const id = localStorage.getItem("userId");
     setLoading(true);
     try {
       await CommonController.commonApiCall(
         "master/browse_menu",
         params,
-        {user_id:id},
+        { user_id: id },
         "node"
       )
         .then((data) => {
@@ -112,8 +110,8 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
     getBrowseListData();
   }, [params]);
   return (
-    <>
-      <div className="filter_box mb-5">
+    <div className="bg-white p-4 w-100">
+      <div className="filter_box mb-3">
         <div className="row">
           <div className="col-md-1 d-flex align-items-center">
             <h4 className="mb-0">Filters</h4>
@@ -134,7 +132,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
         </div>
       </div>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <div className="data_table_height">
         <DataGrid
           columns={[
             {
@@ -182,18 +180,19 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                     onClick={() => onPreview(params.row.p_category_id)}
                   ></i> */}
                   {console.log(userRight.update_right)}
-                  {userRight.update_right&&<i
-                    className="far fa-edit mr-2"
-                    onClick={() => onEdit(params.row)}
-                  ></i>}
-                 
+                  {userRight.update_right && (
+                    <i
+                      className="far fa-edit mr-2"
+                      onClick={() => onEdit(params.row)}
+                    ></i>
+                  )}
                 </div>
               ),
               width: 150,
             },
           ]}
           // pagination
-          
+
           disableColumnFilter
           // pageSize={params.pageSize}
           // page={params.pageNo}
@@ -228,7 +227,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
           getRowId={(browseListData) => browseListData.transaction_id}
         />
       </div>
-    </>
+    </div>
   );
 };
 export default ConfigGroupBrowse;

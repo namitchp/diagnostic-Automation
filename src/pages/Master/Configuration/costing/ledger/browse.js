@@ -2,9 +2,7 @@ import { TextField, Button, MenuItem } from "@material-ui/core";
 import { DataGrid } from "@mui/x-data-grid";
 
 import React, { useEffect, useState } from "react";
-import {
-  CommonController,
-} from "../../../../../_redux/controller/common.controller";
+import { CommonController } from "../../../../../_redux/controller/common.controller";
 import CustomPagination from "../../../../../components/CustomPagination";
 import CustomNoRowsOverlay from "../../../../../components/customRowComponent";
 import {
@@ -107,7 +105,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
     getBrowseListData();
   }, [params]);
   return (
-    <>
+    <div className="bg-white p-4 rounded w-100">
       <div className="filter_box mb-5">
         <div className="row">
           <div className="col-md-1 d-flex align-items-center">
@@ -129,7 +127,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
         </div>
       </div>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <div className="data_table_height">
         <DataGrid
           columns={[
             {
@@ -156,14 +154,18 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
                     className="fas fa-search mr-2"
                     onClick={() => onPreview(params.row.ledger_id)}
                   ></i>
-                  {userRight.update_right&&<i
-                    className="far fa-edit mr-2"
-                    onClick={() => onEdit(params.row)}
-                  ></i>}
-                  {userRight.delete_right&&<i
-                    className="far fa-trash-alt mr-2"
-                    onClick={() => onDelete(params.row.ledger_id)}
-                  ></i>}
+                  {userRight.update_right && (
+                    <i
+                      className="far fa-edit mr-2"
+                      onClick={() => onEdit(params.row)}
+                    ></i>
+                  )}
+                  {userRight.delete_right && (
+                    <i
+                      className="far fa-trash-alt mr-2"
+                      onClick={() => onDelete(params.row.ledger_id)}
+                    ></i>
+                  )}
                 </div>
               ),
               width: 150,
@@ -201,7 +203,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
           getRowId={(browseListData) => browseListData.ledger_id}
         />
       </div>
-    </>
+    </div>
   );
 };
 export default ConfigGroupBrowse;

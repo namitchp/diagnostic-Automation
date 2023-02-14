@@ -12,6 +12,7 @@ import ConfigSalesOrder from "./salesOrder";
 import ConfigQuotation from "./quotation";
 import ConfigCourier from "./courier";
 import MenuStructureIndex from "./menustructure";
+import { Col, Container, Row } from "react-bootstrap";
 const useStyles = makeStyles((theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -19,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ConfigurationMaster = () => {
   const classes = useStyles();
-  const [transectionId, settransectionId] = useState(0);
-  const [selectedIndex, setSeletedIndex] = useState(-1);
+  const [transectionId, settransectionId] = useState(101);
+  const [selectedIndex, setSeletedIndex] = useState(0);
   const [MenuList, setMenuList] = useState([]);
   const [SubMenuList, setSubMenuList] = useState([]);
   const [loading, setloading] = useState(true);
@@ -81,7 +82,7 @@ const ConfigurationMaster = () => {
   };
   useEffect(() => {
     getThirdMenu(12);
-    // getfourthMenu(101);
+    getfourthMenu(101);
   }, []);
   const handleTransectionID = (tab) => {
     setloadingsubMenu(true);
@@ -92,48 +93,62 @@ const ConfigurationMaster = () => {
     setSeletedIndex(newValue);
   };
   return (
-    <React.Fragment>
-      <div className="card card-custom gutter-b  px-7 py-3">
-        <div className={"customtab-panel"}>
-          <Tabs
-            orientation="vertical"
-            variant="scrollable"
-            value={selectedIndex}
-            onChange={handleIndex}
-            className={`menu-nav`}
-            aria-label="Vertical tabs example"
-          >
-            {loading ? (
-              <div className="text-center">
-                {buttonLoader(false, "Loading...", "")}
-              </div>
-            ) : null}
-            {MenuList.map((tab, index) => {
-              return (
-                <Tab
-                  onClick={() => handleTransectionID(tab)}
-                  className={
-                    transectionId === tab.transaction_id ? "tabstyle" : ""
-                  }
-                  value={index}
-                  key={"tab" + index}
-                  label={tab.display_name}
-                />
-              );
-            })}
-          </Tabs>
-          <div className="customtab-container">
-            {loadingsubMenu ? (
-              <div className="text-center">
-                {buttonLoader(false, "Loading...", "")}
-              </div>
-            ) : (
-              panel[transectionId]
-            )}
+    <div className="main_wrapper">
+      <div className="inner_main_first">
+        <div className="configuration_wrapper">
+          <div className="inner_main_third">
+            <Container fluid>
+              <Row>
+                <Col md={2} className="pe-0">
+                  <div className="side_menu">
+                    <Tabs
+                      orientation="vertical"
+                      variant="scrollable"
+                      value={selectedIndex}
+                      onChange={handleIndex}
+                      className={`menu-nav`}
+                      aria-label="Vertical tabs example"
+                    >
+                      {loading ? (
+                        <div className="text-center">
+                          {buttonLoader(false, "Loading...", "")}
+                        </div>
+                      ) : null}
+                      {MenuList.map((tab, index) => {
+                        return (
+                          <Tab
+                            onClick={() => handleTransectionID(tab)}
+                            className={
+                              transectionId === tab.transaction_id
+                                ? "tabstyle"
+                                : ""
+                            }
+                            value={index}
+                            key={"tab" + index}
+                            label={tab.display_name}
+                          />
+                        );
+                      })}
+                    </Tabs>
+                  </div>
+                </Col>
+                <Col md={10} className="ps-0">
+                  <div className="customtab-container">
+                    {loadingsubMenu ? (
+                      <div className="text-center">
+                        {buttonLoader(false, "Loading...", "")}
+                      </div>
+                    ) : (
+                      panel[transectionId]
+                    )}
+                  </div>
+                </Col>
+              </Row>
+            </Container>
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 export default ConfigurationMaster;

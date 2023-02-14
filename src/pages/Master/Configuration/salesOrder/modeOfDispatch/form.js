@@ -55,7 +55,7 @@ const AddOrEditGroup = (props) => {
         props.onClose(0);
     }
     return <React.Fragment>
-        <div className="container-fluid">
+        <div className="container-fluid bg-white p-4">
             <div className="row">
                 <div className="col-md-4">
                     <TextField label="Mode Of Dispatch ID" name="mode_of_dispatch_id"disabled value={groupValues.mode_of_dispatch_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />

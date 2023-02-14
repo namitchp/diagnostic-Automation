@@ -14,53 +14,53 @@ const MaterialCodeIndex = ({ type, browse_id }) => {
   };
 
   return (
-    <div className="card card-custom gutter-b  px-7 py-3">
-      <ul className="nav nav-tabs nav-tabs-line">
-        <li
-          className={
-            "menu-item mb-2  border-bottom-0 rounded mr-2 " +
-            (selectedIndex === 0 ? "menu-level2-color" : "")
-          }
-        >
-          <a
-            className={`menu-link py-2 px-4 rounded d-inline-block  fw-bold `}
-            onClick={() => handleIndex(0)}
-          >
-            Browse
-          </a>
-        </li>
-        {userRight?.insert_right && (
-          <li
-            className={
-              "menu-item mb-2  border-bottom-0 rounded mr-2 " +
-              (selectedIndex === 1 ? "menu-level2-color" : "")
-            }
-          >
-            <a
-              className={`menu-link py-2 px-4 rounded d-inline-block  fw-bold `}
-              onClick={() => handleIndex(1)}
-            >
-              Add Material Code
-            </a>
-          </li>
-        )}
-      </ul>
-      <div className="tab-content">
-        {selectedIndex === 0 ? (
-          <MaterialCodeBrowse
-            onEditMaterial={() => handleIndex(1)}
-            browse_id={browse_id}
-            type={type}
-          />
-        ) : (
-          <AddMaterialCode
-            type={type}
-            onCancel={() => {
-              handleIndex(0);
-              dispatch(clearMaterialCodeEditId());
-            }}
-          />
-        )}
+    <div className="main_wrapper">
+      <div className="inner_main_first">
+        <div className="inner_main_second">
+          <div className="inner_main_third">
+            <ul className="nav nav-tabs nav-tabs-line">
+              <li
+                className={
+                  "menu-item  " +
+                  (selectedIndex === 0 ? "menu-level2-color" : "")
+                }
+              >
+                <a className={`menu-link  `} onClick={() => handleIndex(0)}>
+                  Browse
+                </a>
+              </li>
+              {userRight?.insert_right && (
+                <li
+                  className={
+                    "menu-item  " +
+                    (selectedIndex === 1 ? "menu-level2-color" : "")
+                  }
+                >
+                  <a className={`menu-link  `} onClick={() => handleIndex(1)}>
+                    Add Material Code
+                  </a>
+                </li>
+              )}
+            </ul>
+            <div className="tab-content">
+              {selectedIndex === 0 ? (
+                <MaterialCodeBrowse
+                  onEditMaterial={() => handleIndex(1)}
+                  browse_id={browse_id}
+                  type={type}
+                />
+              ) : (
+                <AddMaterialCode
+                  type={type}
+                  onCancel={() => {
+                    handleIndex(0);
+                    dispatch(clearMaterialCodeEditId());
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

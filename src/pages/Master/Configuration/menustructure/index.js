@@ -22,18 +22,29 @@ const MenuStructureIndex = () => {
     seteditdata(previewData);
   };
   return (
-    <div className="px-3">
-      <Tabs
-        className="w-100"
-        // value={selectedIndex}
-        onChange={handleIndex}
-        
-        aria-label="scrollable auto tabs example"
-      >
-        <Tab value={0} className={selectedIndex ===0 ? "tabstyle" : ""} label="Browse" />
-       {selectedIndex===1&& <Tab className={selectedIndex ===1 ? "tabstyle" : ""} value={1} label="Update Menu Structure" />}
-      </Tabs>
-      <div className="customtab-container w-100 py-3">
+    <div className="config_active_content">
+      <div className="inner_tabs menuStructure">
+        <Tabs
+          className="w-100"
+          // value={selectedIndex}
+          onChange={handleIndex}
+          aria-label="scrollable auto tabs example"
+        >
+          <Tab
+            value={0}
+            className={selectedIndex === 0 ? "tabstyle" : ""}
+            label="Browse"
+          />
+          {selectedIndex === 1 && (
+            <Tab
+              className={selectedIndex === 1 ? "tabstyle" : ""}
+              value={1}
+              label="Update Menu Structure"
+            />
+          )}
+        </Tabs>
+      </div>
+      <div className="customtab-container">
         {/* {selectedIndex === 0 ? <ConfigGroupBrowse onActionClick={(index) => handleIndex({} , index)}/>:<AddOrEditGroup onClose={(index) => handleIndex({} , index)} />} */}
         {selectedIndex === 0 ? (
           <ConfigGroupBrowse

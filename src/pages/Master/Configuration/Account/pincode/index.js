@@ -10,38 +10,53 @@ const PincodeIndex = () => {
   const [editdata, seteditdata] = useState("");
   const handleIndex = (event, newValue) => {
     setSeletedIndex(newValue);
-   seteditdata("")
+    seteditdata("");
   };
-  const handelEdit=(edit)=>{
-    let editData={...edit}
-    editData.type="edit";
-    setSeletedIndex(1)
-    seteditdata(editData)
-}
-const handelPreview=(preview)=>{
-    let previewData={...preview}
-    previewData.type="preview";
-    setSeletedIndex(1)
-    seteditdata(previewData)
-    console.log(previewData)
-}
+  const handelEdit = (edit) => {
+    let editData = { ...edit };
+    editData.type = "edit";
+    setSeletedIndex(1);
+    seteditdata(editData);
+  };
+  const handelPreview = (preview) => {
+    let previewData = { ...preview };
+    previewData.type = "preview";
+    setSeletedIndex(1);
+    seteditdata(previewData);
+    console.log(previewData);
+  };
   return (
-    <div className="px-3">
-      <Tabs
-        className="w-100"
-        value={selectedIndex}
-        onChange={handleIndex}
-        indicatorColor="primary"
-        aria-label="scrollable auto tabs example"
-      >
-        <Tab value={0} className={selectedIndex === 0 ? "tabstyle" : ""}  label="Browse" />
-        {userRight.insert_right&&<Tab className={selectedIndex === 1 ? "tabstyle" : ""}  value={1} label="New Pincode" />}
-      </Tabs>
-      <div className="customtab-container w-100 py-3">
+    <div className="bg-white p-4">
+      <div className="inner_tabs">
+        <Tabs
+          className="w-100"
+          value={selectedIndex}
+          onChange={handleIndex}
+          indicatorColor="primary"
+          aria-label="scrollable auto tabs example"
+        >
+          <Tab
+            value={0}
+            className={selectedIndex === 0 ? "tabstyle" : ""}
+            label="Browse"
+          />
+          {userRight.insert_right && (
+            <Tab
+              className={selectedIndex === 1 ? "tabstyle" : ""}
+              value={1}
+              label="New Pincode"
+            />
+          )}
+        </Tabs>
+      </div>
+      <div className="customtab-container">
         {selectedIndex === 0 ? (
-          <BrowsePincode onEdit={handelEdit} onPreviewData={handelPreview}  />
+          <BrowsePincode onEdit={handelEdit} onPreviewData={handelPreview} />
         ) : (
-          <AddOrEditPincode onClose={(index) => handleIndex({}, index)} editData={editdata} />
+          <AddOrEditPincode
+            onClose={(index) => handleIndex({}, index)}
+            editData={editdata}
+          />
         )}
       </div>
     </div>

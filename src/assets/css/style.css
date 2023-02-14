@@ -4,8 +4,12 @@
   --active-tab-border-color: #c8c8c8;
   --active-tab-color: #000;
   --inactive-tab-color: #737373;
+  --config-active: #d5d5d5;
 } 
-
+::-webkit-scrollbar{width:8px;height: 8px;}
+::-webkit-scrollbar-track{box-shadow:inset 0 0 5px #c8c8c8;border-radius:10px}
+::-webkit-scrollbar-thumb{background:#a3a3a3;border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:#969696}
 a{
   text-decoration: none;
   display: inline-block;
@@ -16,7 +20,13 @@ a{
     color:#fff;
 }
 .MuiDataGrid-columnHeader{
-  background-color: #000;
+  background-color: #242B2E !important;
+  /* background-image: -webkit-linear-gradient(top, #CCCCCC, #A4A4A4) repeat scroll 0 0 transparent;
+  background-image: linear-gradient(top, #CCCCCC, #A4A4A4) repeat scroll 0 0 transparent; */
+}
+.MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted):hover .MuiDataGrid-sortIcon {
+  /* opacity: 1; */
+  fill: #fff;
 }
 .tabstyle>.MuiTab-wrapper{
   box-shadow: 0 0 3px #383737;
@@ -220,7 +230,7 @@ input[type="number"] {
   background-color: var(--active-tab);
 }
 .data_table_height{
-  height: 80vh;
+  height: 50vh;
 }
 .inner_third_level{
   border: solid 1px var(--active-tab-border-color);
@@ -235,6 +245,77 @@ input[type="number"] {
 .header-bottom .third ul.menu-nav li.menu-level2-color a.menu-link, .inner_main_third .inner_wrapper li.menu-level2-color a.menu-link {
   background: var(--inactive-tab);
   border-bottom: solid 1px var(--inactive-tab);
+}
+.PrivateNotchedOutline-root-13{
+  top: 0;
+}
+
+.configuration_wrapper{
+  padding: 15px;
+  border-top: solid 1px var(--active-tab-border-color);
+  margin-top: 4px;
+}
+.configuration_wrapper .side_menu button:first-child{
+  border-top: solid 1px var(--active-tab-border-color);
+}
+.configuration_wrapper .side_menu button{
+  background-color: #f2f2f2;
+  border: solid 1px var(--active-tab-border-color);
+  padding: 0;
+}
+.configuration_wrapper .side_menu button span{
+  padding: 0;
+  height: auto;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+.configuration_wrapper .side_menu .MuiTabs-scroller > span{
+  display: none;
+}
+.configuration_wrapper .side_menu button.Mui-selected{
+  background-color: var(--config-active);
+  color: #000;
+  border: solid 1px transparent;
+}
+.configuration_wrapper .config_active_content{
+  background-color:var(--config-active);
+  padding: 15px;
+}
+.config_active_content header{
+  background-color: var(--inactive-tab-color);
+  color: #fff;
+}
+.config_active_content header button{
+  padding: 0 15px;
+}
+.config_active_content header button.tabstyle span,.config_inner_wrapper .inner_tabs button span, .inner_tabs.menuStructure button.tabstyle span{
+  box-shadow: none;
+  border-radius: none;
+  height: auto;
+  border: none;
+  padding: 0;
+}
+.config_active_content header button.tabstyle{
+  background-color: #fff;
+  color: #000;
+}
+.MuiTab-textColorInherit{
+  opacity: 1 !important;
+}
+
+.config_inner_wrapper .inner_tabs button.tabstyle{
+  background-color: var(--active-tab);
+}
+.config_inner_wrapper .customtab-container{
+  background-color: var(--active-tab);
+  padding: 15px;
+}
+.config_inner_wrapper .inner_tabs span.MuiTabs-indicator {
+  display: none;
+}
+.inner_tabs.menuStructure button {
+  background-color: #fff;
 }
 
 /* Submenu Css end */
@@ -512,10 +593,13 @@ input[type="number"] {
   border: 1px solid rgb(227, 205, 255);
 }
 
+.MuiTab-root{
+  min-width: auto !important;
+}
 /* Responsive CSS */
-@media (min-width: 600px) {
+/* @media (min-width: 600px) {
   .customtab-container .MuiTab-root {
     min-width: 90px;
     
   }
-}
+} */

@@ -45,7 +45,7 @@ const ConfigCostingIndex = () => {
   };
 
   return (
-    <div className="px-3">
+    <div className="config_active_content">
       <AppBar className="rounded light-tab" position="relative" elevation={0}>
         <Tabs
           className="w-100"
@@ -55,11 +55,18 @@ const ConfigCostingIndex = () => {
           aria-label="scrollable auto tabs example"
         >
           {panel.map((tab, index) => {
-            return <Tab className={selectedIndex === index ? "tabstyle" : ""} value={index} key={"tab" + index} label={tab.name} />;
+            return (
+              <Tab
+                className={selectedIndex === index ? "tabstyle" : ""}
+                value={index}
+                key={"tab" + index}
+                label={tab.name}
+              />
+            );
           })}
         </Tabs>
       </AppBar>
-      <div className="customtab-container w-100">{getSelectedComponent()}</div>
+      <div className="config_inner_wrapper w-100">{getSelectedComponent()}</div>
     </div>
   );
 };

@@ -24,19 +24,29 @@ const EnqStatusIndex = () => {
     seteditdata(previewData);
   };
   return (
-    <div className="px-3">
-      <Tabs
-        className="w-100"
-        onChange={handleIndex}
-        indicatorColor="primary"
-        aria-label="scrollable auto tabs example"
-      >
-        <Tab className={selectedIndex === 0 ? "tabstyle" : ""}
- value={0} label="Browse" />
-        {userRight.insert_right&&<Tab className={selectedIndex === 1 ? "tabstyle" : ""}
- value={1} label="New Status" />}
-      </Tabs>
-      <div className="customtab-container w-100 py-3">
+    <div className="bg-white p-4">
+      <div className="inner_tabs">
+        <Tabs
+          className="w-100"
+          onChange={handleIndex}
+          indicatorColor="primary"
+          aria-label="scrollable auto tabs example"
+        >
+          <Tab
+            className={selectedIndex === 0 ? "tabstyle" : ""}
+            value={0}
+            label="Browse"
+          />
+          {userRight.insert_right && (
+            <Tab
+              className={selectedIndex === 1 ? "tabstyle" : ""}
+              value={1}
+              label="New Status"
+            />
+          )}
+        </Tabs>
+      </div>
+      <div className="customtab-container">
         {/* {selectedIndex === 0 ? <ConfigGroupBrowse onActionClick={(index) => handleIndex({} , index)}/>:<AddOrEditGroup onClose={(index) => handleIndex({} , index)} />} */}
         {selectedIndex === 0 ? (
           <ConfigGroupBrowse

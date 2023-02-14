@@ -24,19 +24,29 @@ const InsuranceIndex = () => {
     seteditdata(previewData);
   };
   return (
-    <div className="px-3">
-      <Tabs
-        className="w-100"
-        onChange={handleIndex}
-        indicatorColor="primary"
-        aria-label="scrollable auto tabs example"
-      >
-        <Tab value={0} className={selectedIndex === 0 ? "tabstyle" : ""}
- label="Browse" />
-        {userRight.insert_right&&<Tab value={1} className={selectedIndex === 1 ? "tabstyle" : ""}
- label="New Insurance" />}
-      </Tabs>
-      <div className="customtab-container w-100 py-3">
+    <div className="bg-white p-4">
+      <div className="inner_tabs">
+        <Tabs
+          className="w-100"
+          onChange={handleIndex}
+          indicatorColor="primary"
+          aria-label="scrollable auto tabs example"
+        >
+          <Tab
+            value={0}
+            className={selectedIndex === 0 ? "tabstyle" : ""}
+            label="Browse"
+          />
+          {userRight.insert_right && (
+            <Tab
+              value={1}
+              className={selectedIndex === 1 ? "tabstyle" : ""}
+              label="New Insurance"
+            />
+          )}
+        </Tabs>
+      </div>
+      <div className="customtab-container">
         {/* {selectedIndex === 0 ? <ConfigGroupBrowse onActionClick={(index) => handleIndex({} , index)}/>:<AddOrEditGroup onClose={(index) => handleIndex({} , index)} />} */}
         {selectedIndex === 0 ? (
           <ConfigGroupBrowse

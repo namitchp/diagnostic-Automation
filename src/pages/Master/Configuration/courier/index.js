@@ -17,7 +17,7 @@ const ConfigCourier = ({ list }) => {
     }
   };
   return (
-    <div className="px-3">
+    <div className="config_active_content">
       <AppBar className="rounded light-tab" position="relative" elevation={0}>
         <Tabs
           className="w-100"
@@ -28,12 +28,17 @@ const ConfigCourier = ({ list }) => {
         >
           {list.map((tab, index) => {
             return (
-              <Tab value={index} className={selectedIndex === index ? "tabstyle" : ""} key={"tab" + index} label={tab.display_name} />
+              <Tab
+                value={index}
+                className={selectedIndex === index ? "tabstyle" : ""}
+                key={"tab" + index}
+                label={tab.display_name}
+              />
             );
           })}
         </Tabs>
       </AppBar>
-      <div className="customtab-container w-100">{getSelectedComponent()}</div>
+      <div className="config_inner_wrapper w-100">{getSelectedComponent()}</div>
     </div>
   );
 };

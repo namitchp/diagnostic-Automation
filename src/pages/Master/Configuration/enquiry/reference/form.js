@@ -54,7 +54,7 @@ const AddOrEditGroup = (props) => {
         props.onClose(0);
     }
     return <React.Fragment>
-        <div className="container-fluid">
+        <div className="container-fluid bg-white p-4">
             <div className="row">
                 <div className="col-md-4">
                     <TextField label="Reference ID" name="enq_ref_id" value={groupValues.enq_ref_id} disabled onChange={handleOnChange} fullWidth variant="outlined" size="small" />
