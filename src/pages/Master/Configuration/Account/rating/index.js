@@ -5,7 +5,7 @@ import AddOrEditGroup from "./form";
 import { useSelector } from "react-redux";
 const RatingIndex = () => {
   const userRight = useSelector((state) => state.common.userRightResponse);
-  
+
   const [selectedIndex, setSeletedIndex] = useState(0);
   const [editdata, seteditdata] = useState("");
   const handleIndex = (event, newValue) => {
@@ -25,7 +25,8 @@ const RatingIndex = () => {
     seteditdata(previewData);
   };
   return (
-    <div className="px-3">
+    <div className="bg-white p-4">
+      <div className="inner_tabs">
       <Tabs
         className="w-100"
         value={selectedIndex}
@@ -33,10 +34,20 @@ const RatingIndex = () => {
         indicatorColor="primary"
         aria-label="scrollable auto tabs example"
       >
-        <Tab value={0} className={selectedIndex === 0 ? "tabstyle" : ""}  label="Browse" />
-        {userRight.insert_right&&<Tab value={1} className={selectedIndex ===1? "tabstyle" : ""}  label="New Rating" />}
+        <Tab
+          value={0}
+          className={selectedIndex === 0 ? "tabstyle" : ""}
+          label="Browse"
+        />
+        {userRight.insert_right && (
+          <Tab
+            value={1}
+            className={selectedIndex === 1 ? "tabstyle" : ""}
+            label="New Rating"
+          />
+        )}
       </Tabs>
-      <div className="customtab-container w-100 py-3">
+      <div className="customtab-container">
         {/* {selectedIndex === 0 ? <ConfigGroupBrowse onActionClick={(index) => handleIndex({} , index)}/>:<AddOrEditGroup onClose={(index) => handleIndex({} , index)} />} */}
         {selectedIndex === 0 ? (
           <ConfigGroupBrowse
@@ -49,6 +60,7 @@ const RatingIndex = () => {
             editData={editdata}
           />
         )}
+      </div>
       </div>
     </div>
   );

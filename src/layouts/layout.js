@@ -20,7 +20,7 @@ const MainLayout = () => {
   return (
     <div className="main-frame">
       <Header onHeaderClick={() => setShowSidebar(!showSideBar)} />
-      <div className="mt-1">
+      <div className="wrapper">
         {/* <CustomBreadcrumb /> */}
         <Switch>
           {routes.map((route, i) => (
@@ -50,4 +50,3 @@ const MainLayout = () => {
   );
 };
 export default MainLayout;
-

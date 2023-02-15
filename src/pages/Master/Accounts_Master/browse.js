@@ -29,7 +29,7 @@ import {
   getFilterData,
   updateFilterData,
 } from "../../../_redux/actions/common.action";
-import  moment from "moment";
+import moment from "moment";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -74,7 +74,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
       field: "Group",
       headerName: "Group",
       width: 200,
-      hide: false
+      hide: false,
     },
     {
       field: "short_name",
@@ -215,32 +215,27 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
       width: 120,
       hide: false,
     },
-      {
-        field: "Actions",
-        headerName: "Actions",
-        hide: false,
-        renderCell: (params) => (
-          <ActionButtons
-            onPreview={() =>
-                handleEdit({id:params.row.ID,type:"preview"})
-               
-            }
-            onEdit={
-              userRight?.update_right
-                ? 
-                () => handleEdit({id:params.row.ID,type:"edit"})
-                : null
-            } 
-            onDelete={
-              userRight?.delete_right
-                ?
-                 () => handleDeleteRow(params.row.id)
-                : null
-            }
-          />
-        ),
-        width: 120,
-      },
+    {
+      field: "Actions",
+      headerName: "Actions",
+      hide: false,
+      renderCell: (params) => (
+        <ActionButtons
+          onPreview={() => handleEdit({ id: params.row.ID, type: "preview" })}
+          onEdit={
+            userRight?.update_right
+              ? () => handleEdit({ id: params.row.ID, type: "edit" })
+              : null
+          }
+          onDelete={
+            userRight?.delete_right
+              ? () => handleDeleteRow(params.row.id)
+              : null
+          }
+        />
+      ),
+      width: 120,
+    },
   ]);
   //json
 
@@ -271,7 +266,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
     setfilter(true);
     // handleUpdateFilterData()
   };
-  const handleParams = (event) => {   
+  const handleParams = (event) => {
     setParams({ ...params, [event.target.name]: event.target.value });
     setfilter(true);
   };
@@ -337,15 +332,20 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
     setTempVerified(temp);
     // dispatch(setAccountVerified(param));
   };
-const handleDeleteRow=(id)=>{
-  CommonController.commonApiCallFilter("master/delete_account_master", {
-    company_id:id},"post","node"
-  ).then((data) => {
-    if(data.status===200){
-      showSuccessToast("Delete Success")
-    }
-  });
-}
+  const handleDeleteRow = (id) => {
+    CommonController.commonApiCallFilter(
+      "master/delete_account_master",
+      {
+        company_id: id,
+      },
+      "post",
+      "node"
+    ).then((data) => {
+      if (data.status === 200) {
+        showSuccessToast("Delete Success");
+      }
+    });
+  };
   const handleEdit = (id) => {
     dispatch(selectedAccountId(id));
     onEdit();
@@ -376,14 +376,15 @@ const handleDeleteRow=(id)=>{
     if (filterjsonData) {
       setParams(filterjsonData.data.filterpage);
       setAccountMasterFilter(filterjsonData.data.filterData);
-      if(filterjsonData?.data?.filterpage?.columns?.length>0){
-        const data = filterjsonData.data.filterpage?.columns?.map((val, index) => {
-          const columns = [...gridColumn];
-        return columns[index] = { ...columns[index], hide: val.hide };
-        });
+      if (filterjsonData?.data?.filterpage?.columns?.length > 0) {
+        const data = filterjsonData.data.filterpage?.columns?.map(
+          (val, index) => {
+            const columns = [...gridColumn];
+            return (columns[index] = { ...columns[index], hide: val.hide });
+          }
+        );
         setgridColumn(data);
       }
-     
     }
   }, [filterjsonData]);
   useEffect(() => {
@@ -398,180 +399,187 @@ const handleDeleteRow=(id)=>{
     }
   }, [params, accountMasterFilter, filter]);
   return (
-    <React.Fragment>
-      <div className="filter_box mb-5">
-        <div className="row">
-          {/* <h1>zsdxcfgbhjnmk</h1> */}
-          <div className="col-md-1 d-flex align-items-center">
-            <h4 className="mb-0">Filters</h4>
-          </div>
-          <div className="col-md-2">
-            <FormControl fullWidth size="small" variant="outlined">
-              <InputLabel id="demo-simple-select-outlined-label">
-                Region Name
-              </InputLabel>
-              <Select
-                name="region_name"
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={accountMasterFilter?.region_name}
-                onChange={handleFilters}
-                label="Region Name"
+    <div className="inner_data_wrapper">
+      <div className="bg-white p-4 rounded">
+        <div className="filter_box mb-5">
+          <div className="row">
+            {/* <h1>zsdxcfgbhjnmk</h1> */}
+            <div className="col-md-12 mb-4">
+              <h4 className="mb-0">Filters</h4>
+            </div>
+            <div className="col-md-2">
+              <FormControl fullWidth size="small" variant="outlined">
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Region Name
+                </InputLabel>
+                <Select
+                  name="region_name"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={accountMasterFilter?.region_name}
+                  onChange={handleFilters}
+                  label="Region Name"
+                >
+                  <MenuItem value="">None</MenuItem>
+                  {regionList?.length > 0
+                    ? regionList.map((region, index) => {
+                        return (
+                          <MenuItem
+                            key={"region" + index}
+                            value={region.region_name}
+                          >
+                            {region.region_name}
+                          </MenuItem>
+                        );
+                      })
+                    : null}
+                </Select>
+              </FormControl>
+            </div>
+            <div className="col-md-2">
+              <FormControl fullWidth size="small" variant="outlined">
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Group
+                </InputLabel>
+                <Select
+                  name="group_name"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={accountMasterFilter?.group_name}
+                  onChange={handleFilters}
+                  label="Group"
+                >
+                  <MenuItem value="">None</MenuItem>
+                  {groupList?.length > 0
+                    ? groupList.map((group, index) => {
+                        return (
+                          <MenuItem
+                            key={"groupList" + index}
+                            value={group.group_name}
+                          >
+                            {group.group_name}
+                          </MenuItem>
+                        );
+                      })
+                    : null}
+                </Select>
+              </FormControl>
+            </div>
+            <div className="col-md-2">
+              <FormControl fullWidth size="small" variant="outlined">
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Verified
+                </InputLabel>
+                <Select
+                  name="verified"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={accountMasterFilter?.verified}
+                  onChange={handleFilters}
+                  label="Verified"
+                >
+                  <MenuItem value={""}>All</MenuItem>
+                  <MenuItem value={"1"}>Verified</MenuItem>
+                  <MenuItem value={"0"}>Not Verified</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className="col-md-2">
+              <FormControl fullWidth size="small" variant="outlined">
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Markt. Engg
+                </InputLabel>
+                <Select
+                  name="mark_engg"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={accountMasterFilter?.mark_engg}
+                  onChange={handleFilters}
+                  label="Markt. Engg"
+                >
+                  <MenuItem value="">None</MenuItem>
+                  {enggList?.length > 0
+                    ? enggList.map((engg, index) => {
+                        return (
+                          <MenuItem key={"enggList" + index} value={engg.name}>
+                            {engg.name}
+                          </MenuItem>
+                        );
+                      })
+                    : null}
+                </Select>
+              </FormControl>
+            </div>
+            <div className="col-md-2">
+              <TextField
+                fullWidth
+                id="outlined-basic"
+                size="small"
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13) {
+                    // handleUpdateFilterData();
+                    handleParams(e);
+                    setfilter(true);
+                  }
+                }}
+                name="filter_value"
+                label="Search"
+                variant="outlined"
+              />
+            </div>
+            <div className="col-md-2">
+              <Button
+                color="primary"
+                className="bg-success text-white w-100"
+                disableElevation
+                variant="contained"
               >
-                <MenuItem value="">None</MenuItem>
-                {regionList?.length > 0
-                  ? regionList.map((region, index) => {
-                      return (
-                        <MenuItem
-                          key={"region" + index}
-                          value={region.region_name}
-                        >
-                          {region.region_name}
-                        </MenuItem>
-                      );
-                    })
-                  : null}
-              </Select>
-            </FormControl>
-          </div>
-          <div className="col-md-2">
-            <FormControl fullWidth size="small" variant="outlined">
-              <InputLabel id="demo-simple-select-outlined-label">
-                Group
-              </InputLabel>
-              <Select
-                name="group_name"
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={accountMasterFilter?.group_name}
-                onChange={handleFilters}
-                label="Group"
-              >
-                <MenuItem value="">None</MenuItem>
-                {groupList?.length > 0
-                  ? groupList.map((group, index) => {
-                      return (
-                        <MenuItem
-                          key={"groupList" + index}
-                          value={group.group_name}
-                        >
-                          {group.group_name}
-                        </MenuItem>
-                      );
-                    })
-                  : null}
-              </Select>
-            </FormControl>
-          </div>
-          <div className="col-md-1">
-            <FormControl fullWidth size="small" variant="outlined">
-              <InputLabel id="demo-simple-select-outlined-label">
-                Verified
-              </InputLabel>
-              <Select
-                name="verified"
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={accountMasterFilter?.verified}
-                onChange={handleFilters}
-                label="Verified"
-              >
-                <MenuItem value={""}>All</MenuItem>
-                <MenuItem value={"1"}>Verified</MenuItem>
-                <MenuItem value={"0"}>Not Verified</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          <div className="col-md-2">
-            <FormControl fullWidth size="small" variant="outlined">
-              <InputLabel id="demo-simple-select-outlined-label">
-                Markt. Engg
-              </InputLabel>
-              <Select
-                name="mark_engg"
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={accountMasterFilter?.mark_engg}
-                onChange={handleFilters}
-                label="Markt. Engg"
-              >
-                <MenuItem value="">None</MenuItem>
-                {enggList?.length > 0
-                  ? enggList.map((engg, index) => {
-                      return (
-                        <MenuItem key={"enggList" + index} value={engg.name}>
-                          {engg.name}
-                        </MenuItem>
-                      );
-                    })
-                  : null}
-              </Select>
-            </FormControl>
-          </div>
-          <div className="col-md-2">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              size="small"
-              onKeyDown={(e) => {
-                if (e.keyCode === 13) {
-                  // handleUpdateFilterData();
-                  handleParams(e);
-                  setfilter(true);
-                }
-              }}
-              name="filter_value"
-              label="Search"
-              variant="outlined"
-            />
-          </div>
-          <div className="col-md-2 text-right">
-            <Button color="primary" disableElevation variant="contained">
-              Export Excel
-            </Button>
+                Export Excel
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-      <div style={{ height: 500, width: "100%" }}>
-        <DataGrid
-          pagination
-          disableColumnFilter
-          columns={gridColumn}
-          pageSize={params?.pageSize}
-          page={params?.pageNo}
-          getRowClassName={(params) => {
-            return params.row.sr_no % 2 === 0 ? "even" : "odd";
-          }}
-          rowsPerPageOptions={[15, 25, 50, 100]}
-          rowCount={totalRecord}
-          paginationMode="server"
-          onPageSizeChange={handlePageSizeChange}
-          onPageChange={handlePageChange}
-          loading={loading}
-          rowHeight={35}
-          components={
-            browseListData?.length > 0
-              ? {
-                  Pagination: CustomPagination,
-                  NoRowsOverlay: CustomNoRowsOverlay,
-                }
-              : {}
-          }
-          onSortModelChange={(sort) => {
-            if (sort.length > 0) {
-              setParams({
-                ...params,
-                sort_column: sort[0].field,
-                sort_order: sort[0].sort,
-              });
+        <div className="data_table_height">
+          <DataGrid
+            pagination
+            disableColumnFilter
+            columns={gridColumn}
+            pageSize={params?.pageSize}
+            page={params?.pageNo}
+            getRowClassName={(params) => {
+              return params.row.sr_no % 2 === 0 ? "even" : "odd";
+            }}
+            rowsPerPageOptions={[15, 25, 50, 100]}
+            rowCount={totalRecord}
+            paginationMode="server"
+            onPageSizeChange={handlePageSizeChange}
+            onPageChange={handlePageChange}
+            loading={loading}
+            rowHeight={35}
+            components={
+              browseListData?.length > 0
+                ? {
+                    Pagination: CustomPagination,
+                    NoRowsOverlay: CustomNoRowsOverlay,
+                  }
+                : {}
             }
-          }}
-          onColumnVisibilityChange={(e) => handleColumnHide(e)}
-          getRowId={(browseListData) => browseListData.sr_no}
-          rows={browseListData} //accountMasterList
-        />
+            onSortModelChange={(sort) => {
+              if (sort.length > 0) {
+                setParams({
+                  ...params,
+                  sort_column: sort[0].field,
+                  sort_order: sort[0].sort,
+                });
+              }
+            }}
+            onColumnVisibilityChange={(e) => handleColumnHide(e)}
+            getRowId={(browseListData) => browseListData.sr_no}
+            rows={browseListData} //accountMasterList
+          />
+        </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 export default BrowseAccount;

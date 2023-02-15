@@ -38,49 +38,49 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       field: "product_id",
       headerName: "ID",
       width: 70,
-      hide:false
+      hide: false,
     },
     {
       field: "product_code",
       headerName: "ERP Code",
       width: 180,
-      hide:false
+      hide: false,
     },
     {
       field: "category_name",
       headerName: "Category",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "p_group_name",
       headerName: "Group",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "item_name",
       headerName: "Item Name",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "description",
       headerName: "Description",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "mlfb_no",
       headerName: "MLFB No.",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "list_price",
       headerName: "List Price",
       width: 200,
-      hide:false,
+      hide: false,
       renderCell: (params) => (
         <input
           type="text"
@@ -94,19 +94,19 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       field: "grade",
       headerName: "HSN",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "tax_rate",
       headerName: "Tax Rate",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "lp_ref",
       headerName: "L.P. Ref.",
       width: 200,
-      hide:false,
+      hide: false,
       renderCell: (params) => (
         <input
           type="text"
@@ -120,25 +120,23 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       field: "gg_name",
       headerName: "GG Name",
       width: 200,
-      hide:false,
+      hide: false,
     },
     {
       field: "siemens_product",
       headerName: "Siemens Product",
       width: 200,
-      hide:false
+      hide: false,
     },
     {
       field: "moving_non_moving",
       headerName: "Moving",
       width: 200,
-      hide:false,
+      hide: false,
       renderCell: (params) => (
         <select
           className="form-control"
-          onChange={(event) =>
-            updateProductMovingNonValue(params, event)
-          }
+          onChange={(event) => updateProductMovingNonValue(params, event)}
           defaultValue={params.row.moving_non_moving}
         >
           <option value="Old">Old</option>
@@ -152,7 +150,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       field: "edit",
       headerName: "Verified",
       width: 200,
-      hide:false,
+      hide: false,
       renderCell: (params) => (
         <FormControlLabel
           className={"formControlLabel"}
@@ -198,17 +196,25 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
       headerName: "Actions",
       width: 100,
       renderCell: (params) => (
-        <ActionButtons 
-
-         onPreview={ () => handleEdit({id:params.row.product_id,type:"preview"})}
-         onEdit={userRight?.update_right? () => handleEdit({id:params.row.product_id,type:"edit"}):null}
-         onDelete={userRight?.delete_right?() => handleDeleteRow(params.row.product_id):null}
+        <ActionButtons
+          onPreview={() =>
+            handleEdit({ id: params.row.product_id, type: "preview" })
+          }
+          onEdit={
+            userRight?.update_right
+              ? () => handleEdit({ id: params.row.product_id, type: "edit" })
+              : null
+          }
+          onDelete={
+            userRight?.delete_right
+              ? () => handleDeleteRow(params.row.product_id)
+              : null
+          }
         />
       ),
-  
     },
-  ])
- 
+  ]);
+
   const getProductListResponse = useSelector(
     (state) => state.ProductMaster.productList
   );
@@ -231,7 +237,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     item_name: "",
     lp_ref: "",
     status: "",
-    verified:"",
+    verified: "",
     siemens_product: siemens,
   });
 
@@ -241,7 +247,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     filter_value: "",
     sort_column: "",
     sort_order: "",
-    columns:[],
+    columns: [],
   });
 
   const handleUpdateFilterData = () => {
@@ -282,10 +288,8 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     setjsonfilter(true);
   };
   const handlePageChange = (param) => {
-      setParams({ ...params, pageNo: param });
-      setjsonfilter(true);
-  
-  
+    setParams({ ...params, pageNo: param });
+    setjsonfilter(true);
   };
   const handleColumnHide = (e) => {
     const index = gridColumn.findIndex((val) => val.field == e.field);
@@ -299,11 +303,13 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     if (filterjsonData) {
       setParams(filterjsonData.data?.filterPage);
       setProductMasterFilter(filterjsonData.data?.filterData);
-      if(filterjsonData?.data?.filterPage?.columns?.length>0){
-        const data = filterjsonData?.data?.filterPage?.columns?.map((val, index) => {
-          const columns = [...gridColumn];
-        return columns[index] = { ...columns[index], hide: val.hide };
-        });
+      if (filterjsonData?.data?.filterPage?.columns?.length > 0) {
+        const data = filterjsonData?.data?.filterPage?.columns?.map(
+          (val, index) => {
+            const columns = [...gridColumn];
+            return (columns[index] = { ...columns[index], hide: val.hide });
+          }
+        );
         setgridColumn(data);
       }
     }
@@ -322,7 +328,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     if (jsonfilter) {
       handleUpdateFilterData();
     }
-  }, [productMasterFilter, params,jsonfilter]);
+  }, [productMasterFilter, params, jsonfilter]);
 
   useEffect(() => {
     setIsloading(stateLoading);
@@ -389,10 +395,15 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     onEdit();
   };
   const handleDeleteRow = (id) => {
-    CommonController.commonApiCallFilter("master/delete_product_master", {
-      product_id: id,
-    },"post","node").then((data) => {
-      if (data.status===200) {
+    CommonController.commonApiCallFilter(
+      "master/delete_product_master",
+      {
+        product_id: id,
+      },
+      "post",
+      "node"
+    ).then((data) => {
+      if (data.status === 200) {
         showSuccessToast("Record Deleted Successfully");
         dispatch(getProductListBrowse(params, productMasterFilter));
       } else {
@@ -401,39 +412,43 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
     });
   };
   return (
-    <React.Fragment>
-      <div className="filter_box mb-5">
-        <div className="d-flex align-items-center">
-          <div className="d-flex align-items-center mr-5">
-            <h4 className="mb-0">Filters</h4>
-          </div>
-          <div className="row w-100">
-            <div className="col-md-2 mb-2">
-            <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                Category
-                </InputLabel>
-                <Select
-                  name="category"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.category}
-                  onChange={handleFilters}
-                  label="Category"
-                >
-                  <MenuItem value={""}>All</MenuItem>
-                  {categoryList?.length > 0
-                    ? categoryList.map((ref, index) => {
-                        return (
-                          <MenuItem key={"ref" + index} value={ref.category_name}>
-                            {ref.category_name}
-                          </MenuItem>
-                        );
-                      })
-                    : null}
-                </Select>
-              </FormControl>
-              {/* <Autocomplete
+    <div className="inner_data_wrapper">
+      <div className="bg-white p-4 rounded">
+        <div className="filter_box mb-5">
+          <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center mr-5">
+              <h4 className="mb-0">Filters</h4>
+            </div>
+            <div className="row w-100">
+              <div className="col-md-2 mb-2">
+                <FormControl fullWidth size="small" variant="outlined">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Category
+                  </InputLabel>
+                  <Select
+                    name="category"
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={productMasterFilter?.category}
+                    onChange={handleFilters}
+                    label="Category"
+                  >
+                    <MenuItem value={""}>All</MenuItem>
+                    {categoryList?.length > 0
+                      ? categoryList.map((ref, index) => {
+                          return (
+                            <MenuItem
+                              key={"ref" + index}
+                              value={ref.category_name}
+                            >
+                              {ref.category_name}
+                            </MenuItem>
+                          );
+                        })
+                      : null}
+                  </Select>
+                </FormControl>
+                {/* <Autocomplete
                 id="combo-box-demo"
                 className="mb-3"
                 options={categoryList}
@@ -454,97 +469,95 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   />
                 )}
               /> */}
+              </div>
+              <div className="col-md-2">
+                <FormControl fullWidth size="small" variant="outlined">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Group
+                  </InputLabel>
+                  <Select
+                    name="group_name"
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={productMasterFilter?.group}
+                    onChange={handleFilters}
+                    label="Group"
+                  >
+                    <MenuItem value="All">All</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="col-md-2">
+                <FormControl fullWidth size="small" variant="outlined">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Item Name
+                  </InputLabel>
+                  <Select
+                    name="item_name"
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={productMasterFilter?.item_name}
+                    label="Item Name"
+                  >
+                    <MenuItem value="All">All</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
 
-              
-            </div>
-            <div className="col-md-2">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Group
-                </InputLabel>
-                <Select
-                  name="group_name"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.group}
-                  onChange={handleFilters}
-                  label="Group"
-                >
-                  <MenuItem value="All">All</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-md-2">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Item Name
-                </InputLabel>
-                <Select
-                  name="item_name"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.item_name}
-                  label="Item Name"
-                >
-                  <MenuItem value="All">All</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+              <div className="col-md-2">
+                <FormControl fullWidth size="small" variant="outlined">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Lp. Ref.
+                  </InputLabel>
+                  <Select
+                    name="lp_ref"
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={productMasterFilter?.lp_ref}
+                    onChange={handleFilters}
+                    label="Lp. Ref."
+                  >
+                    <MenuItem value={""}>None</MenuItem>
+                    {lpRefList?.length > 0
+                      ? lpRefList.map((ref, index) => {
+                          return (
+                            <MenuItem key={"ref" + index} value={ref.lp_ref}>
+                              {ref.lp_ref}
+                            </MenuItem>
+                          );
+                        })
+                      : null}
+                  </Select>
+                </FormControl>
+              </div>
 
-            <div className="col-md-2">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Lp. Ref.
-                </InputLabel>
-                <Select
-                  name="lp_ref"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.lp_ref}
-                  onChange={handleFilters}
-                  label="Lp. Ref."
-                >
-                  <MenuItem value={""}>None</MenuItem>
-                  {lpRefList?.length > 0
-                    ? lpRefList.map((ref, index) => {
-                        return (
-                          <MenuItem key={"ref" + index} value={ref.lp_ref}>
-                            {ref.lp_ref}
-                          </MenuItem>
-                        );
-                      })
-                    : null}
-                </Select>
-              </FormControl>
-            </div>
-
-            <div className="col-md-2">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  GG Name
-                </InputLabel>
-                <Select
-                  name="gg_name"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.gg_name}
-                  onChange={handleFilters}
-                  label="GG Name"
-                >
-                  <MenuItem value={""}>None</MenuItem>
-                  {ggNameList?.length > 0
-                    ? ggNameList.map((gg, index) => {
-                        return (
-                          <MenuItem key={"ggName" + index} value={gg.gg_name}>
-                            {gg.gg_name}
-                          </MenuItem>
-                        );
-                      })
-                    : null}
-                </Select>
-              </FormControl>
-            </div>
-            {/* <div className="col-md-2">
+              <div className="col-md-2">
+                <FormControl fullWidth size="small" variant="outlined">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    GG Name
+                  </InputLabel>
+                  <Select
+                    name="gg_name"
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={productMasterFilter?.gg_name}
+                    onChange={handleFilters}
+                    label="GG Name"
+                  >
+                    <MenuItem value={""}>None</MenuItem>
+                    {ggNameList?.length > 0
+                      ? ggNameList.map((gg, index) => {
+                          return (
+                            <MenuItem key={"ggName" + index} value={gg.gg_name}>
+                              {gg.gg_name}
+                            </MenuItem>
+                          );
+                        })
+                      : null}
+                  </Select>
+                </FormControl>
+              </div>
+              {/* <div className="col-md-2">
               <FormControl fullWidth size="small" variant="outlined">
                 <InputLabel id="demo-simple-select-outlined-label">
                   Siemens Product
@@ -563,109 +576,108 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                 </Select>
               </FormControl>
             </div> */}
-            <div className="col-md-2">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Moving
-                </InputLabel>
-                <Select
-                  name="moving_non_moving"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.moving_non_moving}
-                  onChange={handleFilters}
-                  label="Siemens Product"
-                >
-                  <MenuItem value={"All"}>All</MenuItem>
-                  <MenuItem value={"Old"}>Old </MenuItem>
-                  <MenuItem value={"New"}>New</MenuItem>
-                  <MenuItem value={"Panel"}>Panel</MenuItem>
-                  <MenuItem value={"Asset"}>Asset</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-md-2">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Verified
-                </InputLabel>
-                <Select
-                  name="verified"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.verified}
-                  onChange={handleFilters}
-                  label="Verified"
-                >
-                  <MenuItem value={""}>All</MenuItem>
-                  <MenuItem value={"1"}>Verified</MenuItem>
-                  <MenuItem value={"0"}>Not Verified</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-md-2">
-              <TextField
-                fullWidth
-                id="outlined-basic"
-                size="small"
-                onKeyUp={handleParams}
-                name="filter_value"
-                label="Search"
-                variant="outlined"
-                value={params?.filter_value}
-              />
-            </div>
-            <div className="col-md-2 text-right">
-              <Button color="primary" disableElevation variant="contained">
-                Export Excel
-              </Button>
+              <div className="col-md-2">
+                <FormControl fullWidth size="small" variant="outlined">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Moving
+                  </InputLabel>
+                  <Select
+                    name="moving_non_moving"
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={productMasterFilter?.moving_non_moving}
+                    onChange={handleFilters}
+                    label="Siemens Product"
+                  >
+                    <MenuItem value={"All"}>All</MenuItem>
+                    <MenuItem value={"Old"}>Old </MenuItem>
+                    <MenuItem value={"New"}>New</MenuItem>
+                    <MenuItem value={"Panel"}>Panel</MenuItem>
+                    <MenuItem value={"Asset"}>Asset</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="col-md-2">
+                <FormControl fullWidth size="small" variant="outlined">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Verified
+                  </InputLabel>
+                  <Select
+                    name="verified"
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={productMasterFilter?.verified}
+                    onChange={handleFilters}
+                    label="Verified"
+                  >
+                    <MenuItem value={""}>All</MenuItem>
+                    <MenuItem value={"1"}>Verified</MenuItem>
+                    <MenuItem value={"0"}>Not Verified</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="col-md-2">
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  size="small"
+                  onKeyUp={handleParams}
+                  name="filter_value"
+                  label="Search"
+                  variant="outlined"
+                  value={params?.filter_value}
+                />
+              </div>
+              <div className="col-md-2 text-right">
+                <Button color="primary" disableElevation variant="contained">
+                  Export Excel
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div style={{ height: 500, width: "100%" }}>
-        <DataGrid
-          pagination
-          disableColumnFilter
-          pageSize={params?.pageSize}
-          page={params?.pageNo}
-          rowsPerPageOptions={[10, 25, 50]}
-          rowCount={totalRecord}
-          paginationMode="server"
-          onPageSizeChange={handlePageSizeChange}
-          onPageChange={handlePageChange}
-          loading={isLoading}
-          rowHeight={36}
-          components={
-            productList?.length > 0
-              ? {
-                  Pagination: CustomPagination,
-                  // NoRowsOverlay: CustomNoRowsOverlay,
-                }
-              : {}
-          }
-          onSortModelChange={(sort) => {
-            if (sort.length > 0) {
-              setjsonfilter(true);
-              setParams({
-                ...params,
-                sort_column: sort[0].field,
-                sort_order: sort[0].sort,
-              });
+        <div className="data_table_height">
+          <DataGrid
+            pagination
+            disableColumnFilter
+            pageSize={params?.pageSize}
+            page={params?.pageNo}
+            rowsPerPageOptions={[10, 25, 50]}
+            rowCount={totalRecord}
+            paginationMode="server"
+            onPageSizeChange={handlePageSizeChange}
+            onPageChange={handlePageChange}
+            loading={isLoading}
+            rowHeight={36}
+            components={
+              productList?.length > 0
+                ? {
+                    Pagination: CustomPagination,
+                    // NoRowsOverlay: CustomNoRowsOverlay,
+                  }
+                : {}
             }
-          }}
-          
-          columns={gridColumn}
-          rows={productList}
-          getRowId={(productList) => productList.product_id}
-          getRowClassName={(params) => {
-            return params.row.sr_no % 2 === 0 ? "even" : "odd";
-          }}
-          onColumnVisibilityChange={(e) => handleColumnHide(e)}
-        />
+            onSortModelChange={(sort) => {
+              if (sort.length > 0) {
+                setjsonfilter(true);
+                setParams({
+                  ...params,
+                  sort_column: sort[0].field,
+                  sort_order: sort[0].sort,
+                });
+              }
+            }}
+            columns={gridColumn}
+            rows={productList}
+            getRowId={(productList) => productList.product_id}
+            getRowClassName={(params) => {
+              return params.row.sr_no % 2 === 0 ? "even" : "odd";
+            }}
+            onColumnVisibilityChange={(e) => handleColumnHide(e)}
+          />
+        </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

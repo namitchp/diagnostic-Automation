@@ -16,9 +16,7 @@ import ValidityIndex from "./validity";
 import ModeOfDispatchIndex from "./modeOfDispatch";
 import InspectionIndex from "./inspection";
 
-
-
-const ConfigSalesOrder = ({list}) => {
+const ConfigSalesOrder = ({ list }) => {
   const [selectedIndex, setSeletedIndex] = useState(0);
 
   const handleIndex = (event, newValue) => {
@@ -28,10 +26,10 @@ const ConfigSalesOrder = ({list}) => {
   const getSelectedComponent = () => {
     switch (selectedIndex) {
       case 0:
-        return <IdClauseIndex/>;
+        return <IdClauseIndex />;
         break;
       case 1:
-        return < FrightIndex/>;
+        return <FrightIndex />;
         break;
       case 2:
         return <InsuranceIndex />;
@@ -46,37 +44,37 @@ const ConfigSalesOrder = ({list}) => {
         return <LoadingIndex />;
         break;
       case 6:
-        return <BoardingIndex/>;
+        return <BoardingIndex />;
         break;
       case 7:
         return <TravelChargeIndex />;
         break;
-        case 8:
-          return <ConveyanceIndex />;
-          break;
-          case 9:
-            return <PaymentTermsIndex />;
-            break;
-            case 10:
-              return <DeliveryIndex />;
-              break;
-              case 11:
-                return <ValidityIndex />;
-                break;
-                case 12:
-                  return <ModeOfDispatchIndex />;
-                  break;
-                  case 13:
-                    return <InspectionIndex />;
-                    break;
-                   
+      case 8:
+        return <ConveyanceIndex />;
+        break;
+      case 9:
+        return <PaymentTermsIndex />;
+        break;
+      case 10:
+        return <DeliveryIndex />;
+        break;
+      case 11:
+        return <ValidityIndex />;
+        break;
+      case 12:
+        return <ModeOfDispatchIndex />;
+        break;
+      case 13:
+        return <InspectionIndex />;
+        break;
+
       default:
         alert("Something went wrong");
     }
   };
 
   return (
-    <div className="px-3">
+    <div className="config_active_content">
       <AppBar className="rounded light-tab" position="relative" elevation={0}>
         <Tabs
           className="w-100"
@@ -86,11 +84,18 @@ const ConfigSalesOrder = ({list}) => {
           aria-label="scrollable auto tabs example"
         >
           {list.map((tab, index) => {
-            return <Tab className={selectedIndex === index ? "tabstyle" : ""} value={index} key={"tab" + index} label={tab.display_name} />;
+            return (
+              <Tab
+                className={selectedIndex === index ? "tabstyle" : ""}
+                value={index}
+                key={"tab" + index}
+                label={tab.display_name}
+              />
+            );
           })}
         </Tabs>
       </AppBar>
-      <div className="customtab-container w-100">{getSelectedComponent()}</div>
+      <div className="config_inner_wrapper w-100">{getSelectedComponent()}</div>
     </div>
   );
 };

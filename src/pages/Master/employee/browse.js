@@ -222,67 +222,69 @@ const EmployeeBrowse = ({ onEdit }) => {
   };
 
   return (
-    <>
-      {loading && <Loader />}
-      <div className="filter_box mb-5">
-        <div className="row">
-          <div className="col-md-1 d-flex align-items-center">
-            <h4 className="mb-0">Filters</h4>
-          </div>
+    <div className="inner_data_wrapper">
+      <div className="bg-white rounded p-4">
+        {loading && <Loader />}
+        <div className="filter_box mb-5">
+          <div className="row">
+            <div className="col-md-1 d-flex align-items-center">
+              <h4 className="mb-0">Filters</h4>
+            </div>
 
-          <div className="col-md-2">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              size="small"
-              onKeyUp={handleParams}
-              name="filter_value"
-              label="Search"
-              variant="outlined"
-            />
+            <div className="col-md-2">
+              <TextField
+                fullWidth
+                id="outlined-basic"
+                size="small"
+                onKeyUp={handleParams}
+                name="filter_value"
+                label="Search"
+                variant="outlined"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          columns={gridColumn}
-          pagination
-          disableColumnFilter
-          pageSize={params?.pageSize}
-          page={params?.pageNo}
-          rowsPerPageOptions={[10, 25, 100]}
-          rowCount={totalRecord}
-          paginationMode="server"
-          onPageSizeChange={handlePageSizeChange}
-          onPageChange={handlePageChange}
-          loading={loading}
-          rowHeight={30}
-          components={
-            browseListData?.length > 0
-              ? {
-                  Pagination: CustomPagination,
-                  // NoRowsOverlay: CustomNoRowsOverlay,
-                }
-              : null
-          }
-          onSortModelChange={(sort) => {
-            if (sort.length > 0) {
-              setParams({
-                ...params,
-                sort_column: sort[0].field,
-                sort_order: sort[0].sort,
-              });
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            columns={gridColumn}
+            pagination
+            disableColumnFilter
+            pageSize={params?.pageSize}
+            page={params?.pageNo}
+            rowsPerPageOptions={[10, 25, 100]}
+            rowCount={totalRecord}
+            paginationMode="server"
+            onPageSizeChange={handlePageSizeChange}
+            onPageChange={handlePageChange}
+            loading={loading}
+            rowHeight={30}
+            components={
+              browseListData?.length > 0
+                ? {
+                    Pagination: CustomPagination,
+                    // NoRowsOverlay: CustomNoRowsOverlay,
+                  }
+                : null
             }
-          }}
-          rows={browseListData}
-          getRowId={(productList) => productList.user_id}
-          getRowClassName={(params) => {
-            return params.id % 2 === 0 ? "even" : "odd";
-          }}
-          onColumnVisibilityChange={(e) => handleColumnHide(e)}
-        />
+            onSortModelChange={(sort) => {
+              if (sort.length > 0) {
+                setParams({
+                  ...params,
+                  sort_column: sort[0].field,
+                  sort_order: sort[0].sort,
+                });
+              }
+            }}
+            rows={browseListData}
+            getRowId={(productList) => productList.user_id}
+            getRowClassName={(params) => {
+              return params.id % 2 === 0 ? "even" : "odd";
+            }}
+            onColumnVisibilityChange={(e) => handleColumnHide(e)}
+          />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

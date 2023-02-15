@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 const Submenu = (props) => {
   const { list, onSubMenuChange } = props;
@@ -6,26 +7,34 @@ const Submenu = (props) => {
   const selectedSubMenu = window.location.pathname.split("/")[3];
   const selectedSubMenusec = window.location.pathname.split("/")[2];
   return (
-    <div className="header-bottom submenu">
-      <div className="px-3">
+    <Container className="header-bottom" fluid>
+      <div className="submenu">
         <div className="header-navs header-navs-left">
           <ul className="menu-nav mb-0 list-unstyled d-flex flex-wrap">
             {list.length > 0
               ? list.map((item, index) => {
                   if (item.level === 2) {
                     return (
-                      <li className={"menu-item rounded  mr-2 "+ (selectedSubMenu ===
-                        item.transaction_name
-                          .replace(/[^a-zA-Z ]/g, "")
-                          .replace(/\s+/g, "-")
-                          .toLowerCase()
-                          ? // ? "active text-success"
-                            "menu-level2-color"
-                          : "")} key={"sublist" + index}>
+                      <li
+                        className={
+                          "menu-item mr-2 " +
+                          (selectedSubMenu ===
+                          item.transaction_name
+                            .replace(/[^a-zA-Z ]/g, "")
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()
+                            ? // ? "active text-success"
+                              "menu-level2-color"
+                            : "")
+                        }
+                        key={"sublist" + index}
+                      >
                         <Link
-                          onClick={() => onSubMenuChange(item.transaction_id,item,index)}
+                          onClick={() =>
+                            onSubMenuChange(item.transaction_id, item, index)
+                          }
                           className={
-                            "menu-link py-2 px-4 rounded d-inline-block " +
+                            "menu-link d-inline-block " +
                             (selectedSubMenu ===
                             item.transaction_name
                               .replace(/[^a-zA-Z ]/g, "")
@@ -41,9 +50,7 @@ const Submenu = (props) => {
                             .toLowerCase()}/${item.transaction_id}`}
                         >
                           {" "}
-                          <span className="menu-text">
-                            {item.display_name}
-                          </span>
+                          {item.display_name}
                         </Link>
                       </li>
                     );
@@ -53,7 +60,7 @@ const Submenu = (props) => {
           </ul>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

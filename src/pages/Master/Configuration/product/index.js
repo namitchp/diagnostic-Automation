@@ -32,7 +32,7 @@ import { buttonLoader } from "../../../../components/common";
 //   },
 // ];
 
-const ConfigProductIndex = ({list}) => {
+const ConfigProductIndex = ({ list }) => {
   const [selectedIndex, setSeletedIndex] = useState(0);
 
   const handleIndex = (event, newValue) => {
@@ -63,7 +63,7 @@ const ConfigProductIndex = ({list}) => {
   };
 
   return (
-    <div className="px-3">
+    <div className="config_active_content">
       <AppBar className="rounded light-tab" position="relative" elevation={0}>
         <Tabs
           className="w-100"
@@ -73,12 +73,19 @@ const ConfigProductIndex = ({list}) => {
           aria-label="scrollable auto tabs example"
         >
           {list.map((tab, index) => {
-            return <Tab className={selectedIndex ===index ? "tabstyle" : ""} value={index} key={"tab" + index} label={tab.display_name} />;
+            return (
+              <Tab
+                className={selectedIndex === index ? "tabstyle" : ""}
+                value={index}
+                key={"tab" + index}
+                label={tab.display_name}
+              />
+            );
           })}
         </Tabs>
       </AppBar>
-      
-      <div className="customtab-container w-100">{getSelectedComponent()}</div>
+
+      <div className="config_inner_wrapper w-100">{getSelectedComponent()}</div>
     </div>
   );
 };

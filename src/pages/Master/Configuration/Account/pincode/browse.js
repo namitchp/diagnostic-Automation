@@ -16,7 +16,6 @@ import {
 } from "../../../../../components/common";
 import { useSelector } from "react-redux";
 const BrowsePincode = ({ type, onEdit, onPreviewData }) => {
-
   const userRight = useSelector((state) => state.common.userRightResponse);
   const [browseListData, setBrowseListData] = useState([]);
   const [totalRecord, setTotalRecords] = useState(0);
@@ -108,8 +107,8 @@ const BrowsePincode = ({ type, onEdit, onPreviewData }) => {
     getBrowseListData();
   }, [params]);
   return (
-    <>
-      <div className="filter_box mb-5">
+    <div className="bg-white p-4 rounded w-100">
+      <div className="filter_box mb-3">
         <div className="row">
           <div className="col-md-1 d-flex align-items-center">
             <h4 className="mb-0">Filters</h4>
@@ -127,7 +126,7 @@ const BrowsePincode = ({ type, onEdit, onPreviewData }) => {
           </div>
         </div>
       </div>
-      <div style={{ height: 400, width: "100%" }}>
+      <div  className="data_table_height">
         <DataGrid
           columns={[
             {
@@ -164,14 +163,18 @@ const BrowsePincode = ({ type, onEdit, onPreviewData }) => {
                     className="fas fa-search mr-2"
                     onClick={() => onPreview(params.row.pin_code_id)}
                   ></i>
-                  {userRight.update_rightz&&<i
-                    className="far fa-edit mr-2"
-                    onClick={() => onEdit(params.row)}
-                  ></i>}
-                  {userRight.delete_right&&<i
-                    className="far fa-trash-alt mr-2"
-                    onClick={() => deleteData(params.row.pin_code_id)}
-                  ></i>}
+                  {userRight.update_rightz && (
+                    <i
+                      className="far fa-edit mr-2"
+                      onClick={() => onEdit(params.row)}
+                    ></i>
+                  )}
+                  {userRight.delete_right && (
+                    <i
+                      className="far fa-trash-alt mr-2"
+                      onClick={() => deleteData(params.row.pin_code_id)}
+                    ></i>
+                  )}
                 </div>
               ),
               width: 100,
@@ -207,10 +210,12 @@ const BrowsePincode = ({ type, onEdit, onPreviewData }) => {
           }}
           rows={browseListData}
           getRowId={(browseListData) => browseListData.pin_code_id}
-          getRowClassName={(params)=>params.row.pin_code_id%2?"odd" :"even"}
+          getRowClassName={(params) =>
+            params.row.pin_code_id % 2 ? "odd" : "even"
+          }
         />
       </div>
-    </>
+    </div>
   );
 };
 export default BrowsePincode;

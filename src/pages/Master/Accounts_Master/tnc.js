@@ -21,10 +21,10 @@ const AccountTNC = ({ formData, handleChange, list }) => {
     financeList: [],
     ldList: [],
   });
-  console.log(list)
+  console.log(list);
   useEffect(() => {
-    if(list){
-    setDropDownValues(list);
+    if (list) {
+      setDropDownValues(list);
     }
   }, [list]);
 

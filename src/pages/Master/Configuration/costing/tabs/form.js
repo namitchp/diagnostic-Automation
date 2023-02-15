@@ -11,7 +11,7 @@ const AddOrEditGroup = (props) => {
   const [groupValues, setGroupValues] = useState({
     tab_id: "",
     tab_name: "",
-    mtab_id:0,
+    mtab_id: 0,
     tabArray: [],
   });
   const [groupTab, setgroupTab] = useState({
@@ -23,9 +23,9 @@ const AddOrEditGroup = (props) => {
     msg: "",
   });
   const tabArrayDelet = (e) => {
-    const deleteArraytab={...groupValues}
-    deleteArraytab.tabArray.splice(deleteArraytab.tabArray.indexOf(e),1)
-    setGroupValues(deleteArraytab)
+    const deleteArraytab = { ...groupValues };
+    deleteArraytab.tabArray.splice(deleteArraytab.tabArray.indexOf(e), 1);
+    setGroupValues(deleteArraytab);
   };
   const listColumn = [
     {
@@ -42,7 +42,7 @@ const AddOrEditGroup = (props) => {
     },
   ];
   const submitAddBox = () => {
-        let arrayList={...groupValues};
+    let arrayList = { ...groupValues };
     arrayList.tabArray.push(groupTab);
     setGroupValues(arrayList);
   };
@@ -53,7 +53,7 @@ const AddOrEditGroup = (props) => {
         mtab_id: groupValues.mtab_id,
         mtab_name: groupValues.tab_name,
         tab_id: groupValues.tab_id,
-        tabArray:groupValues.tabArray
+        tabArray: groupValues.tabArray,
       };
       await CommonController.commonApiCallFilter(
         "master/insert_cos_tab",
@@ -89,7 +89,7 @@ const AddOrEditGroup = (props) => {
   };
   return (
     <React.Fragment>
-      <div className="container-fluid">
+      <div className="container-fluid bg-white p-4">
         <div className="row">
           <div className="col-md-4">
             <TextField

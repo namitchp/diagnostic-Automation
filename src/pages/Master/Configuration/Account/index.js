@@ -48,7 +48,7 @@ const ConfigAccountIndex = ({ list }) => {
   };
 
   return (
-    <div className="px-3">
+    <div className="config_active_content">
       <AppBar className="rounded " position="relative" elevation={0}>
         <Tabs
           className="w-100"
@@ -69,7 +69,7 @@ const ConfigAccountIndex = ({ list }) => {
           })}
         </Tabs>
       </AppBar>
-      <div className="customtab-container w-100">{getSelectedComponent()}</div>
+      <div className="config_inner_wrapper w-100">{getSelectedComponent()}</div>
     </div>
   );
 };

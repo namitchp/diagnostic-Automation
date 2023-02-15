@@ -33,7 +33,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 const userId = localStorage.getItem("userId");
-const AddMaterialCode = ({ onCancel,type }) => {
+const AddMaterialCode = ({ onCancel, type }) => {
   const dispatch = useDispatch();
   const partyNameListResponse = useSelector(
     (state) => state.MaterialCodeMaster.partyNameList
@@ -136,7 +136,7 @@ const AddMaterialCode = ({ onCancel,type }) => {
     } else {
       setLoading(true);
       var param = {
-        tran_id: selectedMaterialCodeId ? selectedMaterialCodeId.tran_id :0,
+        tran_id: selectedMaterialCodeId ? selectedMaterialCodeId.tran_id : 0,
         customer_id: selectedParty.company_id,
         user_id: userId,
         customer: filterCustomerList(),
@@ -144,7 +144,7 @@ const AddMaterialCode = ({ onCancel,type }) => {
       };
 
       MaterialCodeMasterController.insertMaterialCode(param).then((data) => {
-        if (data.status===200) {
+        if (data.status === 200) {
           showSuccessToast(data.message);
           onCancel();
         } else {
@@ -156,7 +156,6 @@ const AddMaterialCode = ({ onCancel,type }) => {
       });
     }
   };
-
 
   const filterCustomerList = () => {
     var newList = [];
@@ -347,104 +346,109 @@ const AddMaterialCode = ({ onCancel,type }) => {
   };
 
   return (
-    <>
-      {loading && <Loader />}
-      <div className="container-fluid mt-4">
-        <div className="row">
-          <div className="col-md-4">
-            <Autocomplete
-              id="combo-box-demo"
-              options={partyNameList}
-              onChange={(event, newValue) => setSelectedParty(newValue)}
-              getOptionLabel={(option) => option.company_name}
-              value={selectedParty}
-              fullWidth
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Party Name"
-                  size="small"
-                  variant="outlined"
-                />
-              )}
+    <div className="inner_wrapper">
+      <div className="inner_data_wrapper pt-3">
+        {loading && <Loader />}
+        <div className="bg-white p-4 rounded">
+          <div className="row">
+            <div className="col-md-4">
+              <Autocomplete
+                id="combo-box-demo"
+                options={partyNameList}
+                onChange={(event, newValue) => setSelectedParty(newValue)}
+                getOptionLabel={(option) => option.company_name}
+                value={selectedParty}
+                fullWidth
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Party Name"
+                    size="small"
+                    variant="outlined"
+                  />
+                )}
+              />
+            </div>
+            {!showPickCustomer && (
+              <div className="col-md-3 ml-auto text-right">
+                <Button
+                  color="primary"
+                  className="mr-2 bg-primary text-white"
+                  disableElevation
+                  variant="contained"
+                  onClick={togglePickCustomer}
+                >
+                  Pick Customer
+                </Button>
+                <Button
+                  color="primary"
+                  onClick={togglePickItems}
+                  disableElevation
+                  variant="contained"
+                  className="bg-success text-white"
+                >
+                  Pick Item
+                </Button>
+              </div>
+            )}
+          </div>
+          <div className="col-md-12 mt-3 mb-3">
+            {showPickCustomer && (
+              <TablePicker
+                selectedItems={selectedCustomerList}
+                columns={customerListColumn}
+                url={"master/pick_customer"}
+                isNode={"node"}
+                apiBody={{ customer_type: type }}
+                onSubmit={handlePickCustomer}
+                onPickerClose={togglePickCustomer}
+              />
+            )}
+          </div>
+          <div className="col-md-12 mt-3 mb-3">
+            {showPickItems && (
+              <TablePicker
+                selectedItems={selectedItemsList}
+                columns={supplyItemsColumn}
+                url={"master/pick_item"}
+                isNode={"node"}
+                onSubmit={handlePickItems}
+                onPickerClose={togglePickItems}
+              />
+            )}
+          </div>
+          <div className="col-md-12 mt-3 mb-3">
+            <h4>Selected Customer List</h4>
+            <Divider />
+            <SimpleTable
+              columns={selectedCustomerColumns}
+              rows={selectedCustomerList}
+              onDelete={handleAddedCustomer}
             />
           </div>
-          {!showPickCustomer && (
-            <div className="col-md-3 ml-auto text-right">
-              <Button
-                color="primary"
-                className="mr-2"
-                disableElevation
-                variant="contained"
-                onClick={togglePickCustomer}
+          <div className="col-md-12 mt-3 mb-3">
+            <h4>Selected Items List</h4>
+            <Divider />
+            <TableContainer className="mt-4" component={Paper}>
+              <Table
+                size="small"
+                sx={{ minWidth: 650 }}
+                aria-label="simple table"
               >
-                Pick Customer
-              </Button>
-              <Button
-                color="primary"
-                onClick={togglePickItems}
-                disableElevation
-                variant="contained"
-              >
-                Pick Item
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="container-fluid">
-        {showPickCustomer && (
-          <TablePicker
-            selectedItems={selectedCustomerList}
-            columns={customerListColumn}
-            url={"master/pick_customer"}
-            isNode={"node"}
-            apiBody={{customer_type:type}}
-
-            onSubmit={handlePickCustomer}
-            onPickerClose={togglePickCustomer}
-          />
-        )}
-
-        {showPickItems && (
-          <TablePicker
-            selectedItems={selectedItemsList}
-            columns={supplyItemsColumn}
-            url={"master/pick_item"}
-            isNode={"node"}
-            onSubmit={handlePickItems}
-            onPickerClose={togglePickItems}
-          />
-        )}
-      </div>
-      <div className="container-fluid mt-5 pt-5">
-        <h4>Selected Customer List</h4>
-        <Divider />
-        <SimpleTable
-          columns={selectedCustomerColumns}
-          rows={selectedCustomerList}
-          onDelete={handleAddedCustomer}
-        />
-      </div>
-      <div className="container-fluid mt-5 pt-5">
-        <h4>Selected Items List</h4>
-        <Divider />
-        <TableContainer className="mt-4" component={Paper}>
-          <Table size="small" sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>MLFB</StyledTableCell>
-                <StyledTableCell>Item Name</StyledTableCell>
-                <StyledTableCell>Material Code</StyledTableCell>
-                <StyledTableCell>Lp Ref.</StyledTableCell>
-                <StyledTableCell>List Price</StyledTableCell>
-                <StyledTableCell>Dis. %</StyledTableCell>
-                <StyledTableCell>Unit Price</StyledTableCell>
-                <StyledTableCell>Actions</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {/* {rows.lenght > 0 ? (
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>MLFB</StyledTableCell>
+                    <StyledTableCell>Item Name</StyledTableCell>
+                    <StyledTableCell>Material Code</StyledTableCell>
+                    <StyledTableCell>Lp Ref.</StyledTableCell>
+                    <StyledTableCell>List Price</StyledTableCell>
+                    <StyledTableCell>Dis. %</StyledTableCell>
+                    <StyledTableCell>Unit Price</StyledTableCell>
+                    <StyledTableCell>Actions</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {/* {rows.lenght > 0 ? (
                 rows.map((row) => (
                   <TableRow
                     key={rows[columns[0].id]}
@@ -474,102 +478,112 @@ const AddMaterialCode = ({ onCancel,type }) => {
                   No Records Found
                 </TableCell>
               )} */}
-              {selectedItemsList.length > 0 ? (
-                selectedItemsList.map((item, index) => {
-                  return (
-                    <TableRow
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                      key={index}
-                    >
-                      <TableCell scope="row">{item.mlfb_no}</TableCell>
-                      <TableCell scope="row" style={{ width: 150 }}>   
-                        {item.item_name}
-                      </TableCell>
-                      <TableCell scope="row">
-                        <input
-                          className="form-control"
-                          name="material_code"
-                          value={item.material_code}
-                          onChange={(event) =>
-                            handleProductChange(event, item.product_id)
-                          }
-                        />
-                      </TableCell>
-                      <TableCell scope="row">
-                        <input
-                          className="form-control"
-                          name="lp_ref"
-                          value={item.lp_ref}
-                          disabled={true}
-                        />
-                      </TableCell>
-                      <TableCell scope="row">
-                        <input
-                          className="form-control"
-                          name="list_price"
-                          value={item.list_price}
-                          disabled={true}
-                        />
-                      </TableCell>
-                      <TableCell scope="row">
-                        <input
-                          className="form-control"
-                          name="dis_per"
-                          value={
-                            isNaN(item.dis_per)
-                              ? ""
-                              : parseFloat(item.dis_per).toFixed(2)
-                          }
-                          disabled={true}
-                        />
-                      </TableCell>
-                      <TableCell scope="row">
-                        <input
-                          className="form-control"
-                          name="unit_price"
-                          value={isNaN(item.unit_price) ? "" : item.unit_price}
-                          onChange={(event) => calculateDisPer(event, item)}
-                        />
-                      </TableCell>
-                      <TableCell scope="row">
-                        <ActionButtons
-                          onDelete={() => handleAddedItems(item)}
-                        />
+                  {selectedItemsList.length > 0 ? (
+                    selectedItemsList.map((item, index) => {
+                      return (
+                        <TableRow
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                          key={index}
+                        >
+                          <TableCell scope="row">{item.mlfb_no}</TableCell>
+                          <TableCell scope="row" style={{ width: 150 }}>
+                            {item.item_name}
+                          </TableCell>
+                          <TableCell scope="row">
+                            <input
+                              className="form-control"
+                              name="material_code"
+                              value={item.material_code}
+                              onChange={(event) =>
+                                handleProductChange(event, item.product_id)
+                              }
+                            />
+                          </TableCell>
+                          <TableCell scope="row">
+                            <input
+                              className="form-control"
+                              name="lp_ref"
+                              value={item.lp_ref}
+                              disabled={true}
+                            />
+                          </TableCell>
+                          <TableCell scope="row">
+                            <input
+                              className="form-control"
+                              name="list_price"
+                              value={item.list_price}
+                              disabled={true}
+                            />
+                          </TableCell>
+                          <TableCell scope="row">
+                            <input
+                              className="form-control"
+                              name="dis_per"
+                              value={
+                                isNaN(item.dis_per)
+                                  ? ""
+                                  : parseFloat(item.dis_per).toFixed(2)
+                              }
+                              disabled={true}
+                            />
+                          </TableCell>
+                          <TableCell scope="row">
+                            <input
+                              className="form-control"
+                              name="unit_price"
+                              value={
+                                isNaN(item.unit_price) ? "" : item.unit_price
+                              }
+                              onChange={(event) => calculateDisPer(event, item)}
+                            />
+                          </TableCell>
+                          <TableCell scope="row">
+                            <ActionButtons
+                              onDelete={() => handleAddedItems(item)}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={12} className="text-center">
+                        No Records
                       </TableCell>
                     </TableRow>
-                  );
-                })
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={12} className="text-center">
-                    No Records
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div className="w-100 mt-3 text-right">
-          {selectedMaterialCodeId?.type==="preview"?"":<Button
-            color="primary"
-            className="mr-2"
-            onClick={insertMaterialCode}
-            disableElevation
-            variant="contained"
-          >
-            Save
-          </Button>}
-          <Button
-            color="primary"
-            onClick={() => onCancel()}
-            disableElevation
-            variant="contained"
-          >
-            Cancel
-          </Button>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+          <div className="col-md-12 mt-3 mb-3">
+            {selectedMaterialCodeId?.type === "preview" ? (
+              ""
+            ) : (
+              <Button
+                color="primary"
+                className="mr-2"
+                onClick={insertMaterialCode}
+                disableElevation
+                variant="contained"
+              >
+                Save
+              </Button>
+            )}
+            <Button
+              color="primary"
+              onClick={() => onCancel()}
+              disableElevation
+              variant="contained"
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

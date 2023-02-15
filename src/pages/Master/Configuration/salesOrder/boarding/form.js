@@ -55,7 +55,7 @@ const AddOrEditGroup = (props) => {
         props.onClose(0);
     }
     return <React.Fragment>
-        <div className="container-fluid">
+        <div className="container-fluid bg-white p-4">
             <div className="row">
                 <div className="col-md-4">
                     <TextField label="Boarding ID" name="boarding_id"disabled value={groupValues.boarding_id} onChange={handleOnChange} fullWidth variant="outlined" size="small" />
