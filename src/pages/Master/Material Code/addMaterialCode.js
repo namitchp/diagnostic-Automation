@@ -25,7 +25,7 @@ import { searchPartyName } from "../../../_redux/actions/masters/materialcode.ac
 import { MaterialCodeMasterController } from "../../../_redux/controller/Masters/materialcode.controller";
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "#1280cf",
+    backgroundColor: "var(--table-header-color)",
     color: theme.palette.common.white,
   },
   body: {
@@ -564,7 +564,7 @@ const AddMaterialCode = ({ onCancel, type }) => {
             ) : (
               <Button
                 color="primary"
-                className="mr-2"
+                className="mr-2 bg-primary text-white"
                 onClick={insertMaterialCode}
                 disableElevation
                 variant="contained"
@@ -577,6 +577,7 @@ const AddMaterialCode = ({ onCancel, type }) => {
               onClick={() => onCancel()}
               disableElevation
               variant="contained"
+              className="bg-danger text-white"
             >
               Cancel
             </Button>

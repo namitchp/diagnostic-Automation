@@ -31,7 +31,7 @@ setFmList(dropdownList.fm);
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             id="outlined-select-currency2"
             select
@@ -53,7 +53,7 @@ setFmList(dropdownList.fm);
               })}
           </TextField>
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             variant="outlined"
             size="small"
@@ -64,7 +64,7 @@ setFmList(dropdownList.fm);
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             id="outlined-select-currency2"
             select
@@ -86,7 +86,7 @@ setFmList(dropdownList.fm);
               })}
           </TextField>
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             variant="outlined"
             size="small"
@@ -97,7 +97,7 @@ setFmList(dropdownList.fm);
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             id="outlined-select-currency2"
             select
@@ -119,7 +119,7 @@ setFmList(dropdownList.fm);
               })}
           </TextField>
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             variant="outlined"
             size="small"
@@ -130,7 +130,7 @@ setFmList(dropdownList.fm);
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             id="outlined-select-currency2"
             select
@@ -152,7 +152,7 @@ setFmList(dropdownList.fm);
               })}
           </TextField>
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             variant="outlined"
             size="small"
@@ -163,7 +163,7 @@ setFmList(dropdownList.fm);
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             id="outlined-select-currency2"
             select
@@ -185,7 +185,7 @@ setFmList(dropdownList.fm);
               })}
           </TextField>
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             variant="outlined"
             size="small"
@@ -196,7 +196,7 @@ setFmList(dropdownList.fm);
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             id="outlined-select-currency2"
             select
@@ -218,7 +218,7 @@ setFmList(dropdownList.fm);
               })}
           </TextField>
         </div>
-        <div className="col-md-3 mb-5">
+        <div className="col-md-3 mb-4">
           <TextField
             variant="outlined"
             size="small"

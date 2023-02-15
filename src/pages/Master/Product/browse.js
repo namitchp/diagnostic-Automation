@@ -420,7 +420,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
               <h4 className="mb-0">Filters</h4>
             </div>
             <div className="row w-100">
-              <div className="col-md-2 mb-2">
+              <div className="col-md-2 mb-4">
                 <FormControl fullWidth size="small" variant="outlined">
                   <InputLabel id="demo-simple-select-outlined-label">
                     Category
@@ -470,7 +470,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                 )}
               /> */}
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 mb-4">
                 <FormControl fullWidth size="small" variant="outlined">
                   <InputLabel id="demo-simple-select-outlined-label">
                     Group
@@ -487,7 +487,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   </Select>
                 </FormControl>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 mb-4">
                 <FormControl fullWidth size="small" variant="outlined">
                   <InputLabel id="demo-simple-select-outlined-label">
                     Item Name
@@ -504,7 +504,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                 </FormControl>
               </div>
 
-              <div className="col-md-2">
+              <div className="col-md-2 mb-4">
                 <FormControl fullWidth size="small" variant="outlined">
                   <InputLabel id="demo-simple-select-outlined-label">
                     Lp. Ref.
@@ -531,7 +531,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                 </FormControl>
               </div>
 
-              <div className="col-md-2">
+              <div className="col-md-2 mb-4">
                 <FormControl fullWidth size="small" variant="outlined">
                   <InputLabel id="demo-simple-select-outlined-label">
                     GG Name
@@ -557,7 +557,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   </Select>
                 </FormControl>
               </div>
-              {/* <div className="col-md-2">
+              {/* <div className="col-md-2 mb-4">
               <FormControl fullWidth size="small" variant="outlined">
                 <InputLabel id="demo-simple-select-outlined-label">
                   Siemens Product
@@ -576,7 +576,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                 </Select>
               </FormControl>
             </div> */}
-              <div className="col-md-2">
+              <div className="col-md-2 mb-4">
                 <FormControl fullWidth size="small" variant="outlined">
                   <InputLabel id="demo-simple-select-outlined-label">
                     Moving
@@ -597,7 +597,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   </Select>
                 </FormControl>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 mb-4">
                 <FormControl fullWidth size="small" variant="outlined">
                   <InputLabel id="demo-simple-select-outlined-label">
                     Verified
@@ -616,7 +616,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   </Select>
                 </FormControl>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 mb-4">
                 <TextField
                   fullWidth
                   id="outlined-basic"
@@ -628,8 +628,8 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   value={params?.filter_value}
                 />
               </div>
-              <div className="col-md-2 text-right">
-                <Button color="primary" disableElevation variant="contained">
+              <div className="col-md-2">
+                <Button color="primary" className="w-100 bg-success text-white p-2" disableElevation variant="contained">
                   Export Excel
                 </Button>
               </div>

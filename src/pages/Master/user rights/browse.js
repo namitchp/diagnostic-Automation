@@ -469,6 +469,7 @@ const UserRightList = () => {
                   color="primary"
                   onClick={onSave}
                   disableElevation
+                  className="bg-success text-white"
                 >
                   Update
                 </Button>

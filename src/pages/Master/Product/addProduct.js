@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import { CommonController } from "../../../_redux/controller/common.controller";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
 import { Container } from "react-bootstrap";
+import KeyboardArrowRightSharpIcon from '@mui/icons-material/KeyboardArrowRightSharp';
+import KeyboardArrowLeftSharpIcon from '@mui/icons-material/KeyboardArrowLeftSharp';
+
 const AddNewProduct = ({ goBrowse }) => {
   const selectedIdResponse = useSelector(
     (state) => state.AllReducersMaster.productId
@@ -171,11 +174,11 @@ const AddNewProduct = ({ goBrowse }) => {
               <Button
                 variant="contained"
                 onClick={onBack}
-                className="mr-3"
+                className="bg-primary text-white me-3"
                 color="primary"
                 disableElevation
               >
-                Back
+                <KeyboardArrowLeftSharpIcon /> Back
               </Button>
             )}
             {selectedTab === 0 && (
@@ -184,8 +187,9 @@ const AddNewProduct = ({ goBrowse }) => {
                 onClick={onNext}
                 color="primary"
                 disableElevation
+                className="bg-primary text-white"
               >
-                Next
+                Next <KeyboardArrowRightSharpIcon />
               </Button>
             )}
             {selectedIdResponse?.type == "preview"
@@ -196,6 +200,7 @@ const AddNewProduct = ({ goBrowse }) => {
                     onClick={onSubmit}
                     color="primary"
                     disableElevation
+                    className="bg-success text-white"
                   >
                     Submit
                   </Button>

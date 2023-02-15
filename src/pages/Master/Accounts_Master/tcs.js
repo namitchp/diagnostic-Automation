@@ -135,6 +135,7 @@ export const TCSAccount = ({ accountType }) => {
               onClick={saveForm}
               color="primary"
               disableElevation
+              className="bg-success text-white"
             >
               Submit
             </Button>

@@ -42,7 +42,7 @@ const GeneralInfoEmp = ({
         </div>
         <div className="col-md-5">
           <div className="row">
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -53,7 +53,7 @@ const GeneralInfoEmp = ({
                 label="Employee ID"
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -64,7 +64,7 @@ const GeneralInfoEmp = ({
                 label="Attendance Code"
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -75,7 +75,7 @@ const GeneralInfoEmp = ({
                 label="Employee Code"
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -86,7 +86,7 @@ const GeneralInfoEmp = ({
                 label="Card No."
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -97,7 +97,7 @@ const GeneralInfoEmp = ({
                 label="First Name"
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -108,7 +108,7 @@ const GeneralInfoEmp = ({
                 label="Last Name"
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 value={formData.f_h_name}
@@ -119,7 +119,7 @@ const GeneralInfoEmp = ({
                 fullWidth
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -130,7 +130,7 @@ const GeneralInfoEmp = ({
                 label="Mother name"
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 id="outlined-select-currency1"
                 select
@@ -146,7 +146,7 @@ const GeneralInfoEmp = ({
                 <MenuItem value={"Unmaried"}>Unmarried</MenuItem>
               </TextField>
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 id="outlined-select-currency2"
                 select
@@ -164,7 +164,7 @@ const GeneralInfoEmp = ({
             </div>
             {console.log(moment(formData.dob).format())}
             {console.log(formData.dob)}
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <DatePicker
                 autoOk
                 variant="inline"
@@ -180,7 +180,7 @@ const GeneralInfoEmp = ({
                 fullWidth
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -192,7 +192,7 @@ const GeneralInfoEmp = ({
                 label="Present Address"
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -203,7 +203,7 @@ const GeneralInfoEmp = ({
                 label="Mobile No."
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -214,7 +214,7 @@ const GeneralInfoEmp = ({
                 label="Phone No."
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <p>
                 Same as present address
                 <Checkbox
@@ -235,7 +235,7 @@ const GeneralInfoEmp = ({
                 label="Permanent Address"
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -246,7 +246,7 @@ const GeneralInfoEmp = ({
                 label="Phone No."
               />
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -262,7 +262,7 @@ const GeneralInfoEmp = ({
         {/*  */}
         <div className="col-md-5">
           <div className="row">
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -274,7 +274,7 @@ const GeneralInfoEmp = ({
               />
             </div>
 
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <Autocomplete
                 disablePortal
                 id="combo-box-demo1"
@@ -301,7 +301,7 @@ const GeneralInfoEmp = ({
                 )}
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <Autocomplete
                 disablePortal
                 id="combo-box-demo2"
@@ -328,7 +328,7 @@ const GeneralInfoEmp = ({
                 )}
               />
             </div>
-            <div className="col-md-7 mb-3">
+            <div className="col-md-6 mb-4">
               <DatePicker
                 autoOk
                 format="dd/MM/yyyy"
@@ -343,7 +343,7 @@ const GeneralInfoEmp = ({
                 fullWidth
               />
             </div>
-            <div className="col-md-7 mb-3">
+            <div className="col-md-6 mb-4">
               <DatePicker
                 autoOk
                 format="dd/MM/yyyy"
@@ -358,7 +358,7 @@ const GeneralInfoEmp = ({
                 fullWidth
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -369,7 +369,7 @@ const GeneralInfoEmp = ({
                 label="Leaving Reason"
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -380,7 +380,7 @@ const GeneralInfoEmp = ({
                 label="Dispensary"
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 multiline
@@ -393,7 +393,7 @@ const GeneralInfoEmp = ({
               />
             </div>
             {console.log(formData)}
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <Autocomplete
                 disablePortal
                 id="combo-box-demo2"
@@ -422,7 +422,7 @@ const GeneralInfoEmp = ({
                 )}
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 multiline
@@ -434,7 +434,7 @@ const GeneralInfoEmp = ({
                 label="User Name"
               />
             </div>
-            <div className="col-md-12 mb-3">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth

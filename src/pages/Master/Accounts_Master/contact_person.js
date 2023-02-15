@@ -134,7 +134,7 @@ const ContactPerson = ({
   return (
     <div className="row justify-content-sm-around">
       <div className="col-md-5 mb-5">
-        <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-4">
           <TextField
             label="Company Name"
             fullWidth
@@ -145,7 +145,7 @@ const ContactPerson = ({
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-4">
           <TextField
             label="Contact ID"
             disabled
@@ -157,7 +157,7 @@ const ContactPerson = ({
             onChange={handleOnChange}
           />
         </div>
-        <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-4">
           <TextField
             label="Contact Name"
             fullWidth
@@ -168,7 +168,7 @@ const ContactPerson = ({
             onChange={handleOnChange}
           />
         </div>
-        <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-4">
           <Autocomplete
             size="small"
             options={dropDownValues.departmentList}
@@ -181,7 +181,7 @@ const ContactPerson = ({
             )}
           />
         </div>
-        <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-4">
           <Autocomplete
             size="small"
             options={dropDownValues.designationList}
@@ -200,7 +200,7 @@ const ContactPerson = ({
             )}
           />
         </div>
-        <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-4">
           <TextField
             label="Mobile"
             fullWidth
@@ -211,7 +211,7 @@ const ContactPerson = ({
             onChange={handleOnChange}
           />
         </div>
-        <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-4">
           <TextField
             label="Email"
             fullWidth
@@ -222,7 +222,7 @@ const ContactPerson = ({
             onChange={handleOnChange}
           />
         </div>
-        <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-4">
           <TextField
             label="Phone"
             fullWidth
@@ -233,7 +233,7 @@ const ContactPerson = ({
             onChange={handleOnChange}
           />
         </div>
-        <div className="col-md-12 mb-5">
+        <div className="col-md-12 mb-4">
           <TextField
             label="Extn."
             fullWidth

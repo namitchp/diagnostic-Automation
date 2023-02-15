@@ -6,6 +6,9 @@ import GeneralInfoEmp from "./general";
 import OtherDetails from "./other";
 import { useSelector } from "react-redux";
 import { Container } from "react-bootstrap";
+import KeyboardArrowLeftSharpIcon from '@mui/icons-material/KeyboardArrowLeftSharp';
+import KeyboardArrowRightSharpIcon from '@mui/icons-material/KeyboardArrowRightSharp';
+
 const AddEmployee = ({ onClose }) => {
   const selectedIdResponse = useSelector(
     (state) => state.AllReducersMaster.employeeId
@@ -219,11 +222,11 @@ const AddEmployee = ({ onClose }) => {
                 <Button
                   variant="contained"
                   onClick={onBack}
-                  className="mr-3"
+                  className="mr-3 bg-primary text-white"
                   color="primary"
                   disableElevation
                 >
-                  Back
+                  Back <KeyboardArrowLeftSharpIcon />
                 </Button>
               )}
               {selectedTab === 0 && (
@@ -232,8 +235,9 @@ const AddEmployee = ({ onClose }) => {
                   onClick={onNext}
                   color="primary"
                   disableElevation
+                  className="bg-primary text-white"
                 >
-                  Next
+                  Next <KeyboardArrowRightSharpIcon />
                 </Button>
               )}
               {selectedTab === 1 && (
@@ -242,6 +246,7 @@ const AddEmployee = ({ onClose }) => {
                   onClick={onSubmit}
                   color="primary"
                   disableElevation
+                  className="bg-success text-white"
                 >
                   Submit
                 </Button>

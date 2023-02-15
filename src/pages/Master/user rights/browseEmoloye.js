@@ -371,6 +371,7 @@ const Employe = () => {
                 color="primary"
                 onClick={onSave}
                 disableElevation
+                className="bg-success text-white"
               >
                 Update
               </Button>
