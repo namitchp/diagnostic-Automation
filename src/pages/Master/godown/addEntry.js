@@ -110,7 +110,7 @@ const AddGodown = ({ onClose }) => {
         <Button
           onClick={() => onClose()}
           variant="contained"
-          className="mr-2"
+          className="mr-2 bg-danger text-white"
           color="primary"
           disableElevation
         >
