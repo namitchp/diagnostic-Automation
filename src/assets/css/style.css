@@ -6,7 +6,14 @@
   --inactive-tab-color: #737373;
   --config-active: #d5d5d5;
   --table-header-color: #242B2E;
+  --theme-color-dark: #03203C;
+  --theme-color: #207398;
+  --theme-color-secondary: #0b437a;
 } 
+/* menu hover - #0b437a */
+/* dark blue - #03203C */
+/* main blue - #207398 */
+
 ::-webkit-scrollbar{width:8px;height: 8px;}
 ::-webkit-scrollbar-track{box-shadow:inset 0 0 5px #c8c8c8;border-radius:10px}
 ::-webkit-scrollbar-thumb{background:#a3a3a3;border-radius:10px}
@@ -137,33 +144,35 @@ input[type="number"] {
 
 /* Login css ends */
 
-.menu-level1-color{
-  background-color:#656668;
-  box-shadow: 0 0 7px #4b4a4a;
-  
-}
-.menu-level1-color:hover {
-  background-color: rgb(148, 145, 140);
-}
 /* .submenu-link-color{
   color:red !important;
 } */
-
+header{
+  background-color: var(--theme-color) !important;
+  color: #fff !important;
+}
 /* Submenu Css Starts */
 .header_menu_wrapper {
-  background-color:#515456;
+  background-color: var(--theme-color-dark);
   padding: 5px 0;
 }
 .header_menu_wrapper .menu-nav{
   gap: 10px;
 }
 .header_menu_wrapper .menu-nav a.menu-link{
-  font-size: 12px;
+  font-size: 11.5px;
   color: #fff;
-  background-color: transparent;
-  border: solid 1px #fff;
-  padding: 5px 7px;
-  border-radius: 8px;
+  background-color: var(--theme-color);
+  /* border: solid 1px #fff; */
+  padding: 3px 7px;
+  /* border-radius: 8px; */
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  font-weight: 500;
+}
+.header_menu_wrapper .menu-nav a.menu-link:hover{
+  background-color: var(--theme-color-secondary);
+  color: #fff;
 }
 .header_menu_wrapper .menu-nav li.menu-level1-bg a.menu-link{
     color: #000;
@@ -231,12 +240,12 @@ input[type="number"] {
   background-color: var(--active-tab);
 }
 .data_table_height{
-  height: 50vh;
+  height: 100vh;
 }
 .inner_third_level{
   border: solid 1px var(--active-tab-border-color);
   margin-top: -1px;
-  padding: 25px 15px;
+  padding: 15px;
   background-color: var(--inactive-tab);
 }
 .nav-tabs{
@@ -322,7 +331,10 @@ input[type="number"] {
 .inner_tabs.menuStructure button {
   background-color: #fff;
 }
-
+.MuiDataGrid-columnHeaderTitle {
+  color: #fff;
+  font-size: 15px;
+}
 /* Submenu Css end */
 
 .action_btns i {
@@ -353,7 +365,7 @@ input[type="number"] {
   font-size: 24px;
   color: #444;
   background-color: #fff7f7;
-  width: 44px;
+  width: 40px;
   border-radius: 50px;
   height: 40px;
   display: flex;
@@ -363,7 +375,7 @@ input[type="number"] {
 
 .filter_box {
   background: #ffffff;
-  padding: 10px;
+  /* padding: 10px; */
   /* border-radius: 5px;
   border: 1px solid #eee; */
 }
@@ -393,7 +405,7 @@ input[type="number"] {
   font-weight: bold;
   font-family: symbol;
   letter-spacing: 1px;
-  color:red;
+  color:#fff;
 }
 
 .clock_container p {
@@ -441,9 +453,13 @@ input[type="number"] {
 
 .circle_box {
   background-color: #fff7f7;
-  border-radius: 50px;
+  border-radius: 50%;
   padding: 2px;
-  height: 40px;
+  height: 43px;
+  width: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tab {

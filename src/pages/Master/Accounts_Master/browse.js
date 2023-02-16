@@ -401,7 +401,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
   return (
     <div className="inner_data_wrapper">
       <div className="bg-white p-4 rounded">
-        <div className="filter_box mb-5">
+        <div className="filter_box mb-3">
           <div className="row">
             {/* <h1>zsdxcfgbhjnmk</h1> */}
             <div className="col-md-12 mb-4">

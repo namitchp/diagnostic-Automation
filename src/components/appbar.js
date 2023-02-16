@@ -117,14 +117,14 @@ const MainBar = ({ onMenuClick }) => {
                 <h4 className="mb-0">DIAGNOSTIC</h4>
                 <p className="logo-text  mb-0">
                   <small>Diagnostic Automation</small>
-                  <span className="ml-2">13.5</span>
+                  <span className="ml-2">2.0</span>
                 </p>
               </div>
             </div>
 
             <div className="col-md-10 text-right">
               <div className="row justify-content-end">
-                <div className="col-md-1 text-center py-1 pr-0">
+                <div className="col-md-1 text-center py-1">
                   <div className="clock_container">
                     <p className="mb-0">Week </p>
                     <h2 className="mb-0 mt-2 mx-auto">{moment().isoWeek()}</h2>
@@ -161,7 +161,7 @@ const MainBar = ({ onMenuClick }) => {
                   </div>
                 </div>
                 <div className="col-md-2 text-right d-flex align-items-center py-1">
-                  <div className="clock_container ml-auto">
+                  <div className="clock_container ms-auto">
                     <p className="mb-0">Switch</p>
                     <Button
                       variant="default"

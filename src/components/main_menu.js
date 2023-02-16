@@ -15,7 +15,7 @@ const MainMenu = (props) => {
                   return (
                     <li
                       className={
-                        "menu-item rounded menu-level1-color " +
+                        "menu-item menu-level1-color " +
                         (selectedMenu ===
                         item.transaction_name.replace(/\s+/g, "-").toLowerCase()
                           ? "menu-level1-bg"
