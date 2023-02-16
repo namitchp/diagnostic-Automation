@@ -13,7 +13,7 @@ import React from "react";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "#1280cf",
+    backgroundColor: "var(--table-header-color)",
     color: theme.palette.common.white,
   },
   body: {

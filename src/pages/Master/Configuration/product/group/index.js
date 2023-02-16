@@ -33,7 +33,7 @@ const GroupIndex = () => {
           indicatorColor="primary"
           aria-label="scrollable auto tabs example"
         >
-          <Tab value={0} label="Browse" />
+          <Tab value={0} label="Browse"  className={selectedIndex === 0 ? "tabstyle" : ""} />
           {userRight.insert_right && <Tab value={1} label="New Group" />}
         </Tabs>
       </div>

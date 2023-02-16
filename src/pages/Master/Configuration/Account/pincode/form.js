@@ -151,7 +151,7 @@ const AddOrEditPincode = (props) => {
           <div className="col-md-12 mt-3 text-right">
             <Button
               variant="contained"
-              className="mr-2"
+              className="mr-2 bg-danger text-white"
               onClick={onCancelClick}
               disableElevation
             >
@@ -165,6 +165,7 @@ const AddOrEditPincode = (props) => {
                 onClick={onSave}
                 color="primary"
                 disableElevation
+                className="bg-primary text-white"
               >
                 Save
               </Button>

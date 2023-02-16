@@ -31,7 +31,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
   return (
     <div className="row justify-content-center">
       <div className="col-md-5 mb-3">
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency1"
             select
@@ -50,7 +50,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
             ))}
           </TextField>
         </div>
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency2"
             select
@@ -69,7 +69,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
             ))}
           </TextField>
         </div>
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency1"
             select
@@ -88,7 +88,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
             ))}
           </TextField>
         </div>
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency1"
             select
@@ -107,7 +107,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
             ))}
           </TextField>
         </div>
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency56"
             select
@@ -126,7 +126,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
             ))}
           </TextField>
         </div>
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency67"
             select
@@ -145,7 +145,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
             ))}
           </TextField>
         </div>
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency23"
             select
@@ -167,7 +167,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
             ))}
           </TextField>
         </div>
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency33"
             select
@@ -186,7 +186,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
             ))}
           </TextField>
         </div>
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency1"
             select
@@ -207,7 +207,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
         </div>
       </div>
       <div className="col-md-5 mb-3">
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency3"
             select
@@ -227,7 +227,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
           </TextField>
         </div>
 
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency4"
             select
@@ -247,7 +247,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
           </TextField>
         </div>
 
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency5"
             select
@@ -267,7 +267,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
           </TextField>
         </div>
 
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency8"
             select
@@ -287,7 +287,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
           </TextField>
         </div>
 
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency9"
             select
@@ -307,7 +307,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
           </TextField>
         </div>
 
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency67"
             select
@@ -327,7 +327,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
           </TextField>
         </div>
 
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency34"
             select
@@ -347,7 +347,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
           </TextField>
         </div>
 
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency13"
             select
@@ -367,7 +367,7 @@ const AccountTNC = ({ formData, handleChange, list }) => {
           </TextField>
         </div>
 
-        <div className="col-md-12 mb-3">
+        <div className="col-md-12 mb-4">
           <TextField
             id="outlined-select-currency1"
             select

@@ -99,7 +99,7 @@ const AddOrEditGroup = (props) => {
           <div className="col-md-12 mt-3 text-right">
             <Button
               variant="contained"
-              className="mr-2"
+              className="mr-2 bg-danger text-white"
               onClick={onCancelClick}
               disableElevation
             >
@@ -112,6 +112,7 @@ const AddOrEditGroup = (props) => {
                 variant="contained"
                 onClick={onSave}
                 color="primary"
+                className="bg-primary text-white"
                 disableElevation
               >
                 Save

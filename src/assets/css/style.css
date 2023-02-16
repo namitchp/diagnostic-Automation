@@ -5,6 +5,7 @@
   --active-tab-color: #000;
   --inactive-tab-color: #737373;
   --config-active: #d5d5d5;
+  --table-header-color: #242B2E;
 } 
 ::-webkit-scrollbar{width:8px;height: 8px;}
 ::-webkit-scrollbar-track{box-shadow:inset 0 0 5px #c8c8c8;border-radius:10px}
@@ -20,7 +21,7 @@ a{
     color:#fff;
 }
 .MuiDataGrid-columnHeader{
-  background-color: #242B2E !important;
+  background-color: var(--table-header-color) !important;
   /* background-image: -webkit-linear-gradient(top, #CCCCCC, #A4A4A4) repeat scroll 0 0 transparent;
   background-image: linear-gradient(top, #CCCCCC, #A4A4A4) repeat scroll 0 0 transparent; */
 }
@@ -247,7 +248,11 @@ input[type="number"] {
   border-bottom: solid 1px var(--inactive-tab);
 }
 .PrivateNotchedOutline-root-13{
-  top: 0;
+  top: 0 !important;
+}
+.MuiInputLabel-outlined{
+  background-color: #fff;
+  padding: 0 5px !important;
 }
 
 .configuration_wrapper{

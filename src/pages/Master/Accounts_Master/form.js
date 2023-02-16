@@ -6,7 +6,8 @@ import GeneralInfo from "./generalInfo";
 import AccountTNC from "./tnc";
 import { Button } from "@material-ui/core";
 import { showErrorToast, showSuccessToast } from "../../../components/common";
-import { Container } from "react-bootstrap";
+import KeyboardArrowLeftSharpIcon from '@mui/icons-material/KeyboardArrowLeftSharp';
+import KeyboardArrowRightSharpIcon from '@mui/icons-material/KeyboardArrowRightSharp';
 const AddAccountMaster = ({ handleAddAccount }) => {
   const selectedIdResponse = useSelector(
     (state) => state.AllReducersMaster.accountId
@@ -242,14 +243,15 @@ const AddAccountMaster = ({ handleAddAccount }) => {
           />
         )}
       </div>
-      <div className="col-md-12 text-right">
+      <div className="col-md-12 text-right p-0">
         {selectedIndex !== 0 && (
           <Button
             variant="contained"
-            className="mr-2"
+            className="mt-4 bg-primary text-white me-3"
             onClick={() => setSeletedIndex(selectedIndex - 1)}
             disableElevation
           >
+            <KeyboardArrowLeftSharpIcon  /> 
             Back
           </Button>
         )}
@@ -258,10 +260,10 @@ const AddAccountMaster = ({ handleAddAccount }) => {
             variant="contained"
             onClick={() => setSeletedIndex(selectedIndex + 1)}
             color="primary"
-            className="mr-2"
+            className="mt-4 bg-primary text-white"
             disableElevation
           >
-            Next
+            Next <KeyboardArrowRightSharpIcon />
           </Button>
         )}
         {selectedIdResponse?.type == "preview"
@@ -272,6 +274,7 @@ const AddAccountMaster = ({ handleAddAccount }) => {
                 onClick={saveForm}
                 color="primary"
                 disableElevation
+                className="bg-success text-white mt-4"
               >
                 Submit
               </Button>

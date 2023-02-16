@@ -68,7 +68,7 @@ const GeneralProduct = ({
         </div>
         <div className="col-md-5">
           <div className="row">
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 size="small"
@@ -78,7 +78,7 @@ const GeneralProduct = ({
                 fullWidth
               />
             </div>
-            <div className="col-md-12 mb-5 ">
+            <div className="col-md-12 mb-4 ">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -89,7 +89,7 @@ const GeneralProduct = ({
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -117,7 +117,7 @@ const GeneralProduct = ({
                 )}
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -145,7 +145,7 @@ const GeneralProduct = ({
                 )}
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -169,7 +169,7 @@ const GeneralProduct = ({
                 )}
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -190,7 +190,7 @@ const GeneralProduct = ({
                 )}
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -201,7 +201,7 @@ const GeneralProduct = ({
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -240,7 +240,7 @@ const GeneralProduct = ({
 
         <div className="col-md-5">
           <div className="row">
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -261,7 +261,7 @@ const GeneralProduct = ({
                 )}
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 name="qty"
@@ -273,7 +273,7 @@ const GeneralProduct = ({
                 label="Qty"
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -284,7 +284,7 @@ const GeneralProduct = ({
                 label="Package"
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -296,7 +296,7 @@ const GeneralProduct = ({
                 label="List Price"
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 name="margin"
@@ -308,7 +308,7 @@ const GeneralProduct = ({
                 label="Margin"
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -320,7 +320,7 @@ const GeneralProduct = ({
                 label="Purchase Rate"
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
@@ -332,7 +332,7 @@ const GeneralProduct = ({
                 label="Re-Order Level Qty."
               />
             </div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-4">
               <TextField
                 variant="outlined"
                 fullWidth
