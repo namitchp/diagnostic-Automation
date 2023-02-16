@@ -225,7 +225,7 @@ const EmployeeBrowse = ({ onEdit }) => {
     <div className="inner_data_wrapper">
       <div className="bg-white rounded p-4">
         {loading && <Loader />}
-        <div className="filter_box mb-5">
+        <div className="filter_box mb-3">
           <div className="row">
             <div className="col-md-1 d-flex align-items-center">
               <h4 className="mb-0">Filters</h4>

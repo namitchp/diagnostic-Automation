@@ -6,6 +6,7 @@ import { showErrorToast, showSuccessToast } from "../../../components/common";
 import CustomPagination from "../../../components/CustomPagination";
 import CustomNoRowsOverlay from "../../../components/customRowComponent";
 import { CommonController } from "../../../_redux/controller/common.controller";
+
 export const TCSAccount = ({ accountType }) => {
   const [companyList, setCompanyList] = useState([]);
   const [browseListData, setBrowseListData] = useState([]);
@@ -85,7 +86,7 @@ export const TCSAccount = ({ accountType }) => {
     <div className="inner_data_wrapper">
       <div className="bg-white p-4 rounded">
         <div className="row">
-          <div className="col-md-3 ml-3">
+          <div className="col-md-4 mb-3">
             <Autocomplete
               size="small"
               options={companyList}
@@ -116,7 +117,7 @@ export const TCSAccount = ({ accountType }) => {
               )}
             />
           </div>
-          <div className="col-md-3 mb-3">
+          <div className="col-md-4 mb-3">
             <TextField
               label="tcs(%)"
               fullWidth
@@ -129,7 +130,7 @@ export const TCSAccount = ({ accountType }) => {
               }
             />
           </div>
-          <div className="col-md-3 mb-3">
+          <div className="col-md-4 mb-3">
             <Button
               variant="contained"
               onClick={saveForm}
@@ -140,21 +141,20 @@ export const TCSAccount = ({ accountType }) => {
               Submit
             </Button>
           </div>
-        </div>
-        <hr />
-        <div className="col-md-3 mb-5">
-          <TextField
-            label="Search"
-            fullWidth
-            // disabled
-            variant="outlined"
-            size="small"
-            name="company_id"
-            value={params.filter_value}
-            onChange={(e) =>
-              setParams({ ...params, filter_value: e.target.value })
-            }
-          />
+          <div className="col-md-3 mb-3">
+            <TextField
+              label="Search"
+              fullWidth
+              // disabled
+              variant="outlined"
+              size="small"
+              name="company_id"
+              value={params.filter_value}
+              onChange={(e) =>
+                setParams({ ...params, filter_value: e.target.value })
+              }
+            />
+          </div>
         </div>
         <div className="data_table_height">
           <DataGrid

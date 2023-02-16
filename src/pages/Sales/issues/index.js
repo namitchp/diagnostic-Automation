@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import SalesIssueBrowse from "./browse";
 
-
 const SalesIssueIndex = () => {
   const dispatch = useDispatch();
   const [selectedIndex, setSeletedIndex] = useState(0);
@@ -32,7 +31,7 @@ const SalesIssueIndex = () => {
               // dispatch(clearSelectedGodownId());
               handleIndex(1);
             }}
-            >
+          >
             New Marketing Visit
           </a>
         </li>

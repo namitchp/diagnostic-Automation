@@ -200,8 +200,7 @@ const SoDetailBrowse = ({ onEdit }) => {
   return (
     <>
       {loading && <Loader />}
-
-      <div className="filter_box mb-5">
+      <div className="filter_box mb-3">
         <div className="row">
           <div className="col-md-1 d-flex align-items-center">
             <h4 className="mb-0">Filters</h4>
@@ -397,7 +396,7 @@ const SoDetailBrowse = ({ onEdit }) => {
         </DialogActions>
       </Dialog>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <div className="data_table_height">
         <DataGrid
           columns={[
             {

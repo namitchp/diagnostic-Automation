@@ -14,12 +14,27 @@ import { ErrorPage } from "../components/errorPage";
 import { useSelector } from "react-redux";
 
 const Sales = () => {
+  const selectedSubMenu = window.location.pathname;
   const userRight = useSelector((state) => state.common.userRightResponse);
   const salesRoute = {
     23: <Route exact path="/sales/2/enquiry/23" component={SalesIndex} />,
     24: (
       <Route exact path="/sales/2/costing/24" component={SalesCostingIndex} />
     ),
+    30:<Switch>
+    <Route exact path="/sales/2/sales-order/26/so-details/30" component={SoDetail} />
+    <Redirect
+      to="/sales/2/sales-order/26/so-details/30"
+      from={selectedSubMenu}
+    />
+  </Switch>,
+  31:<Switch>
+  <Route exact path="/sales/2/sales-order/26/sl-so-pos/31" component={SalesSlSoPosIndex} />
+  <Redirect
+    to="/sales/2/sales-order/26/sl-so-pos/31"
+    from={selectedSubMenu}
+  />
+</Switch>,
   };
   return (
     <div className="container-fluid">

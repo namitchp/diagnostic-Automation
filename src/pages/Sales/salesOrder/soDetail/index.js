@@ -37,11 +37,7 @@ const SoDetail = () => {
         </li>
       </ul>
       <div className="tab-content">
-        {selectedIndex === 0 ? (
-          <SoDetailBrowse />
-        ) : (
-          <h2>Sales Enquiry Form</h2>
-        )}
+        {selectedIndex === 0 ? <SoDetailBrowse /> : <h2>Sales Enquiry Form</h2>}
       </div>
     </div>
   );
