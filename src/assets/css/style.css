@@ -74,7 +74,7 @@ header{background-image:linear-gradient(180deg,#cecece,#aaa)!important;color:#ff
 .inner_third_level{border:solid 1px var(--active-tab-border-color);margin-top:-1px;padding:15px;background-color:var(--inactive-tab)}
 .nav-tabs{border-bottom:none}
 .header-bottom .third ul.menu-nav li.menu-level2-color a.menu-link,.inner_main_third .inner_wrapper li.menu-level2-color a.menu-link{background:var(--inactive-tab);border-bottom:solid 1px var(--inactive-tab)}
-.PrivateNotchedOutline-root-13{top:0!important}
+fieldset{top:0!important}
 .MuiInputLabel-outlined{background-color:#fff;padding:0 5px!important}
 .configuration_wrapper{padding:15px;border-top:solid 1px var(--active-tab-border-color);margin-top:4px}
 .configuration_wrapper .side_menu button:first-child{border-top:solid 1px var(--active-tab-border-color)}
@@ -149,3 +149,26 @@ button.MuiButtonBase-root.MuiButton-root.bg-white.switch_btn.mx-3.mt-2.MuiButton
 .MuiTab-root{min-width:auto!important}
 img.excel_icons{height:24px;margin-left:10px}
 .circle_box svg{overflow:visible}
+.pagination_wrap{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  font-size: 13px;
+}
+.pagination_wrap ul.MuiPagination-ul li button {
+  border-radius: 5px;
+  border: solid 1px #cdcdcd;
+}
+.pagination_wrap ul.MuiPagination-ul li button svg{
+  fill: #000 !important;
+}
+.pagination_wrap input,.pagination_wrap select{
+  border: solid 1px #cdcdcd;
+  padding: 3px 10px;
+}
+.pagination_wrap input:focus{
+  outline: none;
+  background-color: #ebebeb;
+}
