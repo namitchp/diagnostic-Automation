@@ -5,6 +5,7 @@ import {
   Button,
   CircularProgress,
   IconButton,
+  makeStyles,
   Toolbar,
   Typography,
 } from "@material-ui/core";
@@ -18,14 +19,31 @@ import { id } from "date-fns/locale";
 import { nodeUrl } from "../config";
 const auth = localStorage.getItem("login");
 const userName = localStorage.getItem("userName");
+
+const useStyles = makeStyles((theme) => ({
+  circle: {
+    strokeWidth: "8px",
+    padding: "10px",
+  },
+  progress: {
+    padding: "5px",
+    borderWidth: "2px",
+    borderStyle: "solid",
+    borderColor: 'red'
+  },
+}));
+
 function CircularProgressWithLabel(props) {
+  const classes = useStyles();
+
   return (
     <Box position="relative" display="inline-flex">
       <CircularProgress
         disableShrink
-        size={35}
+        size={40}
         variant="determinate"
         {...props}
+        classes={{ circle: classes.circle, progress: classes.progress }}
       />
       <Box
         top={0}
@@ -126,7 +144,7 @@ const MainBar = ({ onMenuClick }) => {
               <div className="row justify-content-end">
                 <div className="col-md-1 text-center py-1">
                   <div className="clock_container">
-                    <p className="mb-0">Week </p>
+                    <p className="mb-0">Week</p>
                     <h2 className="mb-0 mt-2 mx-auto">{moment().isoWeek()}</h2>
                   </div>
                 </div>

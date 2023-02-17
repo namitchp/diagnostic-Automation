@@ -1,19 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './assets/css/style.bundle.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/css/style.css';
-import { applyMiddleware, createStore } from 'redux';
-import createRootReducer from './_redux/reducers';
-import { rootSaga, sagaMiddleware } from './_redux/middleware';
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "./assets/css/style.bundle.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/css/style.css";
+import { applyMiddleware, createStore } from "redux";
+import createRootReducer from "./_redux/reducers";
+import { rootSaga, sagaMiddleware } from "./_redux/middleware";
+import { Provider } from "react-redux";
+import './fonts/Arial-Nova/Arial-Nova.ttf';
+import './fonts/Cambria-Font/Cambria-Font.ttf';
 
 const reducer = createRootReducer();
 
-const store = createStore(reducer,applyMiddleware(sagaMiddleware))
+const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
@@ -22,7 +24,7 @@ ReactDOM.render(
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
