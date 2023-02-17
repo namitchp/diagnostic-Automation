@@ -10,7 +10,7 @@ const MainMenu = (props) => {
       <Container fluid>
         <div className="header-navs header-navs-left">
           <ul className="menu-nav mb-0 list-unstyled d-flex flex-wrap">
-            {list.length > 0
+            {list?.length > 0
               ? list?.map((item, index) => {
                   return (
                     <li

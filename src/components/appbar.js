@@ -205,7 +205,7 @@ const MainBar = ({ onMenuClick }) => {
                         <div className="user_header d-flex align-items-center">
                           <Avatar
                             alt="Remy Sharp"
-                            src={`${nodeUrl + profileList.image_path}`}
+                            src={`${nodeUrl + profileList?.image_path}`}
                           />
                           {/* <span className="ml-3">{userName}</span> */}
                         </div>

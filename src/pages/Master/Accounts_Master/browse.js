@@ -566,6 +566,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
             onPageChange={handlePageChange}
             loading={loading}
             rowHeight={40}
+            getRowHeight={() => 'auto'}
             components={
               browseListData?.length > 0
                 ? {

@@ -30,7 +30,7 @@ export default function CustomPagination() {
           {/* })} */}
         </select>
       </div>
-      {/* <div className="input_frame">
+      <div className="input_frame">
         <label className="mr-2">Go to Page:</label>
         <input
           type="number"
@@ -42,7 +42,7 @@ export default function CustomPagination() {
           }}
           style={{ width: 50 }}
         />
-      </div> */}
+      </div>
       <Pagination
         color="primary"
         // className="justify-content-end"

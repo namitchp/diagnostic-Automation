@@ -84,7 +84,7 @@ const [ modalPassword, setmodalPassword] = React.useState(false)
         <Avatar
           alt="Remy Sharp"
           className="mx-auto d-block m-3"
-          src={`${nodeUrl + profileList.image_path}`}
+          src={`${nodeUrl + profileList?.image_path}`}
           sx={{ width: 120, height: 120 }}
         />
         <div className="custom_edit">
@@ -168,7 +168,7 @@ const [ modalPassword, setmodalPassword] = React.useState(false)
         <Avatar
           alt="Remy Sharp"
           className="mx-auto d-block m-3"
-          src={`${nodeUrl + profileList.image_path}`}
+          src={`${nodeUrl + profileList?.image_path}`}
           sx={{ width: 150, height: 150 }}
         />
         <Modal.Body>
@@ -181,7 +181,7 @@ const [ modalPassword, setmodalPassword] = React.useState(false)
               <TextField
                 id="standard-multiline-flexible"
                 label="Name"
-                value={profileList.first_name + " " + profileList.last_name}
+                value={profileList?.first_name + " " + profileList.last_name}
                 variant="standard"
               />
             </Grid>
