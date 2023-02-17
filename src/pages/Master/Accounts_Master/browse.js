@@ -586,8 +586,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
             }}
             onColumnVisibilityChange={(e) => handleColumnHide(e)}
             getRowId={(browseListData) => browseListData.sr_no}
-            rows={browseListData} //accountMasterList
-            
+            rows={browseListData} //accountMasterList            
             headerHeight={40}
           />
         </div>

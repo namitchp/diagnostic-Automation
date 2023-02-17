@@ -156,7 +156,7 @@ export const TCSAccount = ({ accountType }) => {
             />
           </div>
         </div>
-        <div className="data_table_height">
+        <div className="data_table_height" style={{ height: '100vh' }}>
           <DataGrid
             columns={[
               {
