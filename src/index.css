@@ -1,8 +1,17 @@
+@font-face {
+  font-family: 'ArialNova';
+  src: local('ArialNova'), url("./fonts/Arial-Nova/Arial-Nova.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Cambria';
+  src: local('Cambria'), url("./fonts/Cambria-Font/Cambria-Font.ttf");
+  font-weight: 400;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'ArialNova'!important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
