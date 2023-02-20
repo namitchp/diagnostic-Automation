@@ -159,14 +159,14 @@ img.excel_icons{height:24px;}
   background-color: #616161;
   color: #fff;
 }
+.pagination_wrap ul.MuiPagination-ul li button.Mui-selected{
+  background-color: #1976d2 ;
+}
 .pagination_wrap ul.MuiPagination-ul li button {
   border-radius: 5px;
-  /* border: solid 1px #cdcdcd; */
   background-color: #fff;
 }
-.css-1to7aaw-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected{
-  background-color: #1976d2 !important;
-}
+
 .pagination_wrap ul.MuiPagination-ul li button svg{
   fill: #000 !important;
 }
