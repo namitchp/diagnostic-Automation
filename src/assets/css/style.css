@@ -68,7 +68,7 @@ header{background-image:linear-gradient(180deg,#cecece,#aaa)!important;color:#ff
 .main_wrapper .inner_main_first .inner_main_second,.main_wrapper .inner_main_third{padding:0 15px 15px}
 .main_wrapper .inner_main_third{border:solid 1px var(--active-tab-border-color);padding:15px;margin-top:4px;background-color:var(--inactive-tab)}
 .menu-level2-color a.menu-link{ font-family: 'Cambria';
-  border:solid 1px var(--active-tab-border-color);border-bottom:solid 1px var(--active-tab);background-color:var(--active-tab);color:#004285;font-weight:400;border-radius:10px 10px 0 0}
+  border:solid 1px var(--active-tab-border-color);border-bottom:solid 1px var(--active-tab);background-color:var(--active-tab);color:#248cf9;font-weight:600;border-radius:10px 10px 0 0}
 .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell{border-right:solid 1px #d5d5d5!important}
 .inner_data_wrapper{border:solid 1px var(--active-tab-border-color);margin-top:-1px;padding:15px;background-color:var(--active-tab)}
 .inner_third_level{border:solid 1px var(--active-tab-border-color);margin-top:-1px;padding:15px;background-color:var(--inactive-tab)}
@@ -147,7 +147,7 @@ button.MuiButtonBase-root.MuiButton-root.bg-white.switch_btn.mx-3.mt-2.MuiButton
 .widget-box.second{background-color:red;border:1px solid #ffd4d9}
 .widget-box.third{background-color:#f30000;border:1px solid #e3cdff}
 .MuiTab-root{min-width:auto!important}
-img.excel_icons{height:24px;margin-left:10px}
+img.excel_icons{height:24px;}
 .circle_box svg{overflow:visible}
 .pagination_wrap{
   width: 100%;
@@ -156,10 +156,16 @@ img.excel_icons{height:24px;margin-left:10px}
   align-items: center;
   padding: 10px;
   font-size: 13px;
+  background-color: #616161;
+  color: #fff;
 }
 .pagination_wrap ul.MuiPagination-ul li button {
   border-radius: 5px;
-  border: solid 1px #cdcdcd;
+  /* border: solid 1px #cdcdcd; */
+  background-color: #fff;
+}
+.css-1to7aaw-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected{
+  background-color: #1976d2 !important;
 }
 .pagination_wrap ul.MuiPagination-ul li button svg{
   fill: #000 !important;

@@ -412,9 +412,9 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
     <div className="inner_data_wrapper">
       <div className="bg-white p-4 rounded">
         <div className="filter_box mb-3">
-          <div className="row">
+          <div className="row align-items-center">
             {/* <h1>zsdxcfgbhjnmk</h1> */}
-            <div className="col-md-12 mb-4">
+            <div className="col">
               <h4 className="mb-0">Filters</h4>
             </div>
             <div className="col-md-2">
@@ -537,14 +537,15 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
                 variant="outlined"
               />
             </div>
-            <div className="col-md-2">
+            <div className="col">
               <Button
                 color="primary"
                 className="bg-success text-white w-100"
                 disableElevation
                 variant="contained"
               >
-                Export <img src={excelIcon} className="excel_icons" />
+                {/* Export  */}
+                <img src={excelIcon} className="excel_icons" />
               </Button>
             </div>
           </div>
