@@ -33,11 +33,12 @@ import {
 import moment from "moment";
 import excelIcon from "../../../assets/image/excel.png";
 
-// const useStyles = makeStyles(() => ({
-//   header: {
-//     height: "10px",
-//   },
-// }));
+const useStyles = makeStyles(() => ({
+  header: {
+    height: "10px",
+    backgroundColor: 'red',
+  },
+}));
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -51,7 +52,7 @@ const LightTooltip = withStyles((theme) => ({
 const user_id = localStorage.getItem("userId");
 
 const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
-  // const classes = useStyles();
+  const classes = useStyles();
   const userRight = useSelector((state) => state.common.userRightResponse);
   const dispatch = useDispatch();
 
@@ -408,6 +409,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
     }
   }, [params, accountMasterFilter, filter]);
 
+  // `${params?.pageSize + 30}rem` }
   return (
     <div className="inner_data_wrapper">
       <div className="bg-white p-4 rounded">
@@ -550,7 +552,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
             </div>
           </div>
         </div>
-        <div style={{ height: `${params?.pageSize + 30}rem` }}>
+        <div style={{ height: '80vh'}}>
           <DataGrid
             pagination
             disableColumnFilter
@@ -588,7 +590,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
             onColumnVisibilityChange={(e) => handleColumnHide(e)}
             getRowId={(browseListData) => browseListData.sr_no}
             rows={browseListData} //accountMasterList            
-            headerHeight={40}
+            headerHeight={40}          
           />
         </div>
       </div>
