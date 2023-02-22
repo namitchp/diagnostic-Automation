@@ -43,7 +43,7 @@ function CircularProgressWithLabel(props) {
         size={40}
         variant="determinate"
         {...props}
-        classes={{ circle: classes.circle }}
+        classes={{ circle: classes.circle}}
       />
       <Box
         top={0}

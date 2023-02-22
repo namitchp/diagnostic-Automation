@@ -266,9 +266,9 @@ const AddAccountMaster = ({ handleAddAccount }) => {
             Next <KeyboardArrowRightSharpIcon />
           </Button>
         )}
-        {selectedIdResponse?.type == "preview"
+        {selectedIdResponse?.type === "preview"
           ? ""
-          : selectedIndex == 2 && (
+          : selectedIndex === 2 && (
               <Button
                 variant="contained"
                 onClick={saveForm}

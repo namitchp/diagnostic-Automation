@@ -172,7 +172,7 @@ const ContactPerson = ({
           <Autocomplete
             size="small"
             options={dropDownValues.departmentList}
-            getOptionLabel={(option) => option.department_name}
+            getOptionLabel={(option) => option.department_name || ""}
             onChange={handleOnChange}
             fullWidth
             variant="outlined"
@@ -185,7 +185,7 @@ const ContactPerson = ({
           <Autocomplete
             size="small"
             options={dropDownValues.designationList}
-            getOptionLabel={(option) => option.designation_name}
+            getOptionLabel={(option) => option.designation_name || ""}
             fullWidth
             onChange={(e, value) =>
               setformContact({

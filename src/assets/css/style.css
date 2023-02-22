@@ -16,7 +16,8 @@
 ::-webkit-scrollbar-thumb:hover{background:#969696}
 a{text-decoration:none;display:inline-block}
 .css-1jbbcbn-MuiDataGrid-columnHeaderTitle{font-weight:700;font-size:15px;color:#fff}
-.MuiDataGrid-columnHeader{background-color:#616161!important}
+.MuiDataGrid-columnHeader,.MuiTableHead-root{background-color:#616161!important;}
+.MuiTableHead-root th{color: #fff;}
 .MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted):hover .MuiDataGrid-sortIcon{fill:#fff}
 .MuiDataGrid-cell{font-size:13px;font-family:arial}
 .tabstyle>.MuiTab-wrapper{box-shadow:0 0 3px #383737;border-radius:10px;height:30px;border:1px solid #df6d6d;padding:10px}
@@ -83,7 +84,7 @@ fieldset{top:0!important}
 .configuration_wrapper .side_menu .MuiTabs-scroller > span{display:none}
 .configuration_wrapper .side_menu button.Mui-selected{background-color:var(--config-active);color:#000;border:solid 1px transparent}
 .configuration_wrapper .config_active_content{background-color:var(--config-active);padding:15px}
-.config_active_content header{background-color:var(--inactive-tab-color);color:#fff}
+.config_active_content header{background-image:none !important;background-color:#616161;color:#fff}
 .config_active_content header button{padding:0 15px}
 .config_active_content header button.tabstyle span,.config_inner_wrapper .inner_tabs button span,.inner_tabs.menuStructure button.tabstyle span{box-shadow:none;border-radius:none;height:auto;border:none;padding:0}
 .config_active_content header button.tabstyle{background-color:#fff;color:#000}
@@ -100,7 +101,6 @@ fieldset{top:0!important}
 .MuiCircularProgress-colorSecondary{color:#0036f3!important}
 .seconds.MuiCircularProgress-colorPrimary{color:#1eae98!important}
 .MuiTypography-colorTextSecondary{color:#000!important;font-weight:600!important;font-size:18px!important}
-.MuiSvgIcon-root{fill:#fff!important}
 .clock_container h2{font-size:24px;color:#444;background-color:#6df659;width:40px;border-radius:50px;height:40px;display:flex;align-items:center;justify-content:center;border:solid 1px #000}
 .filter_box{background:#fff}
 .font_13{font-size:11px!important}
@@ -177,4 +177,7 @@ img.excel_icons{height:24px;}
 .pagination_wrap input:focus{
   outline: none;
   background-color: #ebebeb;
+}
+.data_table_height{
+  height: 75vh;
 }

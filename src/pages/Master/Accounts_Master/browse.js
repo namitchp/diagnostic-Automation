@@ -33,12 +33,6 @@ import {
 import moment from "moment";
 import excelIcon from "../../../assets/image/excel.png";
 
-const useStyles = makeStyles(() => ({
-  header: {
-    height: "10px",
-    backgroundColor: 'red',
-  },
-}));
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -51,8 +45,7 @@ const LightTooltip = withStyles((theme) => ({
 
 const user_id = localStorage.getItem("userId");
 
-const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
-  const classes = useStyles();
+const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {  
   const userRight = useSelector((state) => state.common.userRightResponse);
   const dispatch = useDispatch();
 

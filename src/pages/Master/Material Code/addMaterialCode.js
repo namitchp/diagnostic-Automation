@@ -402,6 +402,8 @@ const AddMaterialCode = ({ onCancel, type }) => {
                 apiBody={{ customer_type: type }}
                 onSubmit={handlePickCustomer}
                 onPickerClose={togglePickCustomer}
+                headerHeight={40}  
+                className="table_head_bg"
               />
             )}
           </div>

@@ -1,9 +1,10 @@
 import {
-  Checkbox,
+  // Checkbox,
   FormControlLabel,
   FormGroup,
   TextField,
 } from "@material-ui/core";
+import Checkbox from '@mui/material/Checkbox';
 import { Autocomplete } from "@material-ui/lab";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -29,7 +30,7 @@ const GeneralProduct = ({
       setGGList(list.gg);
       setUomList(list.uom);
     }
-  }, [list]); 
+  }, [list]);
 
   return (
     <div className="container-fluid p-0">
@@ -39,7 +40,11 @@ const GeneralProduct = ({
             <FormControlLabel
               label="Edit"
               checked={formData?.edit === true}
-              control={<Checkbox color="primary" />}
+              control={
+                <Checkbox
+                  color="primary"                
+                />
+              }
               onChange={(e) => handleCheckChange("edit", e.target.checked)}
             />
             <FormControlLabel

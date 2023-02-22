@@ -45,7 +45,6 @@ const Header = ({ onHeaderClick }) => {
         : "";
     dispatch(userRight(value));
   };
-  console.log(getredirectMenu);
   const handleThirdMenu = (value, index) => {
     redirect(getuserLIstSecond.data, getuserLIstThird.data);
 
@@ -98,7 +97,6 @@ const Header = ({ onHeaderClick }) => {
       ? dispatch(getUserRightListThird(1))
       : dispatch(getUserRightListThird(parseInt(urlLocation[3])));
   }, []);
-  console.log(thirdId);
 
   useEffect(() => {
     if (getuserRightListResponse) {
@@ -117,7 +115,7 @@ const Header = ({ onHeaderClick }) => {
     }
   }, [getuserRightListResponse, getuserLIstSecond, getuserLIstThird]);
   // console.log(getuserLIstThird)
-  console.log(getuserLIstSecond);
+  // console.log(getuserLIstSecond);
   useEffect(() => {
     if (firstLevelBit) {
       dispatch(getUserRightListThird(getuserLIstSecond.data[0].transaction_id));
