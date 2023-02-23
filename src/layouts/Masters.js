@@ -35,7 +35,7 @@ const Masters = () => {
     16: (
       <Switch>
         <Route path="/masters/1/account-master/9/supplier/16" exact>
-          {""}
+          {" "}
           <AccountsMaster accountType="Supplier" browse_id={2} />
         </Route>
         <Redirect

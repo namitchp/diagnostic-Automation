@@ -535,6 +535,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
                 name="filter_value"
                 label="Search"
                 variant="outlined"
+                // value={"dfhnjsdv"}
               />
             </div>
             <div className="col-md-2">
