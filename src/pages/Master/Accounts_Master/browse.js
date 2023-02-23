@@ -405,7 +405,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
   // `${params?.pageSize + 30}rem` }
   return (
     <div className="inner_data_wrapper">
-      <div className="bg-white p-4 rounded">
+      <div className="bg-white p-3 rounded">
         <div className="filter_box mb-3">
           <div className="row align-items-center">
             {/* <h1>zsdxcfgbhjnmk</h1> */}
@@ -545,7 +545,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
             </div>
           </div>
         </div>
-        <div style={{ height: '80vh'}}>
+        <div className="data_table_height">
           <DataGrid
             pagination
             disableColumnFilter

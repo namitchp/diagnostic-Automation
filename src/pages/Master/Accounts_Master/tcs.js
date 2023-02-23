@@ -84,7 +84,7 @@ export const TCSAccount = ({ accountType }) => {
   }, []);
   return (
     <div className="inner_data_wrapper">
-      <div className="bg-white p-4 rounded">
+      <div className="bg-white p-3 rounded">
         <div className="row">
           <div className="col-md-4 mb-3">
             <Autocomplete

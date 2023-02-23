@@ -177,7 +177,7 @@ const AddAccountMaster = ({ handleAddAccount }) => {
   };
 
   return (
-    <div className="inner_data_wrapper pt-3">
+    <div className="inner_data_wrapper pt-2">
       <ul className="nav border-0 nav-tabs nav-tabs-line">
         <li
           className={
