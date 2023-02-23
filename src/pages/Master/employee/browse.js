@@ -223,7 +223,7 @@ const EmployeeBrowse = ({ onEdit }) => {
 
   return (
     <div className="inner_data_wrapper">
-      <div className="bg-white rounded p-4">
+      <div className="bg-white rounded p-3">
         {loading && <Loader />}
         <div className="filter_box mb-3">
           <div className="row">
@@ -266,6 +266,7 @@ const EmployeeBrowse = ({ onEdit }) => {
                   }
                 : null
             }
+            headerHeight={40}
             onSortModelChange={(sort) => {
               if (sort.length > 0) {
                 setParams({

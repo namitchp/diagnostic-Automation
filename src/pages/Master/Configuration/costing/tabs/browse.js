@@ -104,7 +104,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
     getBrowseListData();
   }, [params]);
   return (
-    <div className="bg-white p-4 rounded w-100">
+    <div className="bg-white p-3 rounded w-100">
       <div className="filter_box mb-3">
         <div className="row">
           <div className="col-md-1 d-flex align-items-center">
@@ -176,6 +176,7 @@ const ConfigGroupBrowse = ({ type, onEdit, onPreviewData }) => {
           onPageChange={handlePageChange}
           loading={loading}
           rowHeight={30}
+          headerHeight={40}
           components={
             browseListData.length > 0
               ? {
