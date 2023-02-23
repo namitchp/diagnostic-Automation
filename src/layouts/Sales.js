@@ -21,26 +21,37 @@ const Sales = () => {
     24: (
       <Route exact path="/sales/2/costing/24" component={SalesCostingIndex} />
     ),
-    30:<Switch>
-    <Route exact path="/sales/2/sales-order/26/so-details/30" component={SoDetail} />
-    <Redirect
-      to="/sales/2/sales-order/26/so-details/30"
-      from={selectedSubMenu}
-    />
-  </Switch>,
-  31:<Switch>
-  <Route exact path="/sales/2/sales-order/26/sl-so-pos/31" component={SalesSlSoPosIndex} />
-  <Redirect
-    to="/sales/2/sales-order/26/sl-so-pos/31"
-    from={selectedSubMenu}
-  />
-</Switch>,
+    30: (
+      <Switch>
+        <Route
+          exact
+          path="/sales/2/sales-order/26/so-details/30"
+          component={SoDetail}
+        />
+        <Redirect
+          to="/sales/2/sales-order/26/so-details/30"
+          from={selectedSubMenu}
+        />
+      </Switch>
+    ),
+    31: (
+      <Switch>
+        <Route
+          exact
+          path="/sales/2/sales-order/26/sl-so-pos/31"
+          component={SalesSlSoPosIndex}
+        />
+        <Redirect
+          to="/sales/2/sales-order/26/sl-so-pos/31"
+          from={selectedSubMenu}
+        />
+      </Switch>
+    ),
   };
   return (
-    <div className="container-fluid">
-      <Switch>
-      {userRight?salesRoute[userRight.transaction_id]:""}
-        {/* <Route exact path="/sales/enquiry" component={SalesIndex} />
+    <Switch>
+      {userRight ? salesRoute[userRight.transaction_id] : ""}
+      {/* <Route exact path="/sales/enquiry" component={SalesIndex} />
         <Route exact path="/sales/costing" component={SalesCostingIndex} />
         <Route exact path="/sales/quotation" component={SalesQuotationIndex} />
         <Route exact path="/sales/sales-order-amendment" component={SalesSoAmdIndex} />
@@ -60,8 +71,7 @@ const Sales = () => {
        {(selectedSubMenu==="marketing-visit")&& <Redirect from="/sales" to="/sales/marketing-visit" />}
        {(selectedSubMenu==="issues")&& <Redirect from="/sales" to="/sales/issues" />}
        {(selectedSubMenu==="sales-order")&& <Redirect from="/sales" to="/sales/sales-order/so-details" />} */}
-      </Switch>
-    </div>
+    </Switch>
   );
 };
 

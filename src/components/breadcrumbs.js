@@ -8,7 +8,7 @@ const CustomBreadcrumb = () => {
  
 
     return(
-        <div className="subheader pb-3 subheader-transparent">
+        <div className="subheader  subheader-transparent">
         <div className=" pl-5 d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
             <div className="d-flex align-items-center flex-wrap ">
                 <div className="d-flex align-items-baseline flex-wrap mr-5 rounded">
