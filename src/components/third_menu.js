@@ -2,7 +2,6 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { userRight } from "../_redux/actions/common.action";
 
 const ThirdMenu = (props) => {
   const dispatch = useDispatch();

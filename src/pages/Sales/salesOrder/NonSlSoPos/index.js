@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import SalesOrderBrowse from "./browse";
-const SalesSlSoPosSummariseIndex = () => {
+
+const NonSlSoPOSIndex = () => {
   const dispatch = useDispatch();
   const [selectedIndex, setSeletedIndex] = useState(0);
 
@@ -45,13 +45,13 @@ const SalesSlSoPosSummariseIndex = () => {
                   }
                   onClick={() => handleIndex(1)}
                 >
-                  New Sales Order
+                  Non SL SO POS
                 </a>
               </li>
             </ul>
             <Container fluid className="p-0">
               <div className="inner_wrapper">
-                {selectedIndex === 0 ? <SalesOrderBrowse /> : <h2>Sales Enquiry Form</h2>}
+                {selectedIndex === 0 ? "Browse" : <h2>Non Sl So Pos Enquiry Form</h2>}
               </div>
             </Container>
           </div>
@@ -61,4 +61,4 @@ const SalesSlSoPosSummariseIndex = () => {
   );
 };
 
-export default SalesSlSoPosSummariseIndex;
+export default NonSlSoPOSIndex;

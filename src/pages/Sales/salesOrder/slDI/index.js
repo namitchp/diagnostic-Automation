@@ -1,9 +1,7 @@
 import React, { useState } from "react";
+import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import SalesSiDiBrowse from "./browse";
-
-import SalesEnquiryBrowse from "./browse";
-
+import SalesOrderBrowse from "./browse";
 const SalesSiDiIndex = () => {
   const dispatch = useDispatch();
   const [selectedIndex, setSeletedIndex] = useState(0);
@@ -13,37 +11,51 @@ const SalesSiDiIndex = () => {
   };
 
   return (
-    <div className="card card-custom gutter-b  px-7 py-3">
-      <ul className="nav nav-tabs nav-tabs-line">
-        <li className="nav-item">
-          <a
-            className={`nav-link ` + (selectedIndex === 0 ? "active" : "")}
-            onClick={() => {
-              // dispatch(clearSelectedGodownId());
-              handleIndex(0);
-            }}
-          >
-            Browse
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className={`nav-link ` + (selectedIndex === 1 ? "active" : "")}
-            onClick={() => {
-              // dispatch(clearSelectedGodownId());
-              handleIndex(1);
-            }}
-          >
-            New SL DI
-          </a>
-        </li>
-      </ul>
-      <div className="tab-content">
-        {selectedIndex === 0 ? (
-          <SalesSiDiBrowse />
-        ) : (
-          <h2>Sales Enquiry Form</h2>
-        )}
+    <div className="main_wrapper">
+      <div className="inner_main_first">
+        <div className="inner_main_second">
+          <div className="inner_main_third">
+            <ul className="nav nav-tabs nav-tabs-line">
+              <li
+                className={
+                  " menu-item " +
+                  (selectedIndex === 0 ? "menu-level2-color" : "")
+                }
+              >
+                <a
+                  className={
+                    `menu-link ` +
+                    (selectedIndex === 0 ? "submenu-link-color" : "")
+                  }
+                  onClick={() => handleIndex(0)}
+                >
+                  Browse
+                </a>
+              </li>
+              <li
+                className={
+                  " menu-item " +
+                  (selectedIndex === 1 ? "menu-level2-color" : "")
+                }
+              >
+                <a
+                  className={
+                    `menu-link ` +
+                    (selectedIndex === 1 ? "submenu-link-color" : "")
+                  }
+                  onClick={() => handleIndex(1)}
+                >
+                  New Sales Order
+                </a>
+              </li>
+            </ul>
+            <Container fluid className="p-0">
+              <div className="inner_wrapper">
+                {selectedIndex === 0 ? <SalesOrderBrowse /> : <h2>SL DI Form</h2>}
+              </div>
+            </Container>
+          </div>
+        </div>
       </div>
     </div>
   );
