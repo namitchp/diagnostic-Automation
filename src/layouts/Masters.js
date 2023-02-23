@@ -148,7 +148,7 @@ const Masters = () => {
     ),
   };
   return (
-    <div className="">
+    <>
       {/* {thirdMenu.status===200&& */}
       {/* <Switch> */}
       {userRight ? componentValue[userRight.transaction_id] : ""}
@@ -183,7 +183,7 @@ const Masters = () => {
         )} */}
       {/* </Switch> */}
       {/* } */}
-    </div>
+    </>
   );
 };
 export default Masters;

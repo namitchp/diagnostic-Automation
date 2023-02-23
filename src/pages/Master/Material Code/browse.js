@@ -215,7 +215,7 @@ const MaterialCodeBrowse = ({ onEditMaterial, type, browse_id }) => {
                   name="filter_value"
                   label="Search"
                   variant="outlined"
-                  value={params?.filter_value}
+                  // value={params?.filter_value}
                 />
               </div>
               <DateFilter onDateUpdate={() => getBrowseListData()} />
@@ -244,7 +244,7 @@ const MaterialCodeBrowse = ({ onEditMaterial, type, browse_id }) => {
           </div> */}
             </div>
           </div>
-          <div className="data_table_height">
+          <div style={{ height: '75vh'}}>
             <DataGrid
               pagination
               disableColumnFilter

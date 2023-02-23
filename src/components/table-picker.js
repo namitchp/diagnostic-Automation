@@ -202,7 +202,7 @@ export const TablePicker = ({
       const selectedIndex = tempselected.findIndex(
         (x) => x[columns[0].id] === row[columns[0].id]
       );
-      
+
       if (selectedIndex === -1) {
         tempselected.push(row);
       } else {
@@ -340,7 +340,7 @@ export const TablePicker = ({
       <div className="container-fluid text-right">
         <Button
           color="primary"
-          className="mr-2"
+          className="mr-2 bg-success text-white"
           disableElevation
           variant="contained"
           onClick={() => onSubmit(selected)}
@@ -352,6 +352,7 @@ export const TablePicker = ({
           color="primary"
           disableElevation
           variant="contained"
+          className="bg-danger text-white"
         >
           Close
         </Button>

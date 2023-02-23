@@ -1,10 +1,7 @@
 import {
   Button,
-  FormControl,
   Input,
   InputLabel,
-  MenuItem,
-  Select,
   TextField,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
@@ -172,7 +169,7 @@ const ContactPerson = ({
           <Autocomplete
             size="small"
             options={dropDownValues.departmentList}
-            getOptionLabel={(option) => option.department_name}
+            getOptionLabel={(option) => option.department_name || ""}
             onChange={handleOnChange}
             fullWidth
             variant="outlined"
@@ -185,7 +182,7 @@ const ContactPerson = ({
           <Autocomplete
             size="small"
             options={dropDownValues.designationList}
-            getOptionLabel={(option) => option.designation_name}
+            getOptionLabel={(option) => option.designation_name || ""}
             fullWidth
             onChange={(e, value) =>
               setformContact({
@@ -269,6 +266,7 @@ const ContactPerson = ({
           onClick={handleSaveForm}
           color="primary"
           disableElevation
+          className="bg-success text-white"
         >
           Save
         </Button>

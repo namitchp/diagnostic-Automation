@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
     strokeWidth: "8px",
     padding: "10px",
   },
-  progress: {
-    padding: "5px",
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: 'red'
-  },
+  // progress: {
+  //   padding: "5px",
+  //   borderWidth: "2px",
+  //   borderStyle: "solid",
+  //   borderColor: "red",
+  // },
 }));
 
 function CircularProgressWithLabel(props) {
@@ -43,7 +43,7 @@ function CircularProgressWithLabel(props) {
         size={40}
         variant="determinate"
         {...props}
-        classes={{ circle: classes.circle, progress: classes.progress }}
+        classes={{ circle: classes.circle}}
       />
       <Box
         top={0}
@@ -142,18 +142,16 @@ const MainBar = ({ onMenuClick }) => {
 
             <div className="col-md-10 text-right">
               <div className="row justify-content-end">
-                <div className="col-md-1 text-center py-1">
+                <div className="col d-flex justify-content-end gap-4">
                   <div className="clock_container">
                     <p className="mb-0">Week</p>
                     <h2 className="mb-0 mt-2 mx-auto">{moment().isoWeek()}</h2>
                   </div>
-                </div>
-                <div className="col-md-2 py-1">
                   <div className="clock_container">
                     <p className="mb-2 text-center">
                       {moment().format("dddd DD MMM YYYY")}
                     </p>
-                    <div className="clock_circle d-flex justify-content-around">
+                    <div className="clock_circle d-flex justify-content-around gap-3">
                       <div className="circle_box">
                         <CircularProgressWithLabel
                           className="hrs"
@@ -177,9 +175,7 @@ const MainBar = ({ onMenuClick }) => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-md-2 text-right d-flex align-items-center py-1">
-                  <div className="clock_container ms-auto">
+                  <div className="clock_container">
                     <p className="mb-0">Switch</p>
                     <Button
                       variant="default"
@@ -192,7 +188,7 @@ const MainBar = ({ onMenuClick }) => {
                     </Button>
                   </div>
                   {auth && (
-                    <div className="clock_container ml-3">
+                    <div className="clock_container">
                       <p className="mb-0">{userName}</p>
                       <IconButton
                         aria-label="account of current user"
@@ -232,6 +228,11 @@ const MainBar = ({ onMenuClick }) => {
                     </div>
                   )}
                 </div>
+                {/* <div className="col-md-1 text-center py-1"></div>
+                <div className="col-md-2 py-1"></div>
+                <div className="col-md-2 text-right d-flex align-items-center py-1">
+                  
+                </div> */}
               </div>
             </div>
           </div>

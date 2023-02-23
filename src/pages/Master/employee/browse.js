@@ -244,7 +244,7 @@ const EmployeeBrowse = ({ onEdit }) => {
             </div>
           </div>
         </div>
-        <div style={{ height: 400, width: "100%" }}>
+        <div className="data_table_height">
           <DataGrid
             columns={gridColumn}
             pagination

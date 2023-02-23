@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserRightList,
   getUserRightListSecond,
-  getUserRightListThird,
-  redirectMenu,
+  getUserRightListThird,  
   userRight,
 } from "../_redux/actions/common.action";
 import MainBar from "./appbar";
@@ -45,7 +44,6 @@ const Header = ({ onHeaderClick }) => {
         : "";
     dispatch(userRight(value));
   };
-  console.log(getredirectMenu);
   const handleThirdMenu = (value, index) => {
     redirect(getuserLIstSecond.data, getuserLIstThird.data);
 
@@ -98,7 +96,6 @@ const Header = ({ onHeaderClick }) => {
       ? dispatch(getUserRightListThird(1))
       : dispatch(getUserRightListThird(parseInt(urlLocation[3])));
   }, []);
-  console.log(thirdId);
 
   useEffect(() => {
     if (getuserRightListResponse) {
@@ -117,7 +114,7 @@ const Header = ({ onHeaderClick }) => {
     }
   }, [getuserRightListResponse, getuserLIstSecond, getuserLIstThird]);
   // console.log(getuserLIstThird)
-  console.log(getuserLIstSecond);
+  // console.log(getuserLIstSecond);
   useEffect(() => {
     if (firstLevelBit) {
       dispatch(getUserRightListThird(getuserLIstSecond.data[0].transaction_id));

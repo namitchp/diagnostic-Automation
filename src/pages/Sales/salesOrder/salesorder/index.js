@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import SalesOrderBrowse from "./browse";
-const SalesSlSoPosSummariseIndex = () => {
+const SalesOrderIndex = () => {
   const dispatch = useDispatch();
   const [selectedIndex, setSeletedIndex] = useState(0);
 
@@ -61,4 +61,4 @@ const SalesSlSoPosSummariseIndex = () => {
   );
 };
 
-export default SalesSlSoPosSummariseIndex;
+export default SalesOrderIndex;
