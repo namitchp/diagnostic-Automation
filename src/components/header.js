@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserRightList,
   getUserRightListSecond,
-  getUserRightListThird,
-  redirectMenu,
+  getUserRightListThird,  
   userRight,
 } from "../_redux/actions/common.action";
 import MainBar from "./appbar";

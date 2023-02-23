@@ -1,5 +1,4 @@
 import {
-  Checkbox,
   TextField,
   Button,
   MenuItem,
@@ -199,14 +198,13 @@ const SoDetailBrowse = ({ onEdit }) => {
 
   return (
     <div className="inner_data_wrapper">
-      <div className="p-4 rounded bg-white">
+      <div className="p-3 rounded bg-white">
         {loading && <Loader />}
         <div className="filter_box mb-3">
           <div className="row">
-            <div className="col-md-1 d-flex align-items-center">
+            <div className="col">
               <h4 className="mb-0">Filters</h4>
             </div>
-
             <div className="col-md-2">
               <TextField
                 fullWidth
@@ -222,7 +220,7 @@ const SoDetailBrowse = ({ onEdit }) => {
                 variant="outlined"
               />
             </div>
-            <div className="col-md-2">
+            <div className="col">
               <DatePicker
                 label="From Date"
                 value={bodyParam.fromDate}
@@ -234,7 +232,7 @@ const SoDetailBrowse = ({ onEdit }) => {
                 fullWidth
               />
             </div>
-            <div className="col-md-2">
+            <div className="col">
               <DatePicker
                 label="To Date"
                 value={bodyParam.toDate}
@@ -245,7 +243,7 @@ const SoDetailBrowse = ({ onEdit }) => {
                 fullWidth
               />
             </div>
-            <div className="col-md-2">
+            <div className="col">
               <TextField
                 fullWidth
                 id="outlined-basic"
@@ -260,7 +258,7 @@ const SoDetailBrowse = ({ onEdit }) => {
                 variant="outlined"
               />
             </div>
-            <div className="col-md-1">
+            <div className="col">
               <TextField
                 fullWidth
                 id="outlined-basic"
@@ -279,7 +277,7 @@ const SoDetailBrowse = ({ onEdit }) => {
                 <MenuItem value={"service"}>Service</MenuItem>
               </TextField>
             </div>
-            <div className="col-md-1">
+            <div className="col">
               <TextField
                 fullWidth
                 id="outlined-basic"
@@ -297,7 +295,7 @@ const SoDetailBrowse = ({ onEdit }) => {
                 <MenuItem value={"spares"}>Open</MenuItem>
               </TextField>
             </div>
-            <div className="col-md-2 mt-3">
+            <div className="col">
               <TextField
                 fullWidth
                 id="outlined-basic"
@@ -322,8 +320,7 @@ const SoDetailBrowse = ({ onEdit }) => {
               </TextField>
             </div>
           </div>
-        </div>
-        {/* Update remarks modal */}
+        </div>        
         <Dialog
           open={remarksModal}
           fullWidth
@@ -397,7 +394,6 @@ const SoDetailBrowse = ({ onEdit }) => {
             </Button>
           </DialogActions>
         </Dialog>
-
         <div className="data_table_height">
           <DataGrid
             columns={[
@@ -542,6 +538,7 @@ const SoDetailBrowse = ({ onEdit }) => {
               }
             }}
             rows={browseListData}
+            headerHeight={40}
           />
         </div>
       </div>

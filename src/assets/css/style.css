@@ -106,14 +106,14 @@ header{background-image:-webkit-gradient(linear,left top, left bottom,from(#014A
 .header-bottom .third{border-top:solid 1px var(--active-tab-border-color);margin-top:-1px;padding:5px 15px 0;border-right:solid 1px var(--active-tab-border-color);border-left:solid 1px var(--active-tab-border-color);background-color:var(--active-tab)}
 .main_wrapper{padding:0 .75rem;margin-top:-5px}
 .main_wrapper .inner_main_first{border:solid 1px var(--active-tab-border-color);border-top:none;background-color:var(--active-tab)}
-.main_wrapper .inner_main_first .inner_main_second,.main_wrapper .inner_main_third{padding:0 15px 15px}
-.main_wrapper .inner_main_third{border:solid 1px var(--active-tab-border-color);padding:7px 10px;margin-top:4px;background-color:var(--inactive-tab)}
+.main_wrapper .inner_main_first .inner_main_second,.main_wrapper .inner_main_third{padding:0 5px 15px}
+.main_wrapper .inner_main_third{border:solid 1px var(--active-tab-border-color);padding:5px;margin-top:4px;background-color:var(--inactive-tab)}
 /* .menu-level2-color a.menu-link{
   border:solid 1px var(--active-tab-border-color);border-bottom:solid 1px var(--active-tab);background-color:var(--active-tab);color:#000;font-weight:400;border-radius:10px 10px 0 0} */
   .menu-level2-color a.menu-link{
     border:solid 1px #90d9ff;border-bottom:solid 1px #90d9ff;background-color:#90d9ff;color:#000;font-weight:400;border-radius:10px 10px 0 0}
 .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell{border-right:solid 1px #d5d5d5!important}
-.inner_data_wrapper{border:solid 1px var(--active-tab-border-color);margin-top:-1px;padding:4px;background-color:var(--active-tab)}
+.inner_data_wrapper{border:solid 1px var(--active-tab-border-color);margin-top:-1px;padding:5px;background-color:var(--active-tab)}
 .inner_third_level{border:solid 1px var(--active-tab-border-color);margin-top:-1px;padding:15px;background-color:var(--inactive-tab)}
 .nav-tabs{border-bottom:none}
 .header-bottom .third ul.menu-nav li.menu-level2-color a.menu-link,.inner_main_third .inner_wrapper li.menu-level2-color a.menu-link{background:#90d9ff;border-bottom:solid 1px #90d9ff}
@@ -221,5 +221,5 @@ img.excel_icons{height:24px;}
   background-color: #ebebeb;
 }
 .data_table_height{
-  height: 550px;
+  height: 565px;
 }

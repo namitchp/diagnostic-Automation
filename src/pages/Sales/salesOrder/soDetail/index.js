@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import SoDetailBrowse from "./browse";
 
 const SoDetail = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [selectedIndex, setSeletedIndex] = useState(0);
 
   const handleIndex = (index) => {
@@ -46,7 +46,7 @@ const SoDetail = () => {
                   }
                   onClick={() => handleIndex(1)}
                 >
-                  New So Detail
+                  New SO Detail
                 </a>
               </li>
             </ul>
@@ -55,7 +55,7 @@ const SoDetail = () => {
                 {selectedIndex === 0 ? (
                   <SoDetailBrowse />
                 ) : (
-                  <h2>Sales Enquiry Form</h2>
+                  <h2>SO Detail Form</h2>
                 )}
               </div>
             </Container>

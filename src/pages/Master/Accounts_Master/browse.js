@@ -408,7 +408,6 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
       <div className="bg-white p-3 rounded">
         <div className="filter_box mb-3">
           <div className="row align-items-center">
-            {/* <h1>zsdxcfgbhjnmk</h1> */}
             <div className="col">
               <h4 className="mb-0">Filters</h4>
             </div>
@@ -583,7 +582,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
             onColumnVisibilityChange={(e) => handleColumnHide(e)}
             getRowId={(browseListData) => browseListData.sr_no}
             rows={browseListData} //accountMasterList            
-            headerHeight={40}          
+            headerHeight={40}
           />
         </div>
       </div>
