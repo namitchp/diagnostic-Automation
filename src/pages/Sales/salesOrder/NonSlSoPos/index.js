@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import NonSlSoPosBrowse from "./Browse";
 
 const NonSlSoPOSIndex = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,11 @@ const NonSlSoPOSIndex = () => {
             </ul>
             <Container fluid className="p-0">
               <div className="inner_wrapper">
-                {selectedIndex === 0 ? "Browse" : <h2>Non Sl So Pos Enquiry Form</h2>}
+                {selectedIndex === 0 ? (
+                  <NonSlSoPosBrowse />
+                ) : (
+                  <h2>Non Sl So Pos Enquiry Form</h2>
+                )}
               </div>
             </Container>
           </div>

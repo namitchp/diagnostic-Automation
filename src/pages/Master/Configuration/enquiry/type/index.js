@@ -25,7 +25,7 @@ const TypeIndex = () => {
     seteditdata(previewData);
   };
   return (
-    <div className="bg-white p-4">
+    <div className="bg-white p-3">
       <div className="inner_tabs">
         <Tabs
           className="w-100"
@@ -34,7 +34,11 @@ const TypeIndex = () => {
           indicatorColor="primary"
           aria-label="scrollable auto tabs example"
         >
-          <Tab value={0} label="Browse"  className={selectedIndex === 0 ? "tabstyle" : ""} />
+          <Tab
+            value={0}
+            label="Browse"
+            className={selectedIndex === 0 ? "tabstyle" : ""}
+          />
           {userRight.insert_right && <Tab value={1} label="New Type" />}
         </Tabs>
       </div>

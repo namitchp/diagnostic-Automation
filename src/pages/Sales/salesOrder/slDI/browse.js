@@ -32,6 +32,12 @@ import moment from "moment";
 import ImageIcon from "@material-ui/icons/Image";
 import { DatePicker } from "@material-ui/pickers";
 
+import excelIcon from "../../../../assets/image/excel.png";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import RefreshIcon from "@mui/icons-material/Refresh";
+
+// import Checkbox from "@mui/material/Checkbox";
+
 const user_id = {
   user_id: localStorage.getItem("userId"),
 };
@@ -222,7 +228,7 @@ const SalesSiDiBrowse = ({ onEdit }) => {
                 variant="outlined"
               />
             </div>
-            <div className="col">
+            <div className="col-md-2">
               <DatePicker
                 label="From Date"
                 value={bodyParam.fromDate}
@@ -234,7 +240,7 @@ const SalesSiDiBrowse = ({ onEdit }) => {
                 fullWidth
               />
             </div>
-            <div className="col">
+            <div className="col-md-2">
               <DatePicker
                 label="To Date"
                 value={bodyParam.toDate}
@@ -245,7 +251,7 @@ const SalesSiDiBrowse = ({ onEdit }) => {
                 fullWidth
               />
             </div>
-            <div className="col">
+            <div className="col-md-2">
               <TextField
                 fullWidth
                 id="outlined-basic"
@@ -260,25 +266,14 @@ const SalesSiDiBrowse = ({ onEdit }) => {
                 variant="outlined"
               />
             </div>
+
             <div className="col">
-              <TextField
-                fullWidth
-                id="outlined-basic"
-                size="small"
-                onChange={(e) => {
-                  handleBodyParam(e);
-                }}
-                name="type"
-                select
-                label="Type"
-                variant="outlined"
-              >
-                <MenuItem value={"all"}>All</MenuItem>
-                <MenuItem value={"spares"}>Spares</MenuItem>
-                <MenuItem value={"projects"}>Projects</MenuItem>
-                <MenuItem value={"service"}>Service</MenuItem>
-              </TextField>
+              <FormControlLabel
+                label="All"
+                control={<Checkbox color="primary" />}
+              />
             </div>
+
             <div className="col">
               <TextField
                 fullWidth
@@ -293,10 +288,11 @@ const SalesSiDiBrowse = ({ onEdit }) => {
                 variant="outlined"
               >
                 <MenuItem value={"all"}>All</MenuItem>
-                <MenuItem value={"spares"}>Close</MenuItem>
-                <MenuItem value={"spares"}>Open</MenuItem>
+                <MenuItem value={"open"}>Open</MenuItem>
+                <MenuItem value={"close"}>Close</MenuItem>
               </TextField>
             </div>
+
             <div className="col">
               <TextField
                 fullWidth
@@ -306,23 +302,36 @@ const SalesSiDiBrowse = ({ onEdit }) => {
                   handleBodyParam(e);
                 }}
                 select
-                name="mark_engg"
-                label="Marketing Eng."
+                name="hold"
+                label="Hold"
                 variant="outlined"
               >
-                <MenuItem value={""}>None</MenuItem>
-                {markEng &&
-                  markEng.map((eng, indx) => {
-                    return (
-                      <MenuItem value={eng.value} key={indx}>
-                        {eng.value}
-                      </MenuItem>
-                    );
-                  })}
+                <MenuItem value={"all"}>All</MenuItem>
+                <MenuItem value={"hold"}>Hold</MenuItem>
+                <MenuItem value={"dc-release"}>DC-Release</MenuItem>
+                <MenuItem value={"wip-release"}>WIP-Release</MenuItem>
               </TextField>
+            </div>
+
+            <div className="col">
+              <Button
+                color="primary"
+                className="bg-success text-white w-100"
+                disableElevation
+                variant="contained"
+              >
+                <img src={excelIcon} className="excel_icons" />
+              </Button>
+            </div>
+
+            <div className="col">
+              <Button className="bg-primary text-white ms-2">
+                <RefreshIcon /> Reset
+              </Button>
             </div>
           </div>
         </div>
+
         <Dialog
           open={remarksModal}
           fullWidth

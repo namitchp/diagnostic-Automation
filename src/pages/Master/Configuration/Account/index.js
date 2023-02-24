@@ -47,15 +47,27 @@ const ConfigAccountIndex = ({ list }) => {
     }
   };
 
+  const styles = {
+    appBar: {
+      height: 30,
+    },
+  };
+
   return (
     <div className="config_active_content">
-      <AppBar className="rounded " position="relative" elevation={0}>
+      <AppBar
+        className="rounded "
+        position="relative"
+        elevation={0}
+        style={styles.appBar}
+      >
         <Tabs
           className="w-100"
           onChange={handleIndex}
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
+          // style={styles.appBar}
         >
           {list.map((tab, index) => {
             return (
@@ -64,6 +76,7 @@ const ConfigAccountIndex = ({ list }) => {
                 value={index}
                 key={"tab" + index}
                 label={tab.display_name}
+                style={styles.appBar}
               />
             );
           })}

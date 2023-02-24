@@ -23,26 +23,33 @@ const GroupIndex = () => {
     setSeletedIndex(1);
     seteditdata(previewData);
   };
-
+  const styles = {
+    appBar: {
+      height: 30,
+    },
+  };
   return (
-    <div className="bg-white p-4">
+    <div className="bg-white p-3">
       <div className="inner_tabs">
         <Tabs
           className="w-100"
           onChange={handleIndex}
           indicatorColor="primary"
           aria-label="scrollable auto tabs example"
+          style={styles.appBar}
         >
           <Tab
             value={0}
             className={selectedIndex === 0 ? "tabstyle" : ""}
             label="Browse"
+            style={styles.appBar}
           />
           {/* {userRight.insert_right && ( */}
           <Tab
             value={1}
             className={selectedIndex === 1 ? "tabstyle" : ""}
             label="New Group"
+            style={styles.appBar}
           />
           {/* )} */}
         </Tabs>

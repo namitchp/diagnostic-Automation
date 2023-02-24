@@ -33,7 +33,6 @@ import {
 import moment from "moment";
 import excelIcon from "../../../assets/image/excel.png";
 
-
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -45,7 +44,7 @@ const LightTooltip = withStyles((theme) => ({
 
 const user_id = localStorage.getItem("userId");
 
-const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {  
+const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
   const userRight = useSelector((state) => state.common.userRightResponse);
   const dispatch = useDispatch();
 
@@ -561,7 +560,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
             onPageChange={handlePageChange}
             loading={loading}
             rowHeight={40}
-            getRowHeight={() => 'auto'}
+            getRowHeight={() => "auto"}
             components={
               browseListData?.length > 0
                 ? {
@@ -581,7 +580,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
             }}
             onColumnVisibilityChange={(e) => handleColumnHide(e)}
             getRowId={(browseListData) => browseListData.sr_no}
-            rows={browseListData} //accountMasterList            
+            rows={browseListData} //accountMasterList
             headerHeight={40}
           />
         </div>
