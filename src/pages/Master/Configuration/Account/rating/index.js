@@ -25,42 +25,42 @@ const RatingIndex = () => {
     seteditdata(previewData);
   };
   return (
-    <div className="bg-white p-4">
+    <div className="bg-white p-3">
       <div className="inner_tabs">
-      <Tabs
-        className="w-100"
-        value={selectedIndex}
-        onChange={handleIndex}
-        indicatorColor="primary"
-        aria-label="scrollable auto tabs example"
-      >
-        <Tab
-          value={0}
-          className={selectedIndex === 0 ? "tabstyle" : ""}
-          label="Browse"
-        />
-        {userRight.insert_right && (
+        <Tabs
+          className="w-100"
+          value={selectedIndex}
+          onChange={handleIndex}
+          indicatorColor="primary"
+          aria-label="scrollable auto tabs example"
+        >
           <Tab
-            value={1}
-            className={selectedIndex === 1 ? "tabstyle" : ""}
-            label="New Rating"
+            value={0}
+            className={selectedIndex === 0 ? "tabstyle" : ""}
+            label="Browse"
           />
-        )}
-      </Tabs>
-      <div className="customtab-container">
-        {/* {selectedIndex === 0 ? <ConfigGroupBrowse onActionClick={(index) => handleIndex({} , index)}/>:<AddOrEditGroup onClose={(index) => handleIndex({} , index)} />} */}
-        {selectedIndex === 0 ? (
-          <ConfigGroupBrowse
-            onEdit={handelEdit}
-            onPreviewData={handelPreview}
-          />
-        ) : (
-          <AddOrEditGroup
-            onClose={(index) => handleIndex({}, index)}
-            editData={editdata}
-          />
-        )}
-      </div>
+          {userRight.insert_right && (
+            <Tab
+              value={1}
+              className={selectedIndex === 1 ? "tabstyle" : ""}
+              label="New Rating"
+            />
+          )}
+        </Tabs>
+        <div className="customtab-container">
+          {/* {selectedIndex === 0 ? <ConfigGroupBrowse onActionClick={(index) => handleIndex({} , index)}/>:<AddOrEditGroup onClose={(index) => handleIndex({} , index)} />} */}
+          {selectedIndex === 0 ? (
+            <ConfigGroupBrowse
+              onEdit={handelEdit}
+              onPreviewData={handelPreview}
+            />
+          ) : (
+            <AddOrEditGroup
+              onClose={(index) => handleIndex({}, index)}
+              editData={editdata}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

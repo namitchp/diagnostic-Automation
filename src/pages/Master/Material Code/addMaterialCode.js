@@ -349,7 +349,7 @@ const AddMaterialCode = ({ onCancel, type }) => {
     <div className="inner_wrapper">
       <div className="inner_data_wrapper pt-3">
         {loading && <Loader />}
-        <div className="bg-white p-4 rounded">
+        <div className="bg-white p-3 rounded">
           <div className="row">
             <div className="col-md-4">
               <Autocomplete
@@ -402,7 +402,7 @@ const AddMaterialCode = ({ onCancel, type }) => {
                 apiBody={{ customer_type: type }}
                 onSubmit={handlePickCustomer}
                 onPickerClose={togglePickCustomer}
-                headerHeight={40}  
+                headerHeight={40}
                 className="table_head_bg"
               />
             )}

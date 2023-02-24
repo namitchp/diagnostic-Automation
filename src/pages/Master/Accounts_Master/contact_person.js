@@ -1,10 +1,7 @@
 import {
   Button,
-  FormControl,
   Input,
   InputLabel,
-  MenuItem,
-  Select,
   TextField,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
@@ -269,6 +266,7 @@ const ContactPerson = ({
           onClick={handleSaveForm}
           color="primary"
           disableElevation
+          className="bg-success text-white"
         >
           Save
         </Button>

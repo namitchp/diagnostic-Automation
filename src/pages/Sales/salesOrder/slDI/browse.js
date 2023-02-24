@@ -32,11 +32,18 @@ import moment from "moment";
 import ImageIcon from "@material-ui/icons/Image";
 import { DatePicker } from "@material-ui/pickers";
 
+import excelIcon from "../../../../assets/image/excel.png";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import RefreshIcon from "@mui/icons-material/Refresh";
+
+// import Checkbox from "@mui/material/Checkbox";
+
 const user_id = {
   user_id: localStorage.getItem("userId"),
 };
 
 const label = { inputProps: { "aria-label": "Checkbox" } };
+
 const SalesSiDiBrowse = ({ onEdit }) => {
   const dispatch = useDispatch();
 
@@ -198,352 +205,355 @@ const SalesSiDiBrowse = ({ onEdit }) => {
   };
 
   return (
-    <>
-      {loading && <Loader />}
+    <div className="inner_data_wrapper">
+      <div className="p-3 rounded bg-white">
+        {loading && <Loader />}
+        <div className="filter_box mb-3">
+          <div className="row">
+            <div className="col">
+              <h4 className="mb-0">Filters</h4>
+            </div>
+            <div className="col-md-2">
+              <TextField
+                fullWidth
+                id="outlined-basic"
+                size="small"
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13) {
+                    handleParams(e);
+                  }
+                }}
+                name="filter_value"
+                label="Search"
+                variant="outlined"
+              />
+            </div>
+            <div className="col-md-2">
+              <DatePicker
+                label="From Date"
+                value={bodyParam.fromDate}
+                format="dd/MM/yyyy"
+                onChange={(date) => handleDateChange("fromDate", date)}
+                animateYearScrolling
+                inputVariant="outlined"
+                size="small"
+                fullWidth
+              />
+            </div>
+            <div className="col-md-2">
+              <DatePicker
+                label="To Date"
+                value={bodyParam.toDate}
+                onChange={(date) => handleDateChange("toDate", date)}
+                animateYearScrolling
+                inputVariant="outlined"
+                size="small"
+                fullWidth
+              />
+            </div>
+            <div className="col-md-2">
+              <TextField
+                fullWidth
+                id="outlined-basic"
+                size="small"
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13) {
+                    handleBodyParam(e);
+                  }
+                }}
+                name="party_name"
+                label="Company Name"
+                variant="outlined"
+              />
+            </div>
 
-      <div className="filter_box mb-5">
-        <div className="row">
-          <div className="col-md-1 d-flex align-items-center">
-            <h4 className="mb-0">Filters</h4>
-          </div>
+            <div className="col">
+              <FormControlLabel
+                label="All"
+                control={<Checkbox color="primary" />}
+              />
+            </div>
 
-          <div className="col-md-2">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              size="small"
-              onKeyDown={(e) => {
-                if (e.keyCode === 13) {
-                  handleParams(e);
-                }
-              }}
-              name="filter_value"
-              label="Search"
-              variant="outlined"
-            />
-          </div>
-          <div className="col-md-2">
-            <DatePicker
-              label="From Date"
-              value={bodyParam.fromDate}
-              format="dd/MM/yyyy"
-              onChange={(date) => handleDateChange("fromDate", date)}
-              animateYearScrolling
-              inputVariant="outlined"
-              size="small"
-              fullWidth
-            />
-          </div>
-          <div className="col-md-2">
-            <DatePicker
-              label="To Date"
-              value={bodyParam.toDate}
-              onChange={(date) => handleDateChange("toDate", date)}
-              animateYearScrolling
-              inputVariant="outlined"
-              size="small"
-              fullWidth
-            />
-          </div>
-          <div className="col-md-2">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              size="small"
-              onKeyDown={(e) => {
-                if (e.keyCode === 13) {
+            <div className="col">
+              <TextField
+                fullWidth
+                id="outlined-basic"
+                size="small"
+                onChange={(e) => {
                   handleBodyParam(e);
-                }
-              }}
-              name="party_name"
-              label="Company Name"
-              variant="outlined"
-            />
-          </div>
-          <div className="col-md-1">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              size="small"
-              onChange={(e) => {
-                handleBodyParam(e);
-              }}
-              name="type"
-              select
-              label="Type"
-              variant="outlined"
-            >
-              <MenuItem value={"all"}>All</MenuItem>
-              <MenuItem value={"spares"}>Spares</MenuItem>
-              <MenuItem value={"projects"}>Projects</MenuItem>
-              <MenuItem value={"service"}>Service</MenuItem>
-            </TextField>
-          </div>
-          <div className="col-md-1">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              size="small"
-              onChange={(e) => {
-                handleBodyParam(e);
-              }}
-              select
-              name="status"
-              label="Status"
-              variant="outlined"
-            >
-              <MenuItem value={"all"}>All</MenuItem>
-              <MenuItem value={"spares"}>Close</MenuItem>
-              <MenuItem value={"spares"}>Open</MenuItem>
-            </TextField>
-          </div>
-          <div className="col-md-2 mt-3">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              size="small"
-              onChange={(e) => {
-                handleBodyParam(e);
-              }}
-              select
-              name="mark_engg"
-              label="Marketing Eng."
-              variant="outlined"
-            >
-              <MenuItem value={""}>None</MenuItem>
-              {markEng &&
-                markEng.map((eng, indx) => {
-                  return (
-                    <MenuItem value={eng.value} key={indx}>
-                      {eng.value}
-                    </MenuItem>
-                  );
-                })}
-            </TextField>
+                }}
+                select
+                name="status"
+                label="Status"
+                variant="outlined"
+              >
+                <MenuItem value={"all"}>All</MenuItem>
+                <MenuItem value={"open"}>Open</MenuItem>
+                <MenuItem value={"close"}>Close</MenuItem>
+              </TextField>
+            </div>
+
+            <div className="col">
+              <TextField
+                fullWidth
+                id="outlined-basic"
+                size="small"
+                onChange={(e) => {
+                  handleBodyParam(e);
+                }}
+                select
+                name="hold"
+                label="Hold"
+                variant="outlined"
+              >
+                <MenuItem value={"all"}>All</MenuItem>
+                <MenuItem value={"hold"}>Hold</MenuItem>
+                <MenuItem value={"dc-release"}>DC-Release</MenuItem>
+                <MenuItem value={"wip-release"}>WIP-Release</MenuItem>
+              </TextField>
+            </div>
+
+            <div className="col">
+              <Button
+                color="primary"
+                className="bg-success text-white w-100"
+                disableElevation
+                variant="contained"
+              >
+                <img src={excelIcon} className="excel_icons" />
+              </Button>
+            </div>
+
+            <div className="col">
+              <Button className="bg-primary text-white ms-2">
+                <RefreshIcon /> Reset
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-      {/* Update remarks modal */}
 
-      <Dialog
-        open={remarksModal}
-        fullWidth
-        onClose={toggleRemarks}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <DialogTitle id="responsive-dialog-title">Add Comment</DialogTitle>
-        <DialogContent>
-          <TextField
-            variant="outlined"
-            className="mb-4"
-            size="small"
-            fullWidth
-            id="select-1"
-            select
-            name="status_id"
-            onChange={onRemarkChange}
-            label="Enquiry Status*"
-          >
-            <MenuItem value={"0"}>Close</MenuItem>
-            <MenuItem value={"1"}>Open</MenuItem>
-          </TextField>
-          <TextField
-            variant="outlined"
-            multiline
-            size="small"
-            name="remarks"
-            onChange={onRemarkChange}
-            label="Remarks*"
-            fullWidth
+        <Dialog
+          open={remarksModal}
+          fullWidth
+          onClose={toggleRemarks}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">Add Comment</DialogTitle>
+          <DialogContent>
+            <TextField
+              variant="outlined"
+              className="mb-4"
+              size="small"
+              fullWidth
+              id="select-1"
+              select
+              name="status_id"
+              onChange={onRemarkChange}
+              label="Enquiry Status*"
+            >
+              <MenuItem value={"0"}>Close</MenuItem>
+              <MenuItem value={"1"}>Open</MenuItem>
+            </TextField>
+            <TextField
+              variant="outlined"
+              multiline
+              size="small"
+              name="remarks"
+              onChange={onRemarkChange}
+              label="Remarks*"
+              fullWidth
+            />
+            <List>
+              {remarksList &&
+                remarksList.length > 0 &&
+                remarksList.map((remark, index) => {
+                  return (
+                    <ListItem key={index}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <ImageIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={remark.user_name}
+                        secondary={
+                          <p className="mb-0">
+                            {remark.remarks}{" "}
+                            <span className="float-right">
+                              {remark.datetime}
+                            </span>
+                          </p>
+                        }
+                      />
+                    </ListItem>
+                  );
+                })}
+            </List>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={toggleRemarks} color="primary">
+              Close
+            </Button>
+            <Button
+              onClick={saveRemarks}
+              disabled={
+                remarks.remarks == "" || remarks.status_id == "" || loading
+              }
+              color="primary"
+            >
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <div className="data_table_height">
+          <DataGrid
+            columns={[
+              {
+                field: "id",
+                headerName: "Sr. no",
+                width: 80,
+              },
+              {
+                field: "date",
+                headerName: "Date",
+                width: 100,
+                renderCell: (params) => {
+                  return moment(params.row.date).format("DD/MM/yyyy");
+                },
+              },
+              {
+                field: "enquiry_no",
+                headerName: "Enquiry No",
+                width: 120,
+              },
+              {
+                field: "company_id",
+                headerName: "Comp Id",
+                width: 100,
+              },
+              {
+                field: "company_name",
+                headerName: "Company Name",
+                width: 200,
+              },
+              {
+                field: "description",
+                headerName: "Description",
+                width: 200,
+              },
+              {
+                field: "type",
+                headerName: "Type",
+                width: 100,
+              },
+              {
+                field: "priority_name",
+                headerName: "Priority Name",
+                width: 100,
+              },
+              {
+                field: "reference_name",
+                headerName: "Reference",
+                width: 120,
+              },
+              {
+                field: "status",
+                headerName: "Status",
+                width: 100,
+              },
+              {
+                field: "employee_name",
+                headerName: "Employee Name",
+                width: 150,
+              },
+              {
+                field: "mark_engg",
+                headerName: "Marketing Eng.",
+                width: 150,
+              },
+              {
+                field: "remarks",
+                headerName: "Remarks",
+                width: 150,
+                renderCell: (param) => {
+                  return (
+                    <>
+                      {remarkLoading ? (
+                        <img src="/asset/images/circle.gif" width={20} />
+                      ) : (
+                        <Button
+                          className="text-lowercase"
+                          color="primary"
+                          onClick={() => {
+                            getRemarkList(param.row.tran_id);
+                          }}
+                        >
+                          {param.row.remarks}
+                        </Button>
+                      )}
+                    </>
+                  );
+                },
+              },
+
+              {
+                field: "",
+                headerName: "Actions",
+                renderCell: (params) => (
+                  <ActionButtons
+                    onPreview={
+                      getBrowseUserRight(getuserRightListResponse)
+                        ?.view_right == "True"
+                        ? () => handleEdit(params.row.id)
+                        : null
+                    }
+                    onEdit={
+                      getBrowseUserRight(getuserRightListResponse)
+                        ?.edit_button == "True"
+                        ? () => handleEdit(params.row.id)
+                        : null
+                    }
+                    onDelete={
+                      getBrowseUserRight(getuserRightListResponse)
+                        ?.delete_right == "True"
+                        ? () => handleDeleteRow(params.row.id)
+                        : null
+                    }
+                  />
+                ),
+                width: 100,
+              },
+            ]}
+            pagination
+            disableColumnFilter
+            pageSize={params.pageSize}
+            page={params.pageNo}
+            rowsPerPageOptions={[10, 15, 25, 100]}
+            rowCount={totalRecord}
+            paginationMode="server"
+            onPageSizeChange={handlePageSizeChange}
+            onPageChange={handlePageChange}
+            loading={loading}
+            rowHeight={30}
+            //components={{
+            //Pagination: CustomPagination,
+            //NoRowsOverlay: CustomNoRowsOverlay,
+            //       }}
+            onSortModelChange={(sort) => {
+              if (sort.length > 0) {
+                setParams({
+                  ...params,
+                  sort_column: sort[0].field,
+                  sort_order: sort[0].sort,
+                });
+              }
+            }}
+            rows={browseListData}
+            headerHeight={40}
           />
-          <List>
-            {remarksList &&
-              remarksList.length > 0 &&
-              remarksList.map((remark, index) => {
-                return (
-                  <ListItem key={index}>
-                    <ListItemAvatar>
-                      <Avatar>
-                        <ImageIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={remark.user_name}
-                      secondary={
-                        <p className="mb-0">
-                          {remark.remarks}{" "}
-                          <span className="float-right">{remark.datetime}</span>
-                        </p>
-                      }
-                    />
-                  </ListItem>
-                );
-              })}
-          </List>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={toggleRemarks} color="primary">
-            Close
-          </Button>
-          <Button
-            onClick={saveRemarks}
-            disabled={
-              remarks.remarks == "" || remarks.status_id == "" || loading
-            }
-            color="primary"
-          >
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          columns={[
-            {
-              field: "id",
-              headerName: "Sr. no",
-              width: 80,
-            },
-            {
-              field: "date",
-              headerName: "Date",
-              width: 100,
-              renderCell: (params) => {
-                return moment(params.row.date).format("DD/MM/yyyy");
-              },
-            },
-            {
-              field: "enquiry_no",
-              headerName: "Enquiry No",
-              width: 120,
-            },
-            {
-              field: "company_id",
-              headerName: "Comp Id",
-              width: 100,
-            },
-            {
-              field: "company_name",
-              headerName: "Company Name",
-              width: 200,
-            },
-            {
-              field: "description",
-              headerName: "Description",
-              width: 200,
-            },
-            {
-              field: "type",
-              headerName: "Type",
-              width: 100,
-            },
-            {
-              field: "priority_name",
-              headerName: "Priority Name",
-              width: 100,
-            },
-            {
-              field: "reference_name",
-              headerName: "Reference",
-              width: 120,
-            },
-            {
-              field: "status",
-              headerName: "Status",
-              width: 100,
-            },
-            {
-              field: "employee_name",
-              headerName: "Employee Name",
-              width: 150,
-            },
-            {
-              field: "mark_engg",
-              headerName: "Marketing Eng.",
-              width: 150,
-            },
-            {
-              field: "remarks",
-              headerName: "Remarks",
-              width: 150,
-              renderCell: (param) => {
-                return (
-                  <>
-                    {remarkLoading ? (
-                      <img src="/asset/images/circle.gif" width={20} />
-                    ) : (
-                      <Button
-                        className="text-lowercase"
-                        color="primary"
-                        onClick={() => {
-                          getRemarkList(param.row.tran_id);
-                        }}
-                      >
-                        {param.row.remarks}
-                      </Button>
-                    )}
-                  </>
-                );
-              },
-            },
-
-            {
-              field: "",
-              headerName: "Actions",
-              renderCell: (params) => (
-                <ActionButtons
-                  onPreview={
-                    getBrowseUserRight(getuserRightListResponse)?.view_right ==
-                    "True"
-                      ? () => handleEdit(params.row.id)
-                      : null
-                  }
-                  onEdit={
-                    getBrowseUserRight(getuserRightListResponse)?.edit_button ==
-                    "True"
-                      ? () => handleEdit(params.row.id)
-                      : null
-                  }
-                  onDelete={
-                    getBrowseUserRight(getuserRightListResponse)
-                      ?.delete_right == "True"
-                      ? () => handleDeleteRow(params.row.id)
-                      : null
-                  }
-                />
-              ),
-              width: 100,
-            },
-          ]}
-          pagination
-          disableColumnFilter
-          pageSize={params.pageSize}
-          page={params.pageNo}
-          rowsPerPageOptions={[10, 15, 25, 100]}
-          rowCount={totalRecord}
-          paginationMode="server"
-          onPageSizeChange={handlePageSizeChange}
-          onPageChange={handlePageChange}
-          loading={loading}
-          rowHeight={30}
-          //components={{
-          //Pagination: CustomPagination,
-          //NoRowsOverlay: CustomNoRowsOverlay,
-          //       }}
-          onSortModelChange={(sort) => {
-            if (sort.length > 0) {
-              setParams({
-                ...params,
-                sort_column: sort[0].field,
-                sort_order: sort[0].sort,
-              });
-            }
-          }}
-          rows={browseListData}
-        />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

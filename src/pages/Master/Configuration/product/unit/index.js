@@ -24,7 +24,7 @@ const UnitIndex = () => {
     seteditdata(previewData);
   };
   return (
-    <div className="bg-white p-4">
+    <div className="bg-white p-3">
       <div className="inner_tabs">
         <Tabs
           className="w-100"

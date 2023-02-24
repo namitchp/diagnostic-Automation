@@ -8,7 +8,7 @@ import {
 } from "../../../../../components/common";
 const AddOrEditGroup = (props) => {
   const [groupValues, setGroupValues] = useState({
-    insurance_id:0,
+    insurance_id: 0,
     insurance_name: "",
     description: "",
   });
@@ -59,7 +59,7 @@ const AddOrEditGroup = (props) => {
   };
   return (
     <React.Fragment>
-      <div className="container-fluid bg-white p-4">
+      <div className="container-fluid bg-white p-3">
         <div className="row">
           <div className="col-md-4">
             <TextField
