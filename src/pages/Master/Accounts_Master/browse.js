@@ -32,6 +32,7 @@ import {
 } from "../../../_redux/actions/common.action";
 import moment from "moment";
 import excelIcon from "../../../assets/image/excel.png";
+import CommonDataGrid from "../../../components/commonDataGrid";
 
 
 const LightTooltip = withStyles((theme) => ({
@@ -586,6 +587,7 @@ const BrowseAccount = ({ onEdit, onPreview, accountType, browse_id }) => {
             headerHeight={40}
           />
         </div>
+        {/* <CommonDataGrid/> */}
       </div>
     </div>
   );
