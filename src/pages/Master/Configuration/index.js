@@ -92,6 +92,7 @@ const ConfigurationMaster = () => {
   const handleIndex = (event, newValue) => {
     setSeletedIndex(newValue);
   };
+
   return (
     <div className="main_wrapper">
       <div className="inner_main_first">
@@ -124,6 +125,7 @@ const ConfigurationMaster = () => {
                                 : ""
                             }
                             value={index}
+                            // style={{ height: "10px" }}
                             key={"tab" + index}
                             label={tab.display_name}
                           />

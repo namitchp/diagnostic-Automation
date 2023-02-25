@@ -43,7 +43,7 @@ function CircularProgressWithLabel(props) {
         size={40}
         variant="determinate"
         {...props}
-        classes={{ circle: classes.circle}}
+        classes={{ circle: classes.circle }}
       />
       <Box
         top={0}
@@ -142,7 +142,7 @@ const MainBar = ({ onMenuClick }) => {
 
             <div className="col-md-10 text-right">
               <div className="row justify-content-end">
-                <div className="col d-flex justify-content-end gap-4">
+                <div className="col d-flex justify-content-end gap-3">
                   <div className="clock_container">
                     <p className="mb-0">Week</p>
                     <h2 className="mb-0 mt-2 mx-auto">{moment().isoWeek()}</h2>

@@ -198,7 +198,7 @@ const MaterialCodeBrowse = ({ onEditMaterial, type, browse_id }) => {
   return (
     <div className="inner_wrapper">
       <div className="inner_data_wrapper pt-3">
-        <div className="bg-white p-4">
+        <div className="bg-white p-3">
           {loading && <Loader />}
           <div className="filter_box mb-5">
             <div className="row">
@@ -244,7 +244,7 @@ const MaterialCodeBrowse = ({ onEditMaterial, type, browse_id }) => {
           </div> */}
             </div>
           </div>
-          <div style={{ height: '75vh'}}>
+          <div style={{ height: "75vh" }}>
             <DataGrid
               pagination
               disableColumnFilter
@@ -260,6 +260,7 @@ const MaterialCodeBrowse = ({ onEditMaterial, type, browse_id }) => {
               onPageChange={handlePageChange}
               loading={loading}
               rowHeight={35}
+              headerHeight={40}
               components={
                 browseListData.length > 0
                   ? {

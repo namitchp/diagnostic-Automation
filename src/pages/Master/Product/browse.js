@@ -28,6 +28,8 @@ import {
   getFilterData,
   updateFilterData,
 } from "../../../_redux/actions/common.action";
+import excelIcon from "../../../assets/image/excel.png";
+
 const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsloading] = useState(false);
@@ -413,41 +415,39 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
   };
   return (
     <div className="inner_data_wrapper">
-      <div className="bg-white p-4 rounded">
-        <div className="filter_box mb-1">
-          <div className="d-flex align-items-center mb-3">
-            <h4 className="mb-0">Filters</h4>
+      <div className="bg-white p-3 rounded">
+        <div className="row filter_box mb-3">
+          {/* <div className="col pl-8 pt-1"> */}
+          <div className="col-sm-auto">
+            <h2>Filters</h2>
           </div>
-          <div className="row w-100">
-            <div className="col-md-2 mb-3">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Category
-                </InputLabel>
-                <Select
-                  name="category"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.category}
-                  onChange={handleFilters}
-                  label="Category"
-                >
-                  <MenuItem value={""}>All</MenuItem>
-                  {categoryList?.length > 0
-                    ? categoryList.map((ref, index) => {
-                        return (
-                          <MenuItem
-                            key={"ref" + index}
-                            value={ref.category_name}
-                          >
-                            {ref.category_name}
-                          </MenuItem>
-                        );
-                      })
-                    : null}
-                </Select>
-              </FormControl>
-              {/* <Autocomplete
+
+          <div className="col">
+            <FormControl fullWidth size="small" variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                Category
+              </InputLabel>
+              <Select
+                name="category"
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={productMasterFilter?.category}
+                onChange={handleFilters}
+                label="Category"
+              >
+                <MenuItem value={""}>All</MenuItem>
+                {categoryList?.length > 0
+                  ? categoryList.map((ref, index) => {
+                      return (
+                        <MenuItem key={"ref" + index} value={ref.category_name}>
+                          {ref.category_name}
+                        </MenuItem>
+                      );
+                    })
+                  : null}
+              </Select>
+            </FormControl>
+            {/* <Autocomplete
                 id="combo-box-demo"
                 className="mb-3"
                 options={categoryList}
@@ -468,95 +468,93 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   />
                 )}
               /> */}
-            </div>
-            <div className="col-md-2 mb-3">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Group
-                </InputLabel>
-                <Select
-                  name="group_name"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.group}
-                  onChange={handleFilters}
-                  label="Group"
-                >
-                  <MenuItem value="All">All</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-md-2 mb-3">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Item Name
-                </InputLabel>
-                <Select
-                  name="item_name"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.item_name}
-                  label="Item Name"
-                >
-                  <MenuItem value="All">All</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-
-            <div className="col-md-2 mb-3">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Lp. Ref.
-                </InputLabel>
-                <Select
-                  name="lp_ref"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.lp_ref}
-                  onChange={handleFilters}
-                  label="Lp. Ref."
-                >
-                  <MenuItem value={""}>None</MenuItem>
-                  {lpRefList?.length > 0
-                    ? lpRefList.map((ref, index) => {
-                        return (
-                          <MenuItem key={"ref" + index} value={ref.lp_ref}>
-                            {ref.lp_ref}
-                          </MenuItem>
-                        );
-                      })
-                    : null}
-                </Select>
-              </FormControl>
-            </div>
-
-            <div className="col-md-2 mb-3">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  GG Name
-                </InputLabel>
-                <Select
-                  name="gg_name"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.gg_name}
-                  onChange={handleFilters}
-                  label="GG Name"
-                >
-                  <MenuItem value={""}>None</MenuItem>
-                  {ggNameList?.length > 0
-                    ? ggNameList.map((gg, index) => {
-                        return (
-                          <MenuItem key={"ggName" + index} value={gg.gg_name}>
-                            {gg.gg_name}
-                          </MenuItem>
-                        );
-                      })
-                    : null}
-                </Select>
-              </FormControl>
-            </div>
-            {/* <div className="col-md-2 mb-3">
+          </div>
+          <div className="col">
+            <FormControl fullWidth size="small" variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                Group
+              </InputLabel>
+              <Select
+                name="group_name"
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={productMasterFilter?.group}
+                onChange={handleFilters}
+                label="Group"
+              >
+                <MenuItem value="All">All</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col">
+            <FormControl fullWidth size="small" variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                Item Name
+              </InputLabel>
+              <Select
+                name="item_name"
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={productMasterFilter?.item_name}
+                label="Item Name"
+              >
+                <MenuItem value="All">All</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col">
+            <FormControl fullWidth size="small" variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                Lp. Ref.
+              </InputLabel>
+              <Select
+                name="lp_ref"
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={productMasterFilter?.lp_ref}
+                onChange={handleFilters}
+                label="Lp. Ref."
+              >
+                <MenuItem value={""}>None</MenuItem>
+                {lpRefList?.length > 0
+                  ? lpRefList.map((ref, index) => {
+                      return (
+                        <MenuItem key={"ref" + index} value={ref.lp_ref}>
+                          {ref.lp_ref}
+                        </MenuItem>
+                      );
+                    })
+                  : null}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col">
+            <FormControl fullWidth size="small" variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                GG Name
+              </InputLabel>
+              <Select
+                name="gg_name"
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={productMasterFilter?.gg_name}
+                onChange={handleFilters}
+                label="GG Name"
+              >
+                <MenuItem value={""}>None</MenuItem>
+                {ggNameList?.length > 0
+                  ? ggNameList.map((gg, index) => {
+                      return (
+                        <MenuItem key={"ggName" + index} value={gg.gg_name}>
+                          {gg.gg_name}
+                        </MenuItem>
+                      );
+                    })
+                  : null}
+              </Select>
+            </FormControl>
+          </div>
+          {/* <div className="col-md-2 mb-3">
               <FormControl fullWidth size="small" variant="outlined">
                 <InputLabel id="demo-simple-select-outlined-label">
                   Siemens Product
@@ -575,71 +573,74 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                 </Select>
               </FormControl>
             </div> */}
-            <div className="col-md-2 mb-3">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Moving
-                </InputLabel>
-                <Select
-                  name="moving_non_moving"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.moving_non_moving}
-                  onChange={handleFilters}
-                  label="Siemens Product"
-                >
-                  <MenuItem value={"All"}>All</MenuItem>
-                  <MenuItem value={"Old"}>Old </MenuItem>
-                  <MenuItem value={"New"}>New</MenuItem>
-                  <MenuItem value={"Panel"}>Panel</MenuItem>
-                  <MenuItem value={"Asset"}>Asset</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-md-2 mb-3">
-              <FormControl fullWidth size="small" variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Verified
-                </InputLabel>
-                <Select
-                  name="verified"
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={productMasterFilter?.verified}
-                  onChange={handleFilters}
-                  label="Verified"
-                >
-                  <MenuItem value={""}>All</MenuItem>
-                  <MenuItem value={"1"}>Verified</MenuItem>
-                  <MenuItem value={"0"}>Not Verified</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-md-2 mb-3">
-              <TextField
-                fullWidth
-                id="outlined-basic"
-                size="small"
-                onKeyUp={handleParams}
-                name="filter_value"
-                label="Search"
-                variant="outlined"
-                value={params?.filter_value}
-              />
-            </div>
-            <div className="col-md-2">
-              <Button
-                color="primary"
-                className="w-100 bg-success text-white p-2"
-                disableElevation
-                variant="contained"
+          <div className="col">
+            <FormControl fullWidth size="small" variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                Moving
+              </InputLabel>
+              <Select
+                name="moving_non_moving"
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={productMasterFilter?.moving_non_moving}
+                onChange={handleFilters}
+                label="Siemens Product"
               >
-                Export Excel
-              </Button>
-            </div>
+                <MenuItem value={"All"}>All</MenuItem>
+                <MenuItem value={"Old"}>Old </MenuItem>
+                <MenuItem value={"New"}>New</MenuItem>
+                <MenuItem value={"Panel"}>Panel</MenuItem>
+                <MenuItem value={"Asset"}>Asset</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col">
+            <FormControl fullWidth size="small" variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                Verified
+              </InputLabel>
+              <Select
+                name="verified"
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={productMasterFilter?.verified}
+                onChange={handleFilters}
+                label="Verified"
+              >
+                <MenuItem value={""}>All</MenuItem>
+                <MenuItem value={"1"}>Verified</MenuItem>
+                <MenuItem value={"0"}>Not Verified</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col">
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              size="small"
+              onKeyUp={handleParams}
+              name="filter_value"
+              label="Search"
+              variant="outlined"
+              value={params?.filter_value}
+            />
+          </div>
+          <div className="col">
+            <Button
+              color="primary"
+              className="bg-success text-white w-100"
+              disableElevation
+              variant="contained"
+            >
+              {/* Export  */}
+              <img src={excelIcon} className="excel_icons" />
+            </Button>
           </div>
         </div>
-        <div className="data_table_height">
+        <div
+          className="data_table_height"
+          // style="min-height: 40px; max-height: 40px; line-height: 40px;"
+        >
           <DataGrid
             pagination
             disableColumnFilter
@@ -660,6 +661,7 @@ const BrowseProductMaster = ({ onEdit, siemens, browse_id }) => {
                   }
                 : {}
             }
+            headerHeight={40}
             onSortModelChange={(sort) => {
               if (sort.length > 0) {
                 setjsonfilter(true);

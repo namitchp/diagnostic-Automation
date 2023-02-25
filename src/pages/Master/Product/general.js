@@ -4,7 +4,7 @@ import {
   FormGroup,
   TextField,
 } from "@material-ui/core";
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from "@mui/material/Checkbox";
 import { Autocomplete } from "@material-ui/lab";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -40,11 +40,7 @@ const GeneralProduct = ({
             <FormControlLabel
               label="Edit"
               checked={formData?.edit === true}
-              control={
-                <Checkbox
-                  color="primary"                
-                />
-              }
+              control={<Checkbox color="primary" />}
               onChange={(e) => handleCheckChange("edit", e.target.checked)}
             />
             <FormControlLabel

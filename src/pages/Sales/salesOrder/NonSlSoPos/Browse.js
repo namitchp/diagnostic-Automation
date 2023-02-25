@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   TextField,
   Button,
   MenuItem,
@@ -15,9 +16,7 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../../components/common";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import CustomPagination from "../../../../components/CustomPagination";
-import CustomNoRowsOverlay from "../../../../components/customRowComponent";
+
 import { Loader } from "../../../../components/loader";
 import { CommonController } from "../../../../_redux/controller/common.controller";
 import ActionButtons from "../../../../components/action-buttons";
@@ -30,17 +29,17 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import moment from "moment";
 import ImageIcon from "@material-ui/icons/Image";
-import { DatePicker } from "@material-ui/pickers";
 import excelIcon from "../../../../assets/image/excel.png";
+
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 
 const user_id = {
   user_id: localStorage.getItem("userId"),
 };
 
 const label = { inputProps: { "aria-label": "Checkbox" } };
-const SoDetailBrowse = ({ onEdit }) => {
+
+const NonSlSoPosBrowse = ({ onEdit }) => {
   const dispatch = useDispatch();
 
   const getuserRightListResponse = useSelector(
@@ -206,11 +205,10 @@ const SoDetailBrowse = ({ onEdit }) => {
         {loading && <Loader />}
         <div className="filter_box mb-3">
           <div className="row">
-            <div className="col-md-1">
+            <div className="col">
               <h4 className="mb-0">Filters</h4>
             </div>
-
-            <div className="col">
+            <div className="col-md-2">
               <TextField
                 fullWidth
                 id="outlined-basic"
@@ -227,27 +225,18 @@ const SoDetailBrowse = ({ onEdit }) => {
             </div>
 
             <div className="col">
-              <DatePicker
-                label="From Date"
-                value={bodyParam.fromDate}
-                format="dd/MM/yyyy"
-                onChange={(date) => handleDateChange("fromDate", date)}
-                animateYearScrolling
-                inputVariant="outlined"
-                size="small"
+              <TextField
                 fullWidth
-              />
-            </div>
-
-            <div className="col">
-              <DatePicker
-                label="To Date"
-                value={bodyParam.toDate}
-                onChange={(date) => handleDateChange("toDate", date)}
-                animateYearScrolling
-                inputVariant="outlined"
+                id="outlined-basic"
                 size="small"
-                fullWidth
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13) {
+                    handleBodyParam(e);
+                  }
+                }}
+                name="s_no"
+                label="S No"
+                variant="outlined"
               />
             </div>
 
@@ -258,43 +247,12 @@ const SoDetailBrowse = ({ onEdit }) => {
                 size="small"
                 onKeyDown={(e) => {
                   if (e.keyCode === 13) {
-                    handleParams(e);
+                    handleBodyParam(e);
                   }
                 }}
-                name="filter_value"
-                label=" Party Search"
+                name="comapny_name"
+                label="Company Name"
                 variant="outlined"
-              />
-            </div>
-
-            <div className="col">
-              <TextField
-                fullWidth
-                id="outlined-basic"
-                size="small"
-                onChange={(e) => {
-                  handleBodyParam(e);
-                }}
-                select
-                name="status"
-                label="Status"
-                variant="outlined"
-              >
-                <MenuItem value={"all"}>All</MenuItem>
-                <MenuItem value={"spares"}>Matched</MenuItem>
-                <MenuItem value={"spares"}>Mis Matched</MenuItem>
-              </TextField>
-            </div>
-
-            <div className="col">
-              <FormControlLabel
-                label="Edit"
-                control={<Checkbox color="primary" />}
-              />
-
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="Hide"
               />
             </div>
 
@@ -309,10 +267,18 @@ const SoDetailBrowse = ({ onEdit }) => {
               </Button>
             </div>
 
-            <div className="col">
-              <Button className="bg-primary text-white ms-2">
-                <RefreshIcon /> Reset
-              </Button>
+            <div className="col-md-1">
+              <FormControlLabel
+                label="Edit"
+                control={<Checkbox color="blue" />}
+              />
+            </div>
+
+            <div className="col-md-1">
+              <FormControlLabel
+                label="Allocation"
+                control={<Checkbox color="blue" />}
+              />
             </div>
           </div>
         </div>
@@ -541,4 +507,4 @@ const SoDetailBrowse = ({ onEdit }) => {
   );
 };
 
-export default SoDetailBrowse;
+export default NonSlSoPosBrowse;

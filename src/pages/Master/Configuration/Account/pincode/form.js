@@ -84,7 +84,7 @@ const AddOrEditPincode = (props) => {
 
   return (
     <React.Fragment>
-      <div className="container-fluid bg-white p-4">
+      <div className="container-fluid bg-white p-3">
         <div className="row">
           <div className="col-md-4 mb-3">
             <TextField

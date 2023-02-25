@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import NonSlDi from "./browse";
 
 const SalesNonSlDi = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const SalesNonSlDi = () => {
             </ul>
             <Container fluid className="p-0">
               <div className="inner_wrapper">
-                {selectedIndex === 0 ? <h2>Browse</h2> : <h2>Non SL DI Form</h2>}
+                {selectedIndex === 0 ? <NonSlDi /> : <h2>Non SL DI Form</h2>}
               </div>
             </Container>
           </div>

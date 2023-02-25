@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   TextField,
   Button,
   MenuItem,
@@ -15,7 +16,6 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../../components/common";
-import RefreshIcon from "@mui/icons-material/Refresh";
 import CustomPagination from "../../../../components/CustomPagination";
 import CustomNoRowsOverlay from "../../../../components/customRowComponent";
 import { Loader } from "../../../../components/loader";
@@ -31,16 +31,20 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import moment from "moment";
 import ImageIcon from "@material-ui/icons/Image";
 import { DatePicker } from "@material-ui/pickers";
+
 import excelIcon from "../../../../assets/image/excel.png";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import RefreshIcon from "@mui/icons-material/Refresh";
+
+// import Checkbox from "@mui/material/Checkbox";
 
 const user_id = {
   user_id: localStorage.getItem("userId"),
 };
 
 const label = { inputProps: { "aria-label": "Checkbox" } };
-const SoDetailBrowse = ({ onEdit }) => {
+
+const NonSlDi = ({ onEdit }) => {
   const dispatch = useDispatch();
 
   const getuserRightListResponse = useSelector(
@@ -206,11 +210,10 @@ const SoDetailBrowse = ({ onEdit }) => {
         {loading && <Loader />}
         <div className="filter_box mb-3">
           <div className="row">
-            <div className="col-md-1">
+            <div className="col">
               <h4 className="mb-0">Filters</h4>
             </div>
-
-            <div className="col">
+            <div className="col-md-2">
               <TextField
                 fullWidth
                 id="outlined-basic"
@@ -225,8 +228,7 @@ const SoDetailBrowse = ({ onEdit }) => {
                 variant="outlined"
               />
             </div>
-
-            <div className="col">
+            <div className="col-md-2">
               <DatePicker
                 label="From Date"
                 value={bodyParam.fromDate}
@@ -238,8 +240,7 @@ const SoDetailBrowse = ({ onEdit }) => {
                 fullWidth
               />
             </div>
-
-            <div className="col">
+            <div className="col-md-2">
               <DatePicker
                 label="To Date"
                 value={bodyParam.toDate}
@@ -250,20 +251,26 @@ const SoDetailBrowse = ({ onEdit }) => {
                 fullWidth
               />
             </div>
-
-            <div className="col">
+            <div className="col-md-2">
               <TextField
                 fullWidth
                 id="outlined-basic"
                 size="small"
                 onKeyDown={(e) => {
                   if (e.keyCode === 13) {
-                    handleParams(e);
+                    handleBodyParam(e);
                   }
                 }}
-                name="filter_value"
-                label=" Party Search"
+                name="party_name"
+                label="Company Name"
                 variant="outlined"
+              />
+            </div>
+
+            <div className="col">
+              <FormControlLabel
+                label="All"
+                control={<Checkbox color="primary" />}
               />
             </div>
 
@@ -281,21 +288,29 @@ const SoDetailBrowse = ({ onEdit }) => {
                 variant="outlined"
               >
                 <MenuItem value={"all"}>All</MenuItem>
-                <MenuItem value={"spares"}>Matched</MenuItem>
-                <MenuItem value={"spares"}>Mis Matched</MenuItem>
+                <MenuItem value={"open"}>Open</MenuItem>
+                <MenuItem value={"close"}>Close</MenuItem>
               </TextField>
             </div>
 
             <div className="col">
-              <FormControlLabel
-                label="Edit"
-                control={<Checkbox color="primary" />}
-              />
-
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="Hide"
-              />
+              <TextField
+                fullWidth
+                id="outlined-basic"
+                size="small"
+                onChange={(e) => {
+                  handleBodyParam(e);
+                }}
+                select
+                name="hold"
+                label="Hold"
+                variant="outlined"
+              >
+                <MenuItem value={"all"}>All</MenuItem>
+                <MenuItem value={"hold"}>Hold</MenuItem>
+                <MenuItem value={"dc-release"}>DC-Release</MenuItem>
+                <MenuItem value={"wip-release"}>WIP-Release</MenuItem>
+              </TextField>
             </div>
 
             <div className="col">
@@ -316,6 +331,7 @@ const SoDetailBrowse = ({ onEdit }) => {
             </div>
           </div>
         </div>
+
         <Dialog
           open={remarksModal}
           fullWidth
@@ -541,4 +557,4 @@ const SoDetailBrowse = ({ onEdit }) => {
   );
 };
 
-export default SoDetailBrowse;
+export default NonSlDi;
